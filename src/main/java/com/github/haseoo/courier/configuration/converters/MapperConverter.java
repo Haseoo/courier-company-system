@@ -1,4 +1,4 @@
-package com.slicesy.pizzaorder.configuration.converters;
+package com.github.haseoo.courier.configuration.converters;
 
 import org.modelmapper.AbstractConverter;
 

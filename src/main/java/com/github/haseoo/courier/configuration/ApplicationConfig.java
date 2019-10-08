@@ -1,7 +1,7 @@
-package com.slicesy.pizzaorder.configuration;
+package com.github.haseoo.courier.configuration;
 
-import com.slicesy.pizzaorder.configuration.converters.MapperConverter;
-import com.slicesy.pizzaorder.exceptions.ModelMapperInitializeException;
+import com.github.haseoo.courier.configuration.converters.MapperConverter;
+import com.github.haseoo.courier.configuration.exceptions.ModelMapperInitializeException;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.reflections.Reflections;
@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static com.slicesy.pizzaorder.utilities.Constants.REFLECTION_PREFIX;
+import static com.github.haseoo.courier.utilities.Constants.REFLECTION_PREFIX;
+
 
 @Configuration
 public class ApplicationConfig {
