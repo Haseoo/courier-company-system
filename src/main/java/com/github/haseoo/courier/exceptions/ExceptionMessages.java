@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.configuration.exceptions;
+package com.github.haseoo.courier.exceptions;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

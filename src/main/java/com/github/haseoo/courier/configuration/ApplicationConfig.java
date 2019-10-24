@@ -1,7 +1,7 @@
 package com.github.haseoo.courier.configuration;
 
 import com.github.haseoo.courier.configuration.converters.MapperConverter;
-import com.github.haseoo.courier.configuration.exceptions.ModelMapperInitializeException;
+import com.github.haseoo.courier.exceptions.ModelMapperInitializeException;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.reflections.Reflections;
