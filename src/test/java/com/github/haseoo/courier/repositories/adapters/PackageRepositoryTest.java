@@ -4,6 +4,7 @@ import com.github.haseoo.courier.models.PackageModel;
 import com.github.haseoo.courier.repositories.jpa.PackageJPARepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,8 @@ import static com.github.haseoo.courier.testutlis.Constants.PackageDataGenerator
 import static com.github.haseoo.courier.testutlis.generators.PackageDataGenerator.getPackageModel;
 
 @SpringBootTest
-class AaaTest {
+@Tag("Unit")
+class PackageRepositoryTest {
     @Autowired
     private PackageJPARepository packageJPARepository;
     @Autowired
