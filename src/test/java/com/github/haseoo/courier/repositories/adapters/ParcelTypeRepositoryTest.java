@@ -1,6 +1,5 @@
 package com.github.haseoo.courier.repositories.adapters;
 
-import com.github.haseoo.courier.models.AddressModel;
 import com.github.haseoo.courier.models.ParcelTypeModel;
 import com.github.haseoo.courier.repositories.jpa.ParcelTypeJPARepository;
 import lombok.val;
@@ -67,7 +66,6 @@ class ParcelTypeRepositoryTest {
         ParcelTypeModel active = parcelTypeJPARepository.saveAndFlush(getActiveParcelTypeModel());
         ParcelTypeModel notActive = parcelTypeJPARepository.saveAndFlush(getNotActiveParcelTypeModel());
         //when & then
-        val e = sut.getActiveTypes();
         Assertions.assertThat(sut.getActiveTypes()).hasSize(EXPECTED_LIST_ONE_ELEMENT_SIZE).contains(active).doesNotContain(notActive);
     }
 }
