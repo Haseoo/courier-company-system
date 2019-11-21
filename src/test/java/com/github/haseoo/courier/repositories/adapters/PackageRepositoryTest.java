@@ -9,11 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.github.haseoo.courier.testutlis.Constants.PackageDataGeneratorConstants.EXPECTED_LIST_SIZE;
+import static com.github.haseoo.courier.testutlis.Constants.Constants.INTEGRATION_TEST;
+import static com.github.haseoo.courier.testutlis.Constants.PackageDataConstants.EXPECTED_LIST_SIZE;
+import static com.github.haseoo.courier.testutlis.Constants.PackageDataConstants.FIRST_ID;
 import static com.github.haseoo.courier.testutlis.generators.PackageDataGenerator.getPackageModel;
 
 @SpringBootTest
-@Tag("Unit")
+@Tag(INTEGRATION_TEST)
 class PackageRepositoryTest {
     @Autowired
     private PackageJPARepository packageJPARepository;
@@ -42,5 +44,15 @@ class PackageRepositoryTest {
         packageJPARepository.saveAndFlush(in);
         //when & then
         Assertions.assertThat(sut.getList()).hasSize(EXPECTED_LIST_SIZE).contains(in);
+    }
+
+    @Test
+    void should_return_record_with_id_one() {
+        //given
+        packageJPARepository.saveAndFlush(getPackageModel());
+        //when
+        PackageModel packageModel = sut.getById(FIRST_ID).get();
+        //then
+        Assertions.assertThat(packageModel.getPackageId()).isOne();
     }
 }

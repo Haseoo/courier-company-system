@@ -7,7 +7,7 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "package")
+@Table(name = "packages")
 @Data
 public class PackageModel {
     @Id
@@ -16,4 +16,10 @@ public class PackageModel {
     private Integer packageId;
     @Column(nullable = false)
     private String additionalInfo;
+    @ManyToOne
+    @JoinColumn(name = "receiverAddressId", referencedColumnName = "addressId", nullable = false)
+    private AddressModel receiverAddress;
+    @ManyToOne
+    @JoinColumn(name = "senderAddressId", referencedColumnName = "addressId", nullable = false)
+    private AddressModel senderAddress;
 }
