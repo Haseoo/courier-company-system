@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.github.haseoo.courier.testutlis.Constants.AddressConstants.NEW_STREET;
+import static com.github.haseoo.courier.testutlis.Constants.Constants.EXPECTED_LIST_ONE_ELEMENT_SIZE;
 import static com.github.haseoo.courier.testutlis.Constants.Constants.INTEGRATION_TEST;
-import static com.github.haseoo.courier.testutlis.Constants.PackageDataConstants.EXPECTED_LIST_SIZE;
 import static com.github.haseoo.courier.testutlis.generators.AddressDataGenerator.getAddressModel;
 @SpringBootTest
 @Tag(INTEGRATION_TEST)
@@ -37,11 +38,24 @@ class AddressRepositoryTest {
     }
 
     @Test
+    void should_edit_address() {
+        //given
+        AddressModel address = addressJPARepository.saveAndFlush(getAddressModel());
+        //when
+        address.setStreet(NEW_STREET);
+        AddressModel newAddress = sut.saveAndFlush(address);
+        //then
+        Assertions.assertThat(newAddress.getId()).isEqualTo(address.getId());
+        Assertions.assertThat(newAddress.getStreet()).isEqualTo(address.getStreet());
+        Assertions.assertThat(sut.getList().size()).isOne();
+    }
+
+    @Test
     void should_return_list_with_one_element() {
         //given
         AddressModel in = getAddressModel();
         addressJPARepository.saveAndFlush(in);
         //when & then
-        Assertions.assertThat(sut.getList()).hasSize(EXPECTED_LIST_SIZE);
+        Assertions.assertThat(sut.getList()).hasSize(EXPECTED_LIST_ONE_ELEMENT_SIZE);
     }
 }
