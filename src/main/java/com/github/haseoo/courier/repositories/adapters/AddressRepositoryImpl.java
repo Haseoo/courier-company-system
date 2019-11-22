@@ -1,9 +1,9 @@
 package com.github.haseoo.courier.repositories.adapters;
 
 import com.github.haseoo.courier.models.AddressModel;
+import com.github.haseoo.courier.querydata.AddressQueryData;
 import com.github.haseoo.courier.repositories.jpa.AddressJPARepository;
 import com.github.haseoo.courier.repositories.ports.AddressRepository;
-import com.github.haseoo.courier.querydata.AddressQueryData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AddressRepositoryImpl implements AddressRepository {
     private final AddressJPARepository addressJPARepository;
+
     @Override
     public List<AddressModel> getList() {
         return addressJPARepository.findAll();
