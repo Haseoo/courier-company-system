@@ -66,6 +66,7 @@ class AddressRepositoryTest {
         //when & then
         Assertions.assertThat(sut.addressExist(getExistentQueryData())).isTrue();
     }
+
     @Test
     void should_address_not_exist() {
         //given
@@ -81,6 +82,7 @@ class AddressRepositoryTest {
         //when & then
         Assertions.assertThat(sut.getById(FIRST_ID)).isPresent();
     }
+
     @Test
     void should_find_not_address_by_id() {
         //given & when & then

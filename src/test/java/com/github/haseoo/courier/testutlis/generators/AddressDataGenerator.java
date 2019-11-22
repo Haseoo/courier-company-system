@@ -29,6 +29,7 @@ public class AddressDataGenerator {
                 .flatNumber(TEST_FLAT_NUMBER)
                 .build();
     }
+
     public static AddressQueryData getNotExistentQueryData() {
         return AddressQueryData
                 .builder()

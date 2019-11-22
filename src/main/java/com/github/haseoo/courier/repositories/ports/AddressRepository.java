@@ -10,7 +10,10 @@ import java.util.Optional;
 @Transactional
 public interface AddressRepository {
     List<AddressModel> getList();
+
     Optional<AddressModel> getById(Long id);
+
     AddressModel saveAndFlush(AddressModel addressModel);
+
     Boolean addressExist(AddressQueryData addressQueryData);
 }

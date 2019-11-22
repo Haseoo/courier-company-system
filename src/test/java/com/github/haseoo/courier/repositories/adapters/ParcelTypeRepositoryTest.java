@@ -2,7 +2,6 @@ package com.github.haseoo.courier.repositories.adapters;
 
 import com.github.haseoo.courier.models.ParcelTypeModel;
 import com.github.haseoo.courier.repositories.jpa.ParcelTypeJPARepository;
-import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
