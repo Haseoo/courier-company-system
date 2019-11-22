@@ -12,4 +12,7 @@ public class UsersConstants {
     public static final String TEST_PHONE_NUMBER = "111222333";
     public static final String TEST_NAME = "Test";
     public static final String TEST_SURNAME = "Testovsky";
+    public static final String TEST_EMAIL = "test@test.com";
+    public static final String TEST_COMPANY_NAME = "TestInc";
+    public static final String TEST_NIP = "3818383577";
 }

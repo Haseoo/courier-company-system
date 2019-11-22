@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "clientId")
-public class ClientModel extends  UserModel{
+public class ClientModel extends UserModel {
     private String emailAddress;
     @Column(nullable = false)
     private String phoneNumber;
