@@ -3,7 +3,7 @@ package com.github.haseoo.courier.repositories.adapters;
 import com.github.haseoo.courier.models.AddressModel;
 import com.github.haseoo.courier.repositories.jpa.AddressJPARepository;
 import com.github.haseoo.courier.repositories.ports.AddressRepository;
-import com.github.haseoo.courier.repositories.querydata.AddressQueryData;
+import com.github.haseoo.courier.querydata.AddressQueryData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

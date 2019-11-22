@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.repositories.querydata;
+package com.github.haseoo.courier.querydata;
 
 import lombok.Builder;
 import lombok.Getter;
