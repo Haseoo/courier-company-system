@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.models.enums;
+package com.github.haseoo.courier.enums;
 
 public enum ParcelStateType {
     DELIVERED,
