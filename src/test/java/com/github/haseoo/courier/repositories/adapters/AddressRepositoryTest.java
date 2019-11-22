@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.github.haseoo.courier.testutlis.Constants.AddressConstants.NEW_STREET;
-import static com.github.haseoo.courier.testutlis.Constants.Constants.EXPECTED_LIST_ONE_ELEMENT_SIZE;
-import static com.github.haseoo.courier.testutlis.Constants.Constants.INTEGRATION_TEST;
-import static com.github.haseoo.courier.testutlis.generators.AddressDataGenerator.getAddressModel;
+import static com.github.haseoo.courier.testutlis.constants.AddressConstants.NEW_STREET;
+import static com.github.haseoo.courier.testutlis.constants.Constants.*;
+import static com.github.haseoo.courier.testutlis.generators.AddressDataGenerator.*;
+
 @SpringBootTest
 @Tag(INTEGRATION_TEST)
 class AddressRepositoryTest {
@@ -57,5 +57,33 @@ class AddressRepositoryTest {
         addressJPARepository.saveAndFlush(in);
         //when & then
         Assertions.assertThat(sut.getList()).hasSize(EXPECTED_LIST_ONE_ELEMENT_SIZE);
+    }
+
+    @Test
+    void should_address_exist() {
+        //given
+        addressJPARepository.saveAndFlush(getAddressModel());
+        //when & then
+        Assertions.assertThat(sut.addressExist(getExistentQueryData())).isTrue();
+    }
+    @Test
+    void should_address_not_exist() {
+        //given
+        addressJPARepository.saveAndFlush(getAddressModel());
+        //when & then
+        Assertions.assertThat(sut.addressExist(getNotExistentQueryData())).isFalse();
+    }
+
+    @Test
+    void should_find_address_by_id() {
+        //given
+        addressJPARepository.saveAndFlush(getAddressModel());
+        //when & then
+        Assertions.assertThat(sut.getById(FIRST_ID)).isPresent();
+    }
+    @Test
+    void should_find_not_address_by_id() {
+        //given & when & then
+        Assertions.assertThat(sut.getById(FIRST_ID)).isNotPresent();
     }
 }
