@@ -34,7 +34,10 @@ class ParcelTypeRepositoryTest {
         //when
         ParcelTypeModel out = sut.saveAndFlush(in);
         //then
-        Assertions.assertThat(in).isEqualTo(out);
+        Assertions.assertThat(out.getActive()).isEqualTo(in.getActive());
+        Assertions.assertThat(out.getDescription()).isEqualTo(in.getDescription());
+        Assertions.assertThat(out.getName()).isEqualTo(in.getName());
+        Assertions.assertThat(out.getPrice()).isEqualTo(in.getPrice());
     }
 
     @Test

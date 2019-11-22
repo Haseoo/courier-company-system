@@ -1,7 +1,7 @@
 package com.github.haseoo.courier.testutlis.generators;
 
 import com.github.haseoo.courier.models.AddressModel;
-import com.github.haseoo.courier.repositories.querydata.AddressQueryData;
+import com.github.haseoo.courier.querydata.AddressQueryData;
 import lombok.NoArgsConstructor;
 
 import static com.github.haseoo.courier.testutlis.constants.AddressConstants.*;
