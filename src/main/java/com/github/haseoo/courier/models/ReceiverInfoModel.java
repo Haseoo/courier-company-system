@@ -10,24 +10,21 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Data
 @EqualsAndHashCode
-@Table(name = "address")
-public class AddressModel {
+@Table(name = "receiverInfo")
+public class ReceiverInfoModel {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(insertable = false, nullable = false)
     private Long id;
 
     @Column(nullable = false)
-    private String city;
+    private String name;
 
     @Column(nullable = false)
-    private String street;
+    private String surname;
+
+    private String emailAddress;
 
     @Column(nullable = false)
-    private String postalCode;
-
-    @Column(nullable = false)
-    private String buildingNumber;
-
-    private String flatNumber;
+    private String phoneNumber;
 }
