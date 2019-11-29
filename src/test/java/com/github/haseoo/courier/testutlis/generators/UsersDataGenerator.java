@@ -3,6 +3,7 @@ package com.github.haseoo.courier.testutlis.generators;
 import com.github.haseoo.courier.models.ClientCompanyModel;
 import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.models.CourierModel;
+import com.github.haseoo.courier.models.LogisticianModel;
 import lombok.NoArgsConstructor;
 
 import static com.github.haseoo.courier.testutlis.constants.UsersConstants.*;
@@ -19,7 +20,21 @@ public class UsersDataGenerator {
         courierModel.setSurname(TEST_SURNAME);
         courierModel.setPhoneNumber(TEST_PHONE_NUMBER);
         courierModel.setName(TEST_NAME);
+        courierModel.setActive(true);
         return courierModel;
+    }
+
+    public static LogisticianModel getLogisticianModel() {
+        LogisticianModel logisticianModel = new LogisticianModel();
+        logisticianModel.setPassword(TEST_USER_PASSWD.toCharArray());
+        logisticianModel.setUserName(TEST_USER_NAME);
+        logisticianModel.setPesel(TEST_PESEL);
+        logisticianModel.setUserName(TEST_NAME);
+        logisticianModel.setSurname(TEST_SURNAME);
+        logisticianModel.setPhoneNumber(TEST_PHONE_NUMBER);
+        logisticianModel.setName(TEST_NAME);
+        logisticianModel.setActive(true);
+        return logisticianModel;
     }
 
     public static ClientIndividualModel getIndividualClient() {
@@ -31,6 +46,7 @@ public class UsersDataGenerator {
         clientIndividualModel.setPhoneNumber(TEST_PHONE_NUMBER);
         clientIndividualModel.setUserName(TEST_USER_NAME);
         clientIndividualModel.setPassword(TEST_USER_PASSWD.toCharArray());
+        clientIndividualModel.setActive(true);
         return clientIndividualModel;
     }
 
@@ -46,6 +62,7 @@ public class UsersDataGenerator {
         clientCompanyModel.setUserName(TEST_USER_NAME);
         clientCompanyModel.setPassword(TEST_USER_PASSWD.toCharArray());
         clientCompanyModel.setCompanyName(TEST_COMPANY_NAME);
+        clientCompanyModel.setActive(true);
         return clientCompanyModel;
     }
 }

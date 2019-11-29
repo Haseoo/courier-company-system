@@ -3,6 +3,7 @@ package com.github.haseoo.courier.repositories.adapters;
 import com.github.haseoo.courier.models.ParcelTypeModel;
 import com.github.haseoo.courier.repositories.jpa.ParcelTypeJPARepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,10 @@ class ParcelTypeRepositoryTest {
 
     @BeforeEach
     void beforeEach() {
+        parcelTypeJPARepository.deleteAll();
+    }
+    @AfterEach
+    void cleanUp() {
         parcelTypeJPARepository.deleteAll();
     }
 

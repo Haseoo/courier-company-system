@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Data
 @EqualsAndHashCode
-@Table(name = "address")
+@Table(name = "Address")
 public class AddressModel {
     @Id
     @GeneratedValue(strategy = IDENTITY)
