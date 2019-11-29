@@ -6,5 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ReceiverInfoJPARepository extends JpaRepository<ReceiverInfoModel, Long> {
-    Optional<ReceiverInfoModel> findByNameAndSurnameAndEmailAddressAndPhoneNumber(String name, String surname, String emailAddress, String phoneNumber);
+    Optional<ReceiverInfoModel> findByNameAndSurnameAndEmailAddressAndPhoneNumber(String name,
+                                                                                  String surname,
+                                                                                  String emailAddress,
+                                                                                  String phoneNumber);
 }
