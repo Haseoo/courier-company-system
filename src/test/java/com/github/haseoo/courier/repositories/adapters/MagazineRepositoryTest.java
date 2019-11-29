@@ -4,6 +4,7 @@ import com.github.haseoo.courier.models.MagazineModel;
 import com.github.haseoo.courier.repositories.jpa.MagazineJPARepository;
 import com.github.haseoo.courier.repositories.ports.MagazineRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class MagazineRepositoryTest {
     @Autowired
     MagazineJPARepository magazineJPARepository;
 
-    @BeforeEach
+    @AfterEach
     void setup() {
         magazineJPARepository.deleteAll();
     }
