@@ -4,6 +4,7 @@ import com.github.haseoo.courier.models.ReceiverInfoModel;
 import com.github.haseoo.courier.repositories.jpa.ReceiverInfoJPARepository;
 import com.github.haseoo.courier.repositories.ports.ReceiverInfoRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,10 @@ class ReceiverInfoRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        receiverInfoJPARepository.deleteAll();
+    }
+    @AfterEach
+    void cleanUp() {
         receiverInfoJPARepository.deleteAll();
     }
 

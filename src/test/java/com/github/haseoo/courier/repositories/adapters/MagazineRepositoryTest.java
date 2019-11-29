@@ -24,8 +24,12 @@ class MagazineRepositoryTest {
     @Autowired
     MagazineJPARepository magazineJPARepository;
 
-    @AfterEach
+    @BeforeEach
     void setup() {
+        magazineJPARepository.deleteAll();
+    }
+    @AfterEach
+    void cleanUp() {
         magazineJPARepository.deleteAll();
     }
 

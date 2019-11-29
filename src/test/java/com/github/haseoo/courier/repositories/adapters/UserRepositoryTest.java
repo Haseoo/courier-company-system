@@ -7,6 +7,7 @@ import com.github.haseoo.courier.models.LogisticianModel;
 import com.github.haseoo.courier.repositories.jpa.*;
 import com.github.haseoo.courier.repositories.ports.UserRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,10 @@ class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        userJPARepository.deleteAll();
+    }
+    @AfterEach
+    void cleanUp() {
         userJPARepository.deleteAll();
     }
 

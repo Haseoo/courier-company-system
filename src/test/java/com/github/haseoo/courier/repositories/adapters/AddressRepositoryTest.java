@@ -4,6 +4,7 @@ import com.github.haseoo.courier.models.AddressModel;
 import com.github.haseoo.courier.repositories.jpa.AddressJPARepository;
 import com.github.haseoo.courier.repositories.ports.AddressRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,10 @@ class AddressRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        addressJPARepository.deleteAll();
+    }
+    @AfterEach
+    void cleanUp() {
         addressJPARepository.deleteAll();
     }
 
@@ -78,9 +83,9 @@ class AddressRepositoryTest {
     @Test
     void should_find_address_by_id() {
         //given
-        addressJPARepository.saveAndFlush(getAddressModel());
+        AddressModel in = addressJPARepository.saveAndFlush(getAddressModel());
         //when & then
-        Assertions.assertThat(sut.getById(FIRST_ID)).isPresent();
+        Assertions.assertThat(sut.getById(in.getId())).isPresent();
     }
 
     @Test
