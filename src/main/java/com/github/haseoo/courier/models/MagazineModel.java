@@ -17,7 +17,7 @@ public class MagazineModel {
     @Column(insertable = false, nullable = false)
     private Long id;
 
-    @OneToOne(cascade = ALL, orphanRemoval = true)
+    @OneToOne(cascade = ALL)
     AddressModel address;
 
     @Column(nullable = false)
