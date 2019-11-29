@@ -23,7 +23,7 @@ public class MagazineModel {
     @Column(nullable = false)
     Boolean active;
 
-    @OneToMany(cascade = ALL, mappedBy = "magazine")
+    @OneToMany(mappedBy = "magazine")
     List<LogisticianModel> logisticians;
 
 }
