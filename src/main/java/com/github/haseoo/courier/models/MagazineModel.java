@@ -1,30 +1,29 @@
 package com.github.haseoo.courier.models;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
-@EqualsAndHashCode
-@Table(name = "ReceiverInfo")
-public class ReceiverInfoModel {
+@Table(name = "Magazine")
+public class MagazineModel {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(insertable = false, nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @OneToOne(cascade = ALL, orphanRemoval = true)
+    AddressModel address;
 
     @Column(nullable = false)
-    private String surname;
+    Boolean active;
 
-    private String emailAddress;
+    @OneToMany(cascade = ALL, mappedBy = "magazine")
+    List<LogisticianModel> logisticians;
 
-    @Column(nullable = false)
-    private String phoneNumber;
 }

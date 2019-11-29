@@ -3,6 +3,7 @@ package com.github.haseoo.courier.testutlis.generators;
 import com.github.haseoo.courier.models.ClientCompanyModel;
 import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.models.CourierModel;
+import com.github.haseoo.courier.models.LogisticianModel;
 import lombok.NoArgsConstructor;
 
 import static com.github.haseoo.courier.testutlis.constants.UsersConstants.*;
@@ -20,6 +21,18 @@ public class UsersDataGenerator {
         courierModel.setPhoneNumber(TEST_PHONE_NUMBER);
         courierModel.setName(TEST_NAME);
         return courierModel;
+    }
+
+    public static LogisticianModel getLogisticianModel() {
+        LogisticianModel logisticianModel = new LogisticianModel();
+        logisticianModel.setPassword(TEST_USER_PASSWD.toCharArray());
+        logisticianModel.setUserName(TEST_USER_NAME);
+        logisticianModel.setPesel(TEST_PESEL);
+        logisticianModel.setUserName(TEST_NAME);
+        logisticianModel.setSurname(TEST_SURNAME);
+        logisticianModel.setPhoneNumber(TEST_PHONE_NUMBER);
+        logisticianModel.setName(TEST_NAME);
+        return logisticianModel;
     }
 
     public static ClientIndividualModel getIndividualClient() {

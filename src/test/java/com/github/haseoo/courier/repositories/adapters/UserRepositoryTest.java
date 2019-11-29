@@ -3,10 +3,8 @@ package com.github.haseoo.courier.repositories.adapters;
 import com.github.haseoo.courier.models.ClientCompanyModel;
 import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.models.CourierModel;
-import com.github.haseoo.courier.repositories.jpa.ClientCompanyJPARepository;
-import com.github.haseoo.courier.repositories.jpa.ClientIndividualJPARepository;
-import com.github.haseoo.courier.repositories.jpa.CourierJPARepository;
-import com.github.haseoo.courier.repositories.jpa.UserJPARepository;
+import com.github.haseoo.courier.models.LogisticianModel;
+import com.github.haseoo.courier.repositories.jpa.*;
 import com.github.haseoo.courier.repositories.ports.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +30,8 @@ class UserRepositoryTest {
     private ClientCompanyJPARepository clientCompanyJPARepository;
     @Autowired
     private ClientIndividualJPARepository clientIndividualJPARepository;
+    @Autowired
+    private LogisticianJPARepository logisticianJPARepository;
 
     @BeforeEach
     void setUp() {
@@ -44,10 +44,12 @@ class UserRepositoryTest {
         courierJPARepository.saveAndFlush(getCourierModel());
         clientCompanyJPARepository.saveAndFlush(getCompanyClient());
         clientIndividualJPARepository.saveAndFlush(getIndividualClient());
+        logisticianJPARepository.saveAndFlush(getLogisticianModel());
 
         //when & then
         Assertions.assertThat(sut.getList())
                 .hasAtLeastOneElementOfType(CourierModel.class)
+                .hasAtLeastOneElementOfType(LogisticianModel.class)
                 .hasAtLeastOneElementOfType(ClientIndividualModel.class)
                 .hasAtLeastOneElementOfType(ClientCompanyModel.class);
         //TODO dodać resztę użytkowników jak będą gotowi
