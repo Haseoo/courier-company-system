@@ -20,6 +20,7 @@ public class UsersDataGenerator {
         courierModel.setSurname(TEST_SURNAME);
         courierModel.setPhoneNumber(TEST_PHONE_NUMBER);
         courierModel.setName(TEST_NAME);
+        courierModel.setActive(true);
         return courierModel;
     }
 
@@ -32,6 +33,7 @@ public class UsersDataGenerator {
         logisticianModel.setSurname(TEST_SURNAME);
         logisticianModel.setPhoneNumber(TEST_PHONE_NUMBER);
         logisticianModel.setName(TEST_NAME);
+        logisticianModel.setActive(true);
         return logisticianModel;
     }
 
@@ -44,6 +46,7 @@ public class UsersDataGenerator {
         clientIndividualModel.setPhoneNumber(TEST_PHONE_NUMBER);
         clientIndividualModel.setUserName(TEST_USER_NAME);
         clientIndividualModel.setPassword(TEST_USER_PASSWD.toCharArray());
+        clientIndividualModel.setActive(true);
         return clientIndividualModel;
     }
 
@@ -59,6 +62,7 @@ public class UsersDataGenerator {
         clientCompanyModel.setUserName(TEST_USER_NAME);
         clientCompanyModel.setPassword(TEST_USER_PASSWD.toCharArray());
         clientCompanyModel.setCompanyName(TEST_COMPANY_NAME);
+        clientCompanyModel.setActive(true);
         return clientCompanyModel;
     }
 }

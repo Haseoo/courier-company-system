@@ -20,4 +20,6 @@ public class UserModel {
     private String userName;
     @Column(nullable = false)
     private char[] password;
+    @Column(nullable = false)
+    private Boolean active;
 }
