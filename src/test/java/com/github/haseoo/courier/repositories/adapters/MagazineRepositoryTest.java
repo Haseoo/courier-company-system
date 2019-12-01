@@ -28,6 +28,7 @@ class MagazineRepositoryTest {
     void setup() {
         magazineJPARepository.deleteAll();
     }
+
     @AfterEach
     void cleanUp() {
         magazineJPARepository.deleteAll();

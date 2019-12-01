@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -16,15 +18,14 @@ public class ReceiverInfoModel {
     @GeneratedValue(strategy = IDENTITY)
     @Column(insertable = false, nullable = false)
     private Long id;
-
     @Column(nullable = false)
     private String name;
-
     @Column(nullable = false)
     private String surname;
-
     private String emailAddress;
-
     @Column(nullable = false)
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "receiverContactData", fetch = LAZY)
+    List<ParcelModel> parcels;
 }

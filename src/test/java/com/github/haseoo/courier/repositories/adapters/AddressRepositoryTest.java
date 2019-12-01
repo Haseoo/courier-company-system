@@ -27,6 +27,7 @@ class AddressRepositoryTest {
     void setUp() {
         addressJPARepository.deleteAll();
     }
+
     @AfterEach
     void cleanUp() {
         addressJPARepository.deleteAll();
