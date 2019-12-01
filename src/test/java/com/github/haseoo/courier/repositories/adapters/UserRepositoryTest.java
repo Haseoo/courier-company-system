@@ -38,6 +38,7 @@ class UserRepositoryTest {
     void setUp() {
         userJPARepository.deleteAll();
     }
+
     @AfterEach
     void cleanUp() {
         userJPARepository.deleteAll();
@@ -57,6 +58,5 @@ class UserRepositoryTest {
                 .hasAtLeastOneElementOfType(LogisticianModel.class)
                 .hasAtLeastOneElementOfType(ClientIndividualModel.class)
                 .hasAtLeastOneElementOfType(ClientCompanyModel.class);
-        //TODO dodać resztę użytkowników jak będą gotowi
     }
 }

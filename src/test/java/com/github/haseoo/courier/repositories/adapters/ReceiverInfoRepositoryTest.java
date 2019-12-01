@@ -27,6 +27,7 @@ class ReceiverInfoRepositoryTest {
     void setUp() {
         receiverInfoJPARepository.deleteAll();
     }
+
     @AfterEach
     void cleanUp() {
         receiverInfoJPARepository.deleteAll();

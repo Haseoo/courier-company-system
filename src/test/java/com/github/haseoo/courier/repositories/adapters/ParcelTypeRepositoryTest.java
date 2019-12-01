@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.github.haseoo.courier.testutlis.constants.Constants.*;
 import static com.github.haseoo.courier.testutlis.generators.ParcelTypeDataGenerator.getActiveParcelTypeModel;
@@ -26,6 +27,7 @@ class ParcelTypeRepositoryTest {
     void beforeEach() {
         parcelTypeJPARepository.deleteAll();
     }
+
     @AfterEach
     void cleanUp() {
         parcelTypeJPARepository.deleteAll();
@@ -44,6 +46,7 @@ class ParcelTypeRepositoryTest {
         Assertions.assertThat(out.getPrice()).isEqualTo(in.getPrice());
     }
 
+    @Transactional
     @Test
     void should_return_list_with_two_elements() {
         //given
@@ -67,6 +70,7 @@ class ParcelTypeRepositoryTest {
         Assertions.assertThat(sut.getById(FIRST_ID)).isNotPresent();
     }
 
+    @Transactional
     @Test
     void should_return_one_active_type() {
         //given
