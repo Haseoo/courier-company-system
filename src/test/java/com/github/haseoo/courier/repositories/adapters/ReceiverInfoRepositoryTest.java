@@ -64,7 +64,7 @@ class ReceiverInfoRepositoryTest {
         //given
         receiverInfoJPARepository.saveAndFlush(getReceiverInfoModel());
         //when & then
-        Assertions.assertThat(sut.receiverInfoExists(getExistentQueryData())).isTrue();
+        Assertions.assertThat(sut.receiverInfoExists(getExistentQueryData())).isPresent();
     }
 
     @Test
@@ -72,7 +72,7 @@ class ReceiverInfoRepositoryTest {
         //given
         receiverInfoJPARepository.saveAndFlush(getReceiverInfoModel());
         //when & then
-        Assertions.assertThat(sut.receiverInfoExists(getNotExistentQueryData())).isFalse();
+        Assertions.assertThat(sut.receiverInfoExists(getNotExistentQueryData())).isNotPresent();
     }
 
 }

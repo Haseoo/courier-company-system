@@ -31,12 +31,12 @@ public class ReceiverInfoRepositoryImpl implements ReceiverInfoRepository {
     }
 
     @Override
-    public Boolean receiverInfoExists(ReceiverInfoQueryData receiverInfoQueryData) {
+    public Optional<ReceiverInfoModel> receiverInfoExists(ReceiverInfoQueryData receiverInfoQueryData) {
         return receiverInfoJPARepository.findByNameAndSurnameAndEmailAddressAndPhoneNumber(
                 receiverInfoQueryData.getName(),
                 receiverInfoQueryData.getSurname(),
                 receiverInfoQueryData.getEmailAddress(),
                 receiverInfoQueryData.getPhoneNumber()
-        ).isPresent();
+        );
     }
 }

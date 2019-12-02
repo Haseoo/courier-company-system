@@ -13,5 +13,5 @@ public interface ReceiverInfoRepository {
 
     ReceiverInfoModel saveAndFlush(ReceiverInfoModel addressModel);
 
-    Boolean receiverInfoExists(ReceiverInfoQueryData receiverInfoQueryData);
+    Optional<ReceiverInfoModel> receiverInfoExists(ReceiverInfoQueryData receiverInfoQueryData);
 }
