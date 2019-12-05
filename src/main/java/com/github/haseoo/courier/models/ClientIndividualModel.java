@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "ClientIndividual")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "clientIndividualId")
+@PrimaryKeyJoinColumn(name = "clientId")
 public class ClientIndividualModel extends ClientModel {
     @Column(nullable = false)
     private String name;

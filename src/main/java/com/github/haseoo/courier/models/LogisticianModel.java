@@ -12,7 +12,7 @@ import static javax.persistence.FetchType.EAGER;
 @Table(name = "logistician")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "logistcianId")
+@PrimaryKeyJoinColumn(name = "employeeId")
 public class LogisticianModel extends EmployeeModel {
     @ManyToOne(fetch = EAGER, cascade = ALL)
     @JoinColumn(name = "magazineId")
