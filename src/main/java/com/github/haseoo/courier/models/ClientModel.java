@@ -13,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "Client")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "clientId")
+@PrimaryKeyJoinColumn(name = "userId")
 public class ClientModel extends UserModel {
     private String emailAddress;
     @Column(nullable = false)

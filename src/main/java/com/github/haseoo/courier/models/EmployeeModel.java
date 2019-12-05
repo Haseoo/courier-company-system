@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "Employee")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "employeeId")
+@PrimaryKeyJoinColumn(name = "userId")
 public class EmployeeModel extends UserModel {
     @Column(nullable = false)
     private String name;
