@@ -17,7 +17,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "Courier")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "courierId")
+@PrimaryKeyJoinColumn(name = "employeeId")
 public class CourierModel extends EmployeeModel {
     @OneToMany(fetch = LAZY, mappedBy = "courier", cascade = ALL)
     private List<ParcelStateRecord> parcelStates;
