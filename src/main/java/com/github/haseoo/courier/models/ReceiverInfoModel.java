@@ -18,9 +18,9 @@ public class ReceiverInfoModel {
     @GeneratedValue(strategy = IDENTITY)
     @Column(insertable = false, nullable = false)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition="TEXT")
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition="TEXT")
     private String surname;
     private String emailAddress;
     @Column(nullable = false)
