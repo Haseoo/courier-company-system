@@ -9,7 +9,7 @@ import static javax.persistence.InheritanceType.JOINED;
 
 @Entity
 @Data
-@Table(name = "companyUser")
+@Table(name = "CompanyUser")
 @Inheritance(strategy = JOINED)
 public class UserModel {
     @Id
