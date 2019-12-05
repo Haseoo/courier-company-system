@@ -6,4 +6,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExceptionMessages {
     public static final String MODEL_MAPPER_INITIALIZE_EXCEPTION = "Failed to initialize converters for model mapper";
+    public static final String INVALID_EMPLOYEE_INSTANCE = "Invalid employee instance";
 }

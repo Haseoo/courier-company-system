@@ -5,5 +5,5 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Constants {
-    public static final String REFLECTION_PREFIX = "com.gitgub.haseoo.courier.configuration";
+    public static final String REFLECTION_PREFIX = "com.github.haseoo.courier.configuration.converters";
 }
