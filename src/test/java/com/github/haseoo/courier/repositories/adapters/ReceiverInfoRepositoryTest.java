@@ -74,5 +74,4 @@ class ReceiverInfoRepositoryTest {
         //when & then
         Assertions.assertThat(sut.receiverInfoExists(getNotExistentQueryData())).isNotPresent();
     }
-
 }

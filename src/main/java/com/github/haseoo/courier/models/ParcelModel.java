@@ -24,16 +24,16 @@ public class ParcelModel {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false, name = "parcelTypeId")
     private ParcelTypeModel parcelType;
-    @ManyToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false, name = "deliveryAddressId")
     private AddressModel deliveryAddress;
-    @ManyToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false, name = "senderAddressId")
     private AddressModel senderAddress;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "clientId")
     private ClientModel sender;
-    @ManyToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false, name = "receiverContactDataId")
     private ReceiverInfoModel receiverContactData;
     private LocalDate expectedDeliveryTime;
