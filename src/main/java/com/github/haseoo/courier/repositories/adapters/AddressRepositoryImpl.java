@@ -31,7 +31,7 @@ public class AddressRepositoryImpl implements AddressRepository {
     }
 
     @Override
-    public Boolean addressExist(AddressQueryData addressQueryData) {
+    public Optional<AddressModel> addressExist(AddressQueryData addressQueryData) {
         return addressJPARepository
                 .findByPostalCodeAndCityAndStreetAndBuildingNumberAndFlatNumber(
                         addressQueryData.getPostalCode(),
@@ -39,6 +39,6 @@ public class AddressRepositoryImpl implements AddressRepository {
                         addressQueryData.getStreet(),
                         addressQueryData.getBuildingNumber(),
                         addressQueryData.getFlatNumber()
-                ).isPresent();
+                );
     }
 }

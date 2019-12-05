@@ -6,6 +6,8 @@ import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.models.LogisticianModel;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 import static com.github.haseoo.courier.testutlis.constants.UsersConstants.*;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -21,6 +23,7 @@ public class UsersDataGenerator {
         courierModel.setPhoneNumber(TEST_PHONE_NUMBER);
         courierModel.setName(TEST_NAME);
         courierModel.setActive(true);
+        courierModel.setParcelStates(new ArrayList<>());
         return courierModel;
     }
 
@@ -37,7 +40,7 @@ public class UsersDataGenerator {
         return logisticianModel;
     }
 
-    public static ClientIndividualModel getIndividualClient() {
+    public static ClientIndividualModel getIndividualClientModel() {
         ClientIndividualModel clientIndividualModel = new ClientIndividualModel();
         clientIndividualModel.setName(TEST_NAME);
         clientIndividualModel.setPesel(TEST_PESEL);
@@ -50,7 +53,7 @@ public class UsersDataGenerator {
         return clientIndividualModel;
     }
 
-    public static ClientCompanyModel getCompanyClient() {
+    public static ClientCompanyModel getCompanyClientModel() {
         ClientCompanyModel clientCompanyModel = new ClientCompanyModel();
         clientCompanyModel.setRepresentativeName(TEST_NAME);
         clientCompanyModel.setNip(TEST_NIP);

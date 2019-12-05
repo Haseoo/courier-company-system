@@ -34,6 +34,8 @@ class UserRepositoryTest {
     @Autowired
     private LogisticianJPARepository logisticianJPARepository;
 
+    @Autowired
+
     @BeforeEach
     void setUp() {
         userJPARepository.deleteAll();
@@ -48,8 +50,8 @@ class UserRepositoryTest {
     void getList() {
         //given
         courierJPARepository.saveAndFlush(getCourierModel());
-        clientCompanyJPARepository.saveAndFlush(getCompanyClient());
-        clientIndividualJPARepository.saveAndFlush(getIndividualClient());
+        clientCompanyJPARepository.saveAndFlush(getCompanyClientModel());
+        clientIndividualJPARepository.saveAndFlush(getIndividualClientModel());
         logisticianJPARepository.saveAndFlush(getLogisticianModel());
 
         //when & then

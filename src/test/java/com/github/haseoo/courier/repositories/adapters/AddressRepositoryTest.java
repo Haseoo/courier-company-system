@@ -70,7 +70,7 @@ class AddressRepositoryTest {
         //given
         addressJPARepository.saveAndFlush(getAddressModel());
         //when & then
-        Assertions.assertThat(sut.addressExist(getExistentQueryData())).isTrue();
+        Assertions.assertThat(sut.addressExist(getExistentQueryData())).isPresent();
     }
 
     @Test
@@ -78,7 +78,7 @@ class AddressRepositoryTest {
         //given
         addressJPARepository.saveAndFlush(getAddressModel());
         //when & then
-        Assertions.assertThat(sut.addressExist(getNotExistentQueryData())).isFalse();
+        Assertions.assertThat(sut.addressExist(getNotExistentQueryData())).isNotPresent();
     }
 
     @Test

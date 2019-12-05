@@ -15,5 +15,5 @@ public interface AddressRepository {
 
     AddressModel saveAndFlush(AddressModel addressModel);
 
-    Boolean addressExist(AddressQueryData addressQueryData);
+    Optional<AddressModel> addressExist(AddressQueryData addressQueryData);
 }

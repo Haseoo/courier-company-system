@@ -5,7 +5,8 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "Logistician")
@@ -13,7 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "logistcianId")
 public class LogisticianModel extends EmployeeModel {
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = EAGER, cascade = ALL)
     @JoinColumn(name = "magazineId")
     private MagazineModel magazine;
 }
