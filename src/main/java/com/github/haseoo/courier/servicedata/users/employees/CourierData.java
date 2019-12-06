@@ -1,6 +1,5 @@
 package com.github.haseoo.courier.servicedata.users.employees;
 
-import com.github.haseoo.courier.enums.EmployeeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
-public class CourierData{
+public class CourierData {
     private Long id;
     private String userName;
     private char[] password;
@@ -21,5 +20,5 @@ public class CourierData{
     private String surname;
     private String phoneNumber;
     private String pesel;
-    //private List<ParcelData> assignedParcels;
+    /*private List<ParcelData> assignedParcels*/
 }

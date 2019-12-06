@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface CourierService {
     List<CourierData> getList();
+
     CourierData add(CourierData courierData);
+
     CourierData getById(Long id);
+
     CourierData edit(Long id, CourierData newCourierData);
-    void remove(Long id);
 }

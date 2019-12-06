@@ -23,11 +23,12 @@ public class OrganolepticTestsController {
     private final EmployeeService employeeService;
 
     @GetMapping("/employee")
-    List<EmployeeData> getList() {
+    public List<EmployeeData> getList() {
         return employeeService.getList();
     }
+
     @PutMapping("/courier")
-    CourierData addCourier() {
+    public CourierData addCourier() {
         CourierData c = CourierData.builder()
                 .userName("ovo")
                 .password("o".toCharArray())
@@ -41,7 +42,7 @@ public class OrganolepticTestsController {
     }
 
     @PutMapping("/logistician")
-    LogisticianData addLogistician() {
+    public LogisticianData addLogistician() {
         LogisticianData c = LogisticianData.builder()
                 .userName("ovo")
                 .password("o".toCharArray())

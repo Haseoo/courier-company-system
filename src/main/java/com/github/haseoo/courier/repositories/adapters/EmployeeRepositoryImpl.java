@@ -17,4 +17,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public List<EmployeeModel> getList() {
         return employeeJPARepository.findAll();
     }
+
+    @Override
+    public List<EmployeeModel> findActiveByPesel(String pesel) {
+        return employeeJPARepository.findByPeselAndActiveTrue(pesel);
+    }
 }

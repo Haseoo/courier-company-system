@@ -19,7 +19,7 @@ public class ParcelTypeModel {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
     @Column(nullable = false, scale = 2)
     private BigDecimal price;

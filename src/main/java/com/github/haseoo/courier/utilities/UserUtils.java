@@ -2,7 +2,7 @@ package com.github.haseoo.courier.utilities;
 
 import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.enums.UserType;
-import com.github.haseoo.courier.exceptions.serviceexceptions.InvalidEmployeeInstance;
+import com.github.haseoo.courier.exceptions.serviceexceptions.employees.InvalidEmployeeInstanceException;
 import com.github.haseoo.courier.models.*;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +13,8 @@ import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class UserUtils {
-    private static Map<Class<?extends UserModel>, UserType> userTypeMap;
+    private static Map<Class<? extends UserModel>, UserType> userTypeMap;
+
     static {
         userTypeMap = new HashMap<>();
         userTypeMap.put(CourierModel.class, UserType.COURIER);
@@ -21,14 +22,15 @@ public class UserUtils {
         userTypeMap.put(ClientIndividualModel.class, UserType.INDIVIDUAL_CLIENT);
         userTypeMap.put(ClientCompanyModel.class, UserType.COMPANY_CLIENT);
     }
+
     public static EmployeeType getEmployeeType(EmployeeModel employeeModel) {
         if (employeeModel instanceof CourierModel) {
-            return  EmployeeType.COURIER;
+            return EmployeeType.COURIER;
         }
         if (employeeModel instanceof LogisticianModel) {
             return EmployeeType.LOGISTICIAN;
         }
-        throw new InvalidEmployeeInstance();
+        throw new InvalidEmployeeInstanceException();
     }
 
     public static UserType getUserType(UserModel userModel) {

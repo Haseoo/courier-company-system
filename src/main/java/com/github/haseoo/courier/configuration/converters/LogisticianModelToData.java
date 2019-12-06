@@ -1,8 +1,6 @@
 package com.github.haseoo.courier.configuration.converters;
 
-import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.models.LogisticianModel;
-import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
 
 

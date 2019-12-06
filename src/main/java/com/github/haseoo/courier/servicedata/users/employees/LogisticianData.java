@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor
-public class LogisticianData{
+public class LogisticianData {
     private Long id;
     private String userName;
     private char[] password;
@@ -22,5 +22,5 @@ public class LogisticianData{
     private String phoneNumber;
     private String pesel;
     private EmployeeType employeeType;
-    //private MagazineData magazine;
+    //private MagazineData magazine
 }

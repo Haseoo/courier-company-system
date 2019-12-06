@@ -14,13 +14,13 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "clientId")
 public class ClientCompanyModel extends ClientModel {
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String companyName;
     @Column(nullable = false)
     private String nip;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String representativeName;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String representativeSurname;
     @Column(nullable = false)
     private String representativeEmailAddress;

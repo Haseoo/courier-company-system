@@ -18,15 +18,15 @@ public class AddressModel {
     @GeneratedValue(strategy = IDENTITY)
     @Column(insertable = false, nullable = false)
     private Long id;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String city;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String street;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String postalCode;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String buildingNumber;
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String flatNumber;
 
     @OneToMany(mappedBy = "senderAddress", fetch = LAZY)

@@ -51,4 +51,22 @@ class EmployeeRepositoryTest {
         //when & then
         Assertions.assertThat(sut.getList()).contains(logisticianModel).contains(courierModel);
     }
+
+    @Test
+    void should_find_active_employee_by_pesel() {
+        //given
+        LogisticianModel logisticianModel = logisticianJPARepository.saveAndFlush(getLogisticianModel());
+        //when & then
+        Assertions.assertThat(sut.findActiveByPesel(logisticianModel.getPesel()).size()).isOne();
+    }
+
+    @Test
+    void should_not_find_inactive_employee_by_pesel() {
+        //given
+        LogisticianModel logisticianModel = getLogisticianModel();
+        logisticianModel.setActive(false);
+        logisticianModel = logisticianJPARepository.saveAndFlush(logisticianModel);
+        //when & then
+        Assertions.assertThat(sut.findActiveByPesel(logisticianModel.getPesel()).size()).isZero();
+    }
 }

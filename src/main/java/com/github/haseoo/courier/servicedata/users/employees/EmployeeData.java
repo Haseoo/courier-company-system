@@ -3,9 +3,11 @@ package com.github.haseoo.courier.servicedata.users.employees;
 import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.models.EmployeeModel;
 import com.github.haseoo.courier.utilities.UserUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import static com.github.haseoo.courier.utilities.UserUtils.getEmployeeType;
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
