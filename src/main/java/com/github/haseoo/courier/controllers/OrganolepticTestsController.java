@@ -1,16 +1,14 @@
 package com.github.haseoo.courier.controllers;
 
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
+import com.github.haseoo.courier.servicedata.users.employees.CourierOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeData;
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
 import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.EmployeeService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class OrganolepticTestsController {
 
     @PutMapping("/courier")
     public CourierData addCourier() {
-        CourierData c = CourierData.builder()
+        CourierOperationData c = CourierOperationData.builder()
                 .userName("ovo")
                 .password("o".toCharArray())
                 .active(true)
@@ -39,6 +37,25 @@ public class OrganolepticTestsController {
                 .pesel("nextdday")
                 .build();
         return courierService.add(c);
+    }
+
+    @PostMapping("/courier/{id}")
+    public CourierData editCourier(@PathVariable Long id) {
+        CourierOperationData c = CourierOperationData.builder()
+                .userName("ovo")
+                .password("onononono".toCharArray())
+                .active(true)
+                .name("oło")
+                .surname("oŁowskie")
+                .phoneNumber("1234")
+                .pesel("nextdday2")
+                .build();
+        return courierService.edit(id, c);
+    }
+
+    @GetMapping("/courier/{id}")
+    public CourierData getCourier(@PathVariable Long id) {
+        return courierService.getById(id);
     }
 
     @PutMapping("/logistician")

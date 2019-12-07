@@ -1,12 +1,12 @@
 package com.github.haseoo.courier.testutlis.generators;
 
-import com.github.haseoo.courier.models.ClientCompanyModel;
-import com.github.haseoo.courier.models.ClientIndividualModel;
-import com.github.haseoo.courier.models.CourierModel;
-import com.github.haseoo.courier.models.LogisticianModel;
+import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.servicedata.users.employees.CourierOperationData;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.github.haseoo.courier.testutlis.constants.UsersConstants.*;
 import static lombok.AccessLevel.PRIVATE;
@@ -67,5 +67,25 @@ public class UsersDataGenerator {
         clientCompanyModel.setCompanyName(TEST_COMPANY_NAME);
         clientCompanyModel.setActive(true);
         return clientCompanyModel;
+    }
+
+    public static List<EmployeeModel> getEmployeeModelList() {
+        return Arrays.asList(getCourierModel(), getLogisticianModel());
+    }
+
+    public static List<CourierModel> getCourierModelList() {
+        return Arrays.asList(getCourierModel(), getCourierModel());
+    }
+
+    public static CourierOperationData getCourierOperationData() {
+        return CourierOperationData.builder()
+                .active(true)
+                .name(TEST_NAME)
+                .userName(TEST_USER_NAME)
+                .password(TEST_USER_PASSWD.toCharArray())
+                .pesel(TEST_PESEL)
+                .phoneNumber(TEST_PHONE_NUMBER)
+                .surname(TEST_SURNAME)
+                .build();
     }
 }

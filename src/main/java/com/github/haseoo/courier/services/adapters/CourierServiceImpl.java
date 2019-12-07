@@ -6,6 +6,7 @@ import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.repositories.ports.CourierRepository;
 import com.github.haseoo.courier.repositories.ports.EmployeeRepository;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
+import com.github.haseoo.courier.servicedata.users.employees.CourierOperationData;
 import com.github.haseoo.courier.services.ports.CourierService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -33,14 +34,14 @@ public class CourierServiceImpl implements CourierService {
 
     @Override
     @Transactional
-    public CourierData add(CourierData courierData) {
-        if (employeeRepository.findActiveByPesel(courierData.getPesel())
+    public CourierData add(CourierOperationData courierOperationData) {
+        if (employeeRepository.findActiveByPesel(courierOperationData.getPesel())
                 .stream()
                 .anyMatch(employeeModel -> employeeModel instanceof CourierModel)) {
             throw new ActiveCourierExistsException();
         }
         return modelMapper.map(courierRepository
-                        .saveAndFlush(modelMapper.map(courierData,
+                        .saveAndFlush(modelMapper.map(courierOperationData,
                                 CourierModel.class)),
                 CourierData.class);
     }
@@ -55,7 +56,10 @@ public class CourierServiceImpl implements CourierService {
 
     @Override
     @Transactional
-    public CourierData edit(Long id, CourierData newCourierData) {
-        return null;
+    public CourierData edit(Long id, CourierOperationData courierOperationData) {
+        CourierModel old = courierRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        CourierModel in = modelMapper.map(courierOperationData, CourierModel.class);
+        in.setId(old.getId());
+        return modelMapper.map(courierRepository.saveAndFlush(in), CourierData.class);
     }
 }
