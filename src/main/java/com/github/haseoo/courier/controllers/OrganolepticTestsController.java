@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.controllers;
 
+import com.github.haseoo.courier.servicedata.users.UserData;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import com.github.haseoo.courier.servicedata.users.employees.CourierOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeData;
@@ -7,6 +8,7 @@ import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
 import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.EmployeeService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
+import com.github.haseoo.courier.services.ports.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ public class OrganolepticTestsController {
     private final CourierService courierService;
     private final LogisticianService logisticianService;
     private final EmployeeService employeeService;
+    private final UserService userService;
 
     @GetMapping("/employee")
     public List<EmployeeData> getList() {
@@ -70,5 +73,10 @@ public class OrganolepticTestsController {
                 .pesel("nextdday")
                 .build();
         return logisticianService.add(c);
+    }
+
+    @DeleteMapping("/user{id}")
+    public UserData deleteUser(@PathVariable Long id) {
+        return userService.setAsInactive(id);
     }
 }

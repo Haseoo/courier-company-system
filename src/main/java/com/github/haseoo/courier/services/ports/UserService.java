@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserService {
     List<UserData> getList();
 
-    void remove(Long id);
+    UserData setAsInactive(Long id);
 }
