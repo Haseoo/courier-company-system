@@ -1,14 +1,12 @@
 package com.github.haseoo.courier.servicedata.users.employees;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 public class CourierData {

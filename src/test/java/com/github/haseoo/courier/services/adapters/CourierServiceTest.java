@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
+import static com.github.haseoo.courier.testutlis.ModelMapperConfig.ModelMapperConfig;
 import static com.github.haseoo.courier.testutlis.constants.Constants.*;
 import static com.github.haseoo.courier.testutlis.generators.UsersDataGenerator.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,7 +35,7 @@ class CourierServiceTest {
     @Mock
     private EmployeeRepository employeeRepository;
     @Spy
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = ModelMapperConfig();
 
     @InjectMocks
     private CourierServiceImpl sut;
@@ -55,7 +56,7 @@ class CourierServiceTest {
         CourierModel courierModel = getCourierModel();
         when(courierRepository.getById(FIRST_ID)).thenReturn(Optional.of(courierModel));
         //when
-        sut.getById(FIRST_ID);
+        CourierData c = sut.getById(FIRST_ID);
         //then
         verify(courierRepository).getById(FIRST_ID);
     }
