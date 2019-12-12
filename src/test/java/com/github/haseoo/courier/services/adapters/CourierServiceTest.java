@@ -1,5 +1,7 @@
 package com.github.haseoo.courier.services.adapters;
 
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InvalidPeselException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InvalidPeselFormatException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveCourierExistsException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
 import com.github.haseoo.courier.models.CourierModel;
@@ -22,6 +24,8 @@ import java.util.Optional;
 
 import static com.github.haseoo.courier.testutlis.ModelMapperConfig.ModelMapperConfig;
 import static com.github.haseoo.courier.testutlis.constants.Constants.*;
+import static com.github.haseoo.courier.testutlis.constants.UsersConstants.INVALID_PESEL;
+import static com.github.haseoo.courier.testutlis.constants.UsersConstants.INVALID_PESEL_FORMAT;
 import static com.github.haseoo.courier.testutlis.generators.UsersDataGenerator.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -120,6 +124,19 @@ class CourierServiceTest {
         CourierOperationData in = getCourierOperationData();
         //when & then
         Assertions.assertThatThrownBy(() -> sut.edit(FIRST_ID, in)).isExactlyInstanceOf(EmployeeNotFoundException.class);
+    }
 
+    @Test
+    void should_throw_exception_when_invalid_pesel_format() {
+        //given & when & then
+        Assertions.assertThatThrownBy(() -> sut.add(CourierOperationData.builder().pesel(INVALID_PESEL_FORMAT).build()))
+                .isExactlyInstanceOf(InvalidPeselFormatException.class);
+    }
+
+    @Test
+    void should_throw_exception_when_invalid_pesel() {
+        //given & when & then
+        Assertions.assertThatThrownBy(() -> sut.add(CourierOperationData.builder().pesel(INVALID_PESEL).build()))
+                .isExactlyInstanceOf(InvalidPeselException.class);
     }
 }
