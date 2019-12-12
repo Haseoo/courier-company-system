@@ -1,6 +1,6 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.UserNotFoundException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.UserNotFoundException;
 import com.github.haseoo.courier.models.UserModel;
 import com.github.haseoo.courier.repositories.ports.UserRepository;
 import com.github.haseoo.courier.servicedata.users.UserData;

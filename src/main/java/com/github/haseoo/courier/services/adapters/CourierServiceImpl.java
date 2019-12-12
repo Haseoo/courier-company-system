@@ -1,7 +1,7 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.employees.ActiveCourierExistsException;
-import com.github.haseoo.courier.exceptions.serviceexceptions.employees.EmployeeNotFoundException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveCourierExistsException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
 import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.repositories.ports.CourierRepository;
 import com.github.haseoo.courier.repositories.ports.EmployeeRepository;
@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.github.haseoo.courier.utilities.UserUtils.validatePesel;
 
 @RequiredArgsConstructor
 @Service
@@ -35,6 +37,7 @@ public class CourierServiceImpl implements CourierService {
     @Override
     @Transactional
     public CourierData add(CourierOperationData courierOperationData) {
+        validatePesel(courierOperationData.getPesel());
         if (employeeRepository.findActiveByPesel(courierOperationData.getPesel())
                 .stream()
                 .anyMatch(employeeModel -> employeeModel instanceof CourierModel)) {

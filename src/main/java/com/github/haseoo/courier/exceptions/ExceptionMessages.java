@@ -11,4 +11,6 @@ public class ExceptionMessages {
     public static final String ACTIVE_LOGISTICIAN_WITH_PESEL_EXISTS = "Logistician employee with status active and same PESEL number already exists";
     public static final String EMPLOYEE_NOT_FOUND_STRING_FORMAT = "Employee with %s id not found";
     public static final String USER_NOT_FOUND_STRING_FORMAT = "User with %s id not found";
+    public static final String INVALID_PESEL_EXCEPTION = "Invalid PESEL";
+    public static final String INVALID_PESEL_FORMAT_EXCEPTION = "Incorrect format. Pesel must have 11 digits";
 }

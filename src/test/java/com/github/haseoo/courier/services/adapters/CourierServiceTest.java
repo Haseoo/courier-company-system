@@ -1,7 +1,7 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.employees.ActiveCourierExistsException;
-import com.github.haseoo.courier.exceptions.serviceexceptions.employees.EmployeeNotFoundException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveCourierExistsException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
 import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.repositories.ports.CourierRepository;
 import com.github.haseoo.courier.repositories.ports.EmployeeRepository;

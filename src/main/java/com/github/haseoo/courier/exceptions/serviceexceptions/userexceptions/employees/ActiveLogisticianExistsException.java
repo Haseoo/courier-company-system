@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.exceptions.serviceexceptions.employees;
+package com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees;
 
 import com.github.haseoo.courier.exceptions.BusinessLogicException;
 
