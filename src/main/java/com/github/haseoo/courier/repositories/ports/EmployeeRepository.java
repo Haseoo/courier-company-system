@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface EmployeeRepository {
     List<EmployeeModel> getList();
+
+    List<EmployeeModel> findActiveByPesel(String pesel);
 }

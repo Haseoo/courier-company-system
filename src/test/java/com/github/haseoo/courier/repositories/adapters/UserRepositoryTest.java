@@ -1,9 +1,6 @@
 package com.github.haseoo.courier.repositories.adapters;
 
-import com.github.haseoo.courier.models.ClientCompanyModel;
-import com.github.haseoo.courier.models.ClientIndividualModel;
-import com.github.haseoo.courier.models.CourierModel;
-import com.github.haseoo.courier.models.LogisticianModel;
+import com.github.haseoo.courier.models.*;
 import com.github.haseoo.courier.repositories.jpa.*;
 import com.github.haseoo.courier.repositories.ports.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -47,7 +44,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void getList() {
+    void should_return_list_of_users() {
         //given
         courierJPARepository.saveAndFlush(getCourierModel());
         clientCompanyJPARepository.saveAndFlush(getCompanyClientModel());
@@ -60,5 +57,23 @@ class UserRepositoryTest {
                 .hasAtLeastOneElementOfType(LogisticianModel.class)
                 .hasAtLeastOneElementOfType(ClientIndividualModel.class)
                 .hasAtLeastOneElementOfType(ClientCompanyModel.class);
+    }
+
+    @Test
+    void should_find_user_by_id() {
+        //given
+        UserModel userModel = courierJPARepository.saveAndFlush(getCourierModel());
+        //when & then
+        Assertions.assertThat(sut.getById(userModel.getId())).isPresent();
+    }
+
+    @Test
+    void should_mark_user_as_inactive() {
+        //given
+        UserModel userModel = courierJPARepository.saveAndFlush(getCourierModel());
+        userModel.setActive(false);
+        //when & then
+        Assertions.assertThat(sut.saveAndFlush(userModel).getActive()).isFalse();
+
     }
 }

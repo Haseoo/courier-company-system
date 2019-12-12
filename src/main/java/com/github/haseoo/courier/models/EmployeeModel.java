@@ -10,14 +10,14 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "Employee")
+@Table(name = "employee")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "userId")
 public class EmployeeModel extends UserModel {
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String name;
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String surname;
     @Column(nullable = false)
     private String phoneNumber;

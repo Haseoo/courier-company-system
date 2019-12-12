@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import java.lang.reflect.InvocationTargetException;
 
 import static com.github.haseoo.courier.utilities.Constants.REFLECTION_PREFIX;
+import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 
 @Configuration
@@ -19,6 +20,7 @@ public class ApplicationConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setFieldAccessLevel(PRIVATE);
         Reflections reflections = new Reflections(REFLECTION_PREFIX);
         loadConverters(modelMapper, reflections);
         return modelMapper;

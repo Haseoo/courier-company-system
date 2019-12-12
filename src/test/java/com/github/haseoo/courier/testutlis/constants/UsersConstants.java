@@ -15,4 +15,6 @@ public class UsersConstants {
     public static final String TEST_EMAIL = "test@test.com";
     public static final String TEST_COMPANY_NAME = "TestInc";
     public static final String TEST_NIP = "3818383577";
+    public static final String INVALID_PESEL_FORMAT = "7120476785";
+    public static final String INVALID_PESEL = "19120476785";
 }

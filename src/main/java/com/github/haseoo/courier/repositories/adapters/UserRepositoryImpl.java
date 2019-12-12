@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -16,5 +17,15 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<UserModel> getList() {
         return userJPARepository.findAll();
+    }
+
+    @Override
+    public Optional<UserModel> getById(Long id) {
+        return userJPARepository.findById(id);
+    }
+
+    @Override
+    public UserModel saveAndFlush(UserModel userModel) {
+        return userJPARepository.saveAndFlush(userModel);
     }
 }
