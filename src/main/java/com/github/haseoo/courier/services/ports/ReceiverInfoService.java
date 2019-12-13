@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface ReceiverInfoService {
     ReceiverInfoData get(ReceiverInfoOperationData receiverInfoOperationData);
+
     ReceiverInfoData edit(Long id, ReceiverInfoOperationData receiverInfoOperationData);
+
     ReceiverInfoData getById(Long id);
+
     List<ReceiverInfoData> getList();
 }

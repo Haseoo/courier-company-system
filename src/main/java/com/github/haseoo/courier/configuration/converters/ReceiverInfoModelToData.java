@@ -8,11 +8,11 @@ public class ReceiverInfoModelToData extends MapperConverter<ReceiverInfoModel, 
     protected ReceiverInfoData convert(ReceiverInfoModel receiverInfoModel) {
         return ReceiverInfoData
                 .builder()
-                    .id(receiverInfoModel.getId())
-                    .emailAddress(receiverInfoModel.getEmailAddress())
-                    .name(receiverInfoModel.getName())
-                    .phoneNumber(receiverInfoModel.getPhoneNumber())
-                    .surname(receiverInfoModel.getSurname())
+                .id(receiverInfoModel.getId())
+                .emailAddress(receiverInfoModel.getEmailAddress())
+                .name(receiverInfoModel.getName())
+                .phoneNumber(receiverInfoModel.getPhoneNumber())
+                .surname(receiverInfoModel.getSurname())
                 .build();
     }
 }

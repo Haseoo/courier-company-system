@@ -37,21 +37,21 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
     @Override
     public ReceiverInfoData edit(Long id, ReceiverInfoOperationData receiverInfoOperationData) {
         ReceiverInfoModel receiverInfoModel = receiverInfoRepository.getById(id).orElseThrow(() -> new ReceiverInfoNotFound(id));
-        copyNonNullProperties(modelMapper.map(receiverInfoOperationData, ReceiverInfoModel.class),receiverInfoModel);
-        return modelMapper.map(receiverInfoRepository.saveAndFlush(receiverInfoModel),ReceiverInfoData.class);
+        copyNonNullProperties(modelMapper.map(receiverInfoOperationData, ReceiverInfoModel.class), receiverInfoModel);
+        return modelMapper.map(receiverInfoRepository.saveAndFlush(receiverInfoModel), ReceiverInfoData.class);
     }
 
     @Override
     public ReceiverInfoData getById(Long id) {
         ReceiverInfoModel receiverInfoModel = receiverInfoRepository.getById(id).orElseThrow(() -> new ReceiverInfoNotFound(id));
-        return modelMapper.map(receiverInfoModel,ReceiverInfoData.class);
+        return modelMapper.map(receiverInfoModel, ReceiverInfoData.class);
     }
 
     @Override
     public List<ReceiverInfoData> getList() {
         return receiverInfoRepository.getList()
                 .stream()
-                .map(receiverInfoModel -> modelMapper.map(receiverInfoModel,ReceiverInfoData.class))
+                .map(receiverInfoModel -> modelMapper.map(receiverInfoModel, ReceiverInfoData.class))
                 .collect(Collectors.toList());
     }
 }

@@ -6,6 +6,6 @@ import static com.github.haseoo.courier.exceptions.ExceptionMessages.RECEIVER_IN
 
 public class ReceiverInfoNotFound extends BusinessLogicException {
     public ReceiverInfoNotFound(Long id) {
-        super(String.format(RECEIVER_INFO_NOT_FOUND_FORMAT_EXCEPTION,id));
+        super(String.format(RECEIVER_INFO_NOT_FOUND_FORMAT_EXCEPTION, id));
     }
 }

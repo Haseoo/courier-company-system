@@ -22,7 +22,6 @@ public class ParcelTypeOperationData {
     @NonNull
     private Boolean active;
 
-    //TODO do mapera
     public static ParcelTypeOperationData of(ParcelTypeCommandAddData commandData) {
         return new ParcelTypeOperationData(
                 commandData.getName(),
