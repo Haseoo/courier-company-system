@@ -1,15 +1,12 @@
 package com.github.haseoo.courier.servicedata.parcels;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)

@@ -14,4 +14,5 @@ public class ExceptionMessages {
     public static final String INVALID_PESEL_EXCEPTION = "Invalid PESEL";
     public static final String INVALID_PESEL_FORMAT_EXCEPTION = "Incorrect format. Pesel must have 11 digits";
     public static final String PARCEL_TYPE_NOT_FOUND_FORMAT_EXCEPTION = "Parcel type with id %s not found";
+    public static final String RECEIVER_INFO_NOT_FOUND_FORMAT_EXCEPTION = "Receiver with %s id not found";
 }
