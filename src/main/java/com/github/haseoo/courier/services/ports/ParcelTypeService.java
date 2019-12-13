@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface ParcelTypeService {
     ParcelTypeData add(ParcelTypeOperationData parcelType);
+
     ParcelTypeData edit(Long id, ParcelTypeOperationData parcelType);
+
     List<ParcelTypeData> getList(boolean active);
+
     ParcelTypeData getById(Long id);
 }

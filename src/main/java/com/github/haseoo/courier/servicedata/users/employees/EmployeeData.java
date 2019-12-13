@@ -2,23 +2,20 @@ package com.github.haseoo.courier.servicedata.users.employees;
 
 import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.models.EmployeeModel;
+import com.github.haseoo.courier.servicedata.users.UserData;
 import com.github.haseoo.courier.utilities.UserUtils;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
-public class EmployeeData {
-    private Long id;
-    private String userName;
-    private char[] password;
-    private Boolean active;
+public class EmployeeData extends UserData {
     private String name;
     private String surname;
     private String phoneNumber;

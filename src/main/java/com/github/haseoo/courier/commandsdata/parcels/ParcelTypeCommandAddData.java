@@ -13,6 +13,7 @@ public class ParcelTypeCommandAddData {
     private String name;
     private String description;
     private BigDecimal price;
+
     @JsonCreator
     public ParcelTypeCommandAddData(@JsonProperty(value = "name", required = true) String name,
                                     @JsonProperty(value = "description", required = true) String description,

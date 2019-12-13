@@ -8,10 +8,10 @@ public class ParcelTypeDataToOfferView extends MapperConverter<ParcelTypeData, P
     public ParcelTypeOfferView convert(ParcelTypeData parcelTypeData) {
         return ParcelTypeOfferView
                 .builder()
-                    .name(parcelTypeData.getName())
-                    .description(parcelTypeData.getDescription())
-                    .price(parcelTypeData.getPrice())
-                    .active(parcelTypeData.getActive())
+                .name(parcelTypeData.getName())
+                .description(parcelTypeData.getDescription())
+                .price(parcelTypeData.getPrice())
+                .active(parcelTypeData.getActive())
                 .build();
     }
 }

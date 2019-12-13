@@ -10,22 +10,21 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
-import static com.github.haseoo.courier.utilities.Utils.getNullPropertyNames;
 
 @Service
 @RequiredArgsConstructor
 public class ParcelTypeServiceImpl implements ParcelTypeService {
     private final ParcelTypeRepository parcelTypeRepository;
     private final ModelMapper modelMapper;
+
     @Override
     public ParcelTypeData add(ParcelTypeOperationData parcelType) {
         return modelMapper.map(parcelTypeRepository.saveAndFlush(modelMapper.map(parcelType, ParcelTypeModel.class)),
-                               ParcelTypeData.class);
+                ParcelTypeData.class);
     }
 
     @Override

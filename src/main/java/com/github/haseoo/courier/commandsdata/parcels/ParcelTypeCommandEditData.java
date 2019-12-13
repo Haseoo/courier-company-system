@@ -14,6 +14,7 @@ public class ParcelTypeCommandEditData {
     private String description;
     private BigDecimal price;
     private Boolean active;
+
     @JsonCreator
     public ParcelTypeCommandEditData(@JsonProperty(value = "name") String name,
                                      @JsonProperty(value = "description") String description,

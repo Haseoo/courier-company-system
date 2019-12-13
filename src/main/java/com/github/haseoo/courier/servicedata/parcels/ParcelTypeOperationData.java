@@ -23,7 +23,7 @@ public class ParcelTypeOperationData {
 
     //TODO do mapera
     public static ParcelTypeOperationData of(ParcelTypeCommandAddData commandData) {
-        return new ParcelTypeOperationData (
+        return new ParcelTypeOperationData(
                 commandData.getName(),
                 commandData.getDescription(),
                 commandData.getPrice(),
@@ -32,7 +32,7 @@ public class ParcelTypeOperationData {
     }
 
     public static ParcelTypeOperationData of(ParcelTypeCommandEditData commandData) {
-        return new ParcelTypeOperationData (
+        return new ParcelTypeOperationData(
                 commandData.getName(),
                 commandData.getDescription(),
                 commandData.getPrice(),

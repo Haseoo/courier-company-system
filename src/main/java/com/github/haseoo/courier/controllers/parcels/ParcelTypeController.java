@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class ParcelTypeController {
     private final ParcelTypeService parcelTypeService;
     private final ModelMapper modelMapper;
+
     @GetMapping
     public List<ParcelTypeView> getParcelType() {
         return parcelTypeService.getList(false)
