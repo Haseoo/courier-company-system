@@ -4,14 +4,14 @@ import com.github.haseoo.courier.enums.UserType;
 import com.github.haseoo.courier.models.UserModel;
 import com.github.haseoo.courier.utilities.UserUtils;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
-@Builder
+@SuperBuilder
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor
 public class UserData {

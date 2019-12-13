@@ -36,8 +36,8 @@ public class OrganolepticTestsController {
                 .active(true)
                 .name("oło")
                 .surname("oŁowski")
-                .phoneNumber("1234")
-                .pesel("nextdday")
+                .phoneNumber("98072811859")
+                .pesel("98072811859")
                 .build();
         return courierService.add(c);
     }
@@ -50,8 +50,8 @@ public class OrganolepticTestsController {
                 .active(true)
                 .name("oło")
                 .surname("oŁowskie")
-                .phoneNumber("1234")
-                .pesel("nextdday2")
+                .phoneNumber("98072811859")
+                .pesel("98072811859")
                 .build();
         return courierService.edit(id, c);
     }
