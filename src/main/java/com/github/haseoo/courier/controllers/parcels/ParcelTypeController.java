@@ -2,9 +2,9 @@ package com.github.haseoo.courier.controllers.parcels;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandAddData;
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandEditData;
-import com.github.haseoo.courier.servicedata.parcels.ParcelTypeData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelTypeOperationData;
 import com.github.haseoo.courier.services.ports.ParcelTypeService;
+import com.github.haseoo.courier.views.parcels.type.ParcelTypeOfferView;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeView;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,17 +29,17 @@ public class ParcelTypeController {
     }
 
     @GetMapping("/offer")
-    public List<ParcelTypeView> getOffer() {
+    public List<ParcelTypeOfferView> getOffer() {
         return parcelTypeService.getList(true)
                 .stream()
                 .map(parcelTypeData -> modelMapper
-                        .map(parcelTypeData, ParcelTypeView.class))
+                        .map(parcelTypeData, ParcelTypeOfferView.class))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ParcelTypeView getById(@PathVariable Long id) {
-        return modelMapper.map(parcelTypeService.getById(id), ParcelTypeView.class);
+    public ParcelTypeOfferView getById(@PathVariable Long id) {
+        return modelMapper.map(parcelTypeService.getById(id), ParcelTypeOfferView.class);
     }
 
     @PutMapping

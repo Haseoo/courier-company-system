@@ -10,8 +10,12 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
+import static com.github.haseoo.courier.utilities.Utils.getNullPropertyNames;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +31,8 @@ public class ParcelTypeServiceImpl implements ParcelTypeService {
     @Override
     public ParcelTypeData edit(Long id, ParcelTypeOperationData parcelType) {
         ParcelTypeModel parcelTypeModel = parcelTypeRepository.getById(id).orElseThrow(() -> new ParcelTypeNotFound(id));
-        ParcelTypeModel edited = modelMapper.map(parcelType, ParcelTypeModel.class);
-        edited.setId(parcelTypeModel.getId());
-        return modelMapper.map(parcelTypeRepository.saveAndFlush(edited), ParcelTypeData.class);
+        copyNonNullProperties(modelMapper.map(parcelType, ParcelTypeModel.class), parcelTypeModel);
+        return modelMapper.map(parcelTypeRepository.saveAndFlush(parcelTypeModel), ParcelTypeData.class);
     }
 
     @Override

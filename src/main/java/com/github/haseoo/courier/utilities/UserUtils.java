@@ -59,7 +59,7 @@ public class UserUtils {
     }
 
     private static Integer calculateChecksum(String pesel) {
-        Integer checksum = 0;
+        int checksum = 0;
         for (int i = 0; i < pesel.length() - 1; i++) {
             checksum += Integer.parseInt(pesel.substring(i, i + 1)) * peselWeights.get(i);
         }

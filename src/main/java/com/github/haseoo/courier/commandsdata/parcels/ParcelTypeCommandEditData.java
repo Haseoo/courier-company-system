@@ -15,10 +15,10 @@ public class ParcelTypeCommandEditData {
     private BigDecimal price;
     private Boolean active;
     @JsonCreator
-    public ParcelTypeCommandEditData(@JsonProperty(value = "name", required = true) String name,
-                                     @JsonProperty(value = "description", required = true) String description,
-                                     @JsonProperty(value = "price", required = true) BigDecimal price,
-                                     @JsonProperty(value = "isActive", required = true) Boolean active) {
+    public ParcelTypeCommandEditData(@JsonProperty(value = "name") String name,
+                                     @JsonProperty(value = "description") String description,
+                                     @JsonProperty(value = "price") BigDecimal price,
+                                     @JsonProperty(value = "isActive") Boolean active) {
         this.name = name;
         this.description = description;
         this.price = price;
