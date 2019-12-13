@@ -11,7 +11,7 @@ public interface ReceiverInfoRepository {
 
     Optional<ReceiverInfoModel> getById(Long id);
 
-    ReceiverInfoModel saveAndFlush(ReceiverInfoModel addressModel);
+    ReceiverInfoModel saveAndFlush(ReceiverInfoModel receiverInfoModel);
 
     Optional<ReceiverInfoModel> receiverInfoExists(ReceiverInfoQueryData receiverInfoQueryData);
 }

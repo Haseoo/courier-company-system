@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/parcelType")
+@RequestMapping("/api/parcelType")
 public class ParcelTypeController {
     private final ParcelTypeService parcelTypeService;
     private final ModelMapper modelMapper;
