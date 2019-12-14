@@ -18,7 +18,7 @@ public class ReceiverInfoCommandData {
     public ReceiverInfoCommandData(@JsonProperty(value = "name", required = true) String name,
                                    @JsonProperty(value = "surname", required = true) String surname,
                                    @JsonProperty(value = "emailAddress", required = true) String emailAddress,
-                                   @JsonProperty(value = "phoneNumber", required = true) String phoneNumber){
+                                   @JsonProperty(value = "phoneNumber", required = true) String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.emailAddress = emailAddress;

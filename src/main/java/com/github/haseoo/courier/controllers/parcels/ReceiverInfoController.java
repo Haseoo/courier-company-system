@@ -15,26 +15,29 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/receiverInfo")
 public class ReceiverInfoController {
-    private final ReceiverInfoService  receiverInfoService;
+    private final ReceiverInfoService receiverInfoService;
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public List<ReceiverInfoView> getReceiverInfo(){
+    public List<ReceiverInfoView> getReceiverInfo() {
         return receiverInfoService.getList()
                 .stream()
                 .map(receiverInfoData -> modelMapper.map(receiverInfoData, ReceiverInfoView.class))
                 .collect(Collectors.toList());
     }
+
     @PutMapping
-    public ReceiverInfoView getOrElseAdd(@RequestBody ReceiverInfoCommandData commandData){
+    public ReceiverInfoView getOrElseAdd(@RequestBody ReceiverInfoCommandData commandData) {
         return modelMapper.map(receiverInfoService.get(ReceiverInfoOperationData.of(commandData)), ReceiverInfoView.class);
     }
+
     @GetMapping("/{id}")
-    public ReceiverInfoView getById(@PathVariable Long id){
+    public ReceiverInfoView getById(@PathVariable Long id) {
         return modelMapper.map(receiverInfoService.getById(id), ReceiverInfoView.class);
     }
+
     @PostMapping("/{id}")
-    public ReceiverInfoView edit(@PathVariable Long id, @RequestBody ReceiverInfoCommandData commandData){
+    public ReceiverInfoView edit(@PathVariable Long id, @RequestBody ReceiverInfoCommandData commandData) {
         return modelMapper.map(receiverInfoService.edit(id, ReceiverInfoOperationData.of(commandData)), ReceiverInfoView.class);
     }
 }

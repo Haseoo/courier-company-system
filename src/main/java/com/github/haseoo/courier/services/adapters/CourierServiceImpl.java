@@ -6,7 +6,8 @@ import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.repositories.ports.CourierRepository;
 import com.github.haseoo.courier.repositories.ports.EmployeeRepository;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
-import com.github.haseoo.courier.servicedata.users.employees.CourierOperationData;
+import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
+import com.github.haseoo.courier.servicedata.users.employees.EmployeeEditOperationData;
 import com.github.haseoo.courier.services.ports.CourierService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.utilities.UserUtils.validatePesel;
+import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
 
 @RequiredArgsConstructor
 @Service
@@ -36,15 +38,11 @@ public class CourierServiceImpl implements CourierService {
 
     @Override
     @Transactional
-    public CourierData add(CourierOperationData courierOperationData) {
-        validatePesel(courierOperationData.getPesel());
-        if (employeeRepository.findActiveByPesel(courierOperationData.getPesel())
-                .stream()
-                .anyMatch(employeeModel -> employeeModel instanceof CourierModel)) {
-            throw new ActiveCourierExistsException();
-        }
+    public CourierData add(EmployeeAddOperationData addOperationData) {
+        validatePesel(addOperationData.getPesel());
+        validatePeselExistence(addOperationData.getPesel());
         return modelMapper.map(courierRepository
-                        .saveAndFlush(modelMapper.map(courierOperationData,
+                        .saveAndFlush(modelMapper.map(addOperationData,
                                 CourierModel.class)),
                 CourierData.class);
     }
@@ -59,10 +57,24 @@ public class CourierServiceImpl implements CourierService {
 
     @Override
     @Transactional
-    public CourierData edit(Long id, CourierOperationData courierOperationData) {
-        CourierModel old = courierRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        CourierModel in = modelMapper.map(courierOperationData, CourierModel.class);
-        in.setId(old.getId());
-        return modelMapper.map(courierRepository.saveAndFlush(in), CourierData.class);
+    public CourierData edit(Long id, EmployeeEditOperationData editOperationData) {
+        CourierModel courierModel = courierRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        if (peselChanged(editOperationData, courierModel)) {
+            validatePeselExistence(editOperationData.getPesel());
+        }
+        copyNonNullProperties(modelMapper.map(editOperationData, CourierModel.class), courierModel);
+        return modelMapper.map(courierRepository.saveAndFlush(courierModel), CourierData.class);
+    }
+
+    private void validatePeselExistence(String pesel) {
+        if (employeeRepository.findActiveByPesel(pesel)
+                .stream()
+                .anyMatch(employeeModel -> employeeModel instanceof CourierModel)) {
+            throw new ActiveCourierExistsException();
+        }
+    }
+
+    private boolean peselChanged(EmployeeEditOperationData courierEditOperationData, CourierModel courierModel) {
+        return courierEditOperationData.getPesel() != null && !courierEditOperationData.getPesel().equals(courierModel.getPesel());
     }
 }

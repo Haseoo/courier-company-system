@@ -11,10 +11,8 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
-public class CourierOperationData {
-    private String userName;
+public class EmployeeEditOperationData {
     private char[] password;
-    private Boolean active;
     private String name;
     private String surname;
     private String phoneNumber;
