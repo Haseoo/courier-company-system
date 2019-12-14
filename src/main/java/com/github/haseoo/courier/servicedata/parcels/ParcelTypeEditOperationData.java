@@ -1,7 +1,10 @@
 package com.github.haseoo.courier.servicedata.parcels;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandEditData;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 

@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.servicedata.parcels;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandAddData;
-import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandEditData;
 import lombok.*;
 
 import java.math.BigDecimal;

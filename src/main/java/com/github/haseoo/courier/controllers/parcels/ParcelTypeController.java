@@ -2,8 +2,8 @@ package com.github.haseoo.courier.controllers.parcels;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandAddData;
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandEditData;
-import com.github.haseoo.courier.servicedata.parcels.ParcelTypeEditOperationData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelTypeAddOperationData;
+import com.github.haseoo.courier.servicedata.parcels.ParcelTypeEditOperationData;
 import com.github.haseoo.courier.services.ports.ParcelTypeService;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeOfferView;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeView;

@@ -27,7 +27,7 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
     public ReceiverInfoData get(ReceiverInfoOperationData receiverInfoOperationData) {
         return modelMapper.map(receiverInfoRepository
                 .receiverInfoExists(ReceiverInfoQueryData.of(receiverInfoOperationData))
-                .orElse(receiverInfoRepository
+                .orElseGet(() -> receiverInfoRepository
                         .saveAndFlush(modelMapper
                                 .map(receiverInfoOperationData, ReceiverInfoModel.class)
                         )

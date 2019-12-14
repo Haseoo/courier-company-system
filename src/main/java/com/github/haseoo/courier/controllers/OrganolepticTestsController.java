@@ -1,14 +1,13 @@
 package com.github.haseoo.courier.controllers;
 
+import com.github.haseoo.courier.servicedata.address.AddressData;
+import com.github.haseoo.courier.servicedata.address.AddressOperationData;
 import com.github.haseoo.courier.servicedata.users.UserData;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import com.github.haseoo.courier.servicedata.users.employees.CourierOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeData;
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
-import com.github.haseoo.courier.services.ports.CourierService;
-import com.github.haseoo.courier.services.ports.EmployeeService;
-import com.github.haseoo.courier.services.ports.LogisticianService;
-import com.github.haseoo.courier.services.ports.UserService;
+import com.github.haseoo.courier.services.ports.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +21,7 @@ public class OrganolepticTestsController {
     private final LogisticianService logisticianService;
     private final EmployeeService employeeService;
     private final UserService userService;
+    private final AddressService addressService;
 
     @GetMapping("/employee")
     public List<EmployeeData> getList() {
@@ -78,5 +78,15 @@ public class OrganolepticTestsController {
     @DeleteMapping("/user{id}")
     public UserData deleteUser(@PathVariable Long id) {
         return userService.setAsInactive(id);
+    }
+
+    @GetMapping("/address")
+    public List<AddressData> getListAddress() {
+        return addressService.getList();
+    }
+
+    @PutMapping
+    public AddressData getAddress(@RequestBody AddressOperationData addressOperationData) {
+        return addressService.get(addressOperationData);
     }
 }
