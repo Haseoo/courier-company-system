@@ -33,4 +33,9 @@ public class ParcelTypeRepositoryImpl implements ParcelTypeRepository {
     public List<ParcelTypeModel> getActiveTypes() {
         return parcelTypeJPARepository.getAllByActiveTrue();
     }
+
+    @Override
+    public void delete(Long id) {
+        parcelTypeJPARepository.deleteById(id);
+    }
 }

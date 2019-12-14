@@ -1,6 +1,6 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.ReceiverInfoNotFound;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ReceiverInfoNotFound;
 import com.github.haseoo.courier.models.ReceiverInfoModel;
 import com.github.haseoo.courier.querydata.ReceiverInfoQueryData;
 import com.github.haseoo.courier.repositories.ports.ReceiverInfoRepository;
