@@ -16,7 +16,7 @@ public class CourierRepositoryImpl implements CourierRepository {
 
     @Override
     public List<CourierModel> getList() {
-        return courierJPARepository.findAll();
+        return courierJPARepository.findAllByActiveTrue();
     }
 
     @Override

@@ -16,7 +16,7 @@ public class LogisticianRepositoryImpl implements LogisticianRepository {
 
     @Override
     public List<LogisticianModel> getList() {
-        return logisticianJPARepository.findAll();
+        return logisticianJPARepository.findAllByActiveTrue();
     }
 
     @Override
