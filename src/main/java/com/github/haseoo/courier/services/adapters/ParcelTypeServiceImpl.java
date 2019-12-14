@@ -5,8 +5,8 @@ import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelTypeNotFound;
 import com.github.haseoo.courier.models.ParcelTypeModel;
 import com.github.haseoo.courier.repositories.ports.ParcelTypeRepository;
-import com.github.haseoo.courier.servicedata.parcels.ParcelTypeData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelTypeAddOperationData;
+import com.github.haseoo.courier.servicedata.parcels.ParcelTypeData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelTypeEditOperationData;
 import com.github.haseoo.courier.services.ports.ParcelTypeService;
 import lombok.RequiredArgsConstructor;
