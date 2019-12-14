@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.exceptions.serviceexceptions;
+package com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions;
 
 import com.github.haseoo.courier.exceptions.BusinessLogicException;
 

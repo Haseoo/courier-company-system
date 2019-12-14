@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
-public class ParcelTypeOperationData {
+public class ParcelTypeAddOperationData {
     @NonNull
     private String name;
     @NonNull
@@ -22,21 +22,12 @@ public class ParcelTypeOperationData {
     @NonNull
     private Boolean active;
 
-    public static ParcelTypeOperationData of(ParcelTypeCommandAddData commandData) {
-        return new ParcelTypeOperationData(
+    public static ParcelTypeAddOperationData of(ParcelTypeCommandAddData commandData) {
+        return new ParcelTypeAddOperationData(
                 commandData.getName(),
                 commandData.getDescription(),
                 commandData.getPrice(),
                 true
-        );
-    }
-
-    public static ParcelTypeOperationData of(ParcelTypeCommandEditData commandData) {
-        return new ParcelTypeOperationData(
-                commandData.getName(),
-                commandData.getDescription(),
-                commandData.getPrice(),
-                commandData.getActive()
         );
     }
 }

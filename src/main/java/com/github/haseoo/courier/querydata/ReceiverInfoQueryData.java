@@ -16,10 +16,10 @@ public class ReceiverInfoQueryData {
     public static ReceiverInfoQueryData of(ReceiverInfoOperationData receiverInfo) {
         return ReceiverInfoQueryData
                 .builder()
-                .emailAddress(receiverInfo.getEmailAddress())
-                .name(receiverInfo.getName())
-                .surname(receiverInfo.getSurname())
-                .phoneNumber(receiverInfo.getPhoneNumber())
+                    .emailAddress(receiverInfo.getEmailAddress())
+                    .name(receiverInfo.getName())
+                    .surname(receiverInfo.getSurname())
+                    .phoneNumber(receiverInfo.getPhoneNumber())
                 .build();
     }
 }

@@ -13,4 +13,6 @@ public interface ParcelTypeRepository {
     Optional<ParcelTypeModel> getById(Long id);
 
     List<ParcelTypeModel> getActiveTypes();
+
+    void delete(Long id);
 }

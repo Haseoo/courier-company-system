@@ -2,7 +2,8 @@ package com.github.haseoo.courier.controllers.parcels;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandAddData;
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandEditData;
-import com.github.haseoo.courier.servicedata.parcels.ParcelTypeOperationData;
+import com.github.haseoo.courier.servicedata.parcels.ParcelTypeEditOperationData;
+import com.github.haseoo.courier.servicedata.parcels.ParcelTypeAddOperationData;
 import com.github.haseoo.courier.services.ports.ParcelTypeService;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeOfferView;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeView;
@@ -45,11 +46,16 @@ public class ParcelTypeController {
 
     @PutMapping
     public ParcelTypeView add(@RequestBody ParcelTypeCommandAddData commandData) {
-        return modelMapper.map(parcelTypeService.add(ParcelTypeOperationData.of(commandData)), ParcelTypeView.class);
+        return modelMapper.map(parcelTypeService.add(ParcelTypeAddOperationData.of(commandData)), ParcelTypeView.class);
     }
 
     @PostMapping("/{id}")
     public ParcelTypeView edit(@PathVariable Long id, @RequestBody ParcelTypeCommandEditData commandData) {
-        return modelMapper.map(parcelTypeService.edit(id, ParcelTypeOperationData.of(commandData)), ParcelTypeView.class);
+        return modelMapper.map(parcelTypeService.edit(id, ParcelTypeEditOperationData.of(commandData)), ParcelTypeView.class);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        parcelTypeService.delete(id);
     }
 }
