@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.services.adapters;
 
+import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveCourierExistsException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
 import com.github.haseoo.courier.models.CourierModel;
@@ -51,14 +52,14 @@ public class CourierServiceImpl implements CourierService {
     public CourierData getById(Long id) {
         return modelMapper.map(courierRepository
                         .getById(id)
-                        .orElseThrow(() -> new EmployeeNotFoundException(id)),
+                        .orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.COURIER)),
                 CourierData.class);
     }
 
     @Override
     @Transactional
     public CourierData edit(Long id, EmployeeEditOperationData editOperationData) {
-        CourierModel courierModel = courierRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        CourierModel courierModel = courierRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.COURIER));
         if (peselChanged(editOperationData, courierModel)) {
             validatePeselExistence(editOperationData.getPesel());
         }

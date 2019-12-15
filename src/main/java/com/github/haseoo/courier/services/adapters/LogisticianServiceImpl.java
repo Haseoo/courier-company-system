@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.services.adapters;
 
+import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveCourierExistsException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveLogisticianExistsException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
@@ -54,14 +55,14 @@ public class LogisticianServiceImpl implements LogisticianService {
     public LogisticianData getById(Long id) {
         return modelMapper.map(logisticianRepository
                         .getById(id)
-                        .orElseThrow(() -> new EmployeeNotFoundException(id)),
+                        .orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.LOGISTICIAN)),
                 LogisticianData.class);
     }
 
     @Override
     @Transactional
     public LogisticianData edit(Long id, EmployeeEditOperationData editOperationData) {
-        LogisticianModel logisticianModel = logisticianRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        LogisticianModel logisticianModel = logisticianRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.LOGISTICIAN));
         if (peselChanged(editOperationData, logisticianModel)) {
             validatePeselExistence(editOperationData.getPesel());
         }
