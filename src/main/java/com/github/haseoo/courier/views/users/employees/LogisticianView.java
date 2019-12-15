@@ -1,6 +1,5 @@
 package com.github.haseoo.courier.views.users.employees;
 
-import com.github.haseoo.courier.enums.EmployeeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

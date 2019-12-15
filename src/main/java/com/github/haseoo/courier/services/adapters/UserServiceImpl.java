@@ -31,4 +31,11 @@ public class UserServiceImpl implements UserService {
         userModel.setActive(false);
         return UserData.of(userRepository.saveAndFlush(userModel));
     }
+
+    @Override
+    public UserData setAsActive(Long id) {
+        UserModel userModel = userRepository.getById(id).orElseThrow(() -> new UserNotFoundException(id));
+        userModel.setActive(true);
+        return UserData.of(userRepository.saveAndFlush(userModel));
+    }
 }

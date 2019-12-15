@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
-import com.github.haseoo.courier.models.EmployeeModel;
 import com.github.haseoo.courier.repositories.ports.EmployeeRepository;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeData;
 import com.github.haseoo.courier.services.ports.EmployeeService;

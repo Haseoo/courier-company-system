@@ -1,18 +1,19 @@
 package com.github.haseoo.courier.configuration.converters;
 
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
-import com.github.haseoo.courier.views.users.employees.LogisticianView;
+import com.github.haseoo.courier.views.users.employees.EmployeeView;
 
-public class LogisticianDataToView extends MapperConverter<LogisticianData, LogisticianView> {
+public class LogisticianDataToEmployeeView extends MapperConverter<LogisticianData, EmployeeView> {
     @Override
-    protected LogisticianView convert(LogisticianData logisticianData) {
-        return LogisticianView
+    protected EmployeeView convert(LogisticianData logisticianData) {
+        return EmployeeView
                 .builder()
                 .id(logisticianData.getId())
                 .name(logisticianData.getName())
                 .surname(logisticianData.getSurname())
                 .pesel(logisticianData.getPesel())
                 .phoneNumber(logisticianData.getPesel())
+                .employeeType(logisticianData.getEmployeeType())
                 .build();
     }
 }

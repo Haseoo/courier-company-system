@@ -2,7 +2,6 @@ package com.github.haseoo.courier.commandsdata.parcels;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 

@@ -1,9 +1,9 @@
 package com.github.haseoo.courier.servicedata.users.employees;
 
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeAddCommandData;
-import lombok.*;
-
-import static lombok.AccessLevel.PRIVATE;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
 @Builder
@@ -28,13 +28,13 @@ public class EmployeeAddOperationData {
     public static EmployeeAddOperationData of(EmployeeAddCommandData commandData) {
         return EmployeeAddOperationData
                 .builder()
-                    .userName(commandData.getUserName())
-                    .password(commandData.getPassword())
-                    .active(true)
-                    .name(commandData.getName())
-                    .surname(commandData.getSurname())
-                    .phoneNumber(commandData.getPhoneNumber())
-                    .pesel(commandData.getPesel())
+                .userName(commandData.getUserName())
+                .password(commandData.getPassword())
+                .active(true)
+                .name(commandData.getName())
+                .surname(commandData.getSurname())
+                .phoneNumber(commandData.getPhoneNumber())
+                .pesel(commandData.getPesel())
                 .build();
     }
 }

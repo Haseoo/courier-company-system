@@ -8,12 +8,12 @@ public class EmployeeDataToView extends MapperConverter<EmployeeData, EmployeeVi
     protected EmployeeView convert(EmployeeData employeeData) {
         return EmployeeView
                 .builder()
-                    .id(employeeData.getId())
-                    .name(employeeData.getName())
-                    .surname(employeeData.getSurname())
-                    .pesel(employeeData.getPesel())
-                    .phoneNumber(employeeData.getPhoneNumber())
-                    .employeeType(employeeData.getEmployeeType())
+                .id(employeeData.getId())
+                .name(employeeData.getName())
+                .surname(employeeData.getSurname())
+                .pesel(employeeData.getPesel())
+                .phoneNumber(employeeData.getPhoneNumber())
+                .employeeType(employeeData.getEmployeeType())
                 .build();
     }
 }

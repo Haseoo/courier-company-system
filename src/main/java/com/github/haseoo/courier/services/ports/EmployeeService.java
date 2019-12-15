@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface EmployeeService {
     List<EmployeeData> getList();
+
     EmployeeData getById(Long id);
 }

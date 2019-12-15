@@ -5,6 +5,7 @@ public enum EmployeeType {
     COURIER("courier");
 
     private String string;
+
     EmployeeType(String s) {
         string = s;
     }
