@@ -1,7 +1,7 @@
 package com.github.haseoo.courier.testutlis.generators;
 
 import com.github.haseoo.courier.models.*;
-import com.github.haseoo.courier.servicedata.users.employees.CourierOperationData;
+import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -77,8 +77,8 @@ public class UsersDataGenerator {
         return Arrays.asList(getCourierModel(), getCourierModel());
     }
 
-    public static CourierOperationData getCourierOperationData() {
-        return CourierOperationData.builder()
+    public static EmployeeAddOperationData getCourierOperationData() {
+        return EmployeeAddOperationData.builder()
                 .active(true)
                 .name(TEST_NAME)
                 .userName(TEST_USER_NAME)

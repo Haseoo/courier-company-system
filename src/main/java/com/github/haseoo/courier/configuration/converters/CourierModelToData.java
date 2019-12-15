@@ -3,6 +3,9 @@ package com.github.haseoo.courier.configuration.converters;
 import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 
+import static com.github.haseoo.courier.utilities.UserUtils.getEmployeeType;
+import static com.github.haseoo.courier.utilities.UserUtils.getUserType;
+
 
 public class CourierModelToData extends MapperConverter<CourierModel, CourierData> {
 
@@ -17,6 +20,8 @@ public class CourierModelToData extends MapperConverter<CourierModel, CourierDat
                 .surname(courierModel.getSurname())
                 .phoneNumber(courierModel.getPhoneNumber())
                 .pesel(courierModel.getPesel())
+                .employeeType(getEmployeeType(courierModel))
+                .userType(getUserType(courierModel))
                 .build();
     }
 }

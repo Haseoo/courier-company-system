@@ -8,4 +8,6 @@ public interface UserService {
     List<UserData> getList();
 
     UserData setAsInactive(Long id);
+
+    UserData setAsActive(Long id);
 }

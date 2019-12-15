@@ -19,7 +19,7 @@ public class ReceiverInfoOperationData {
     @NonNull
     private String phoneNumber;
 
-    public static ReceiverInfoOperationData of(ReceiverInfoCommandData commandData){
+    public static ReceiverInfoOperationData of(ReceiverInfoCommandData commandData) {
         return new ReceiverInfoOperationData(
                 commandData.getName(),
                 commandData.getSurname(),
