@@ -1,6 +1,9 @@
 package com.github.haseoo.courier.controllers;
 
+import com.github.haseoo.courier.commandsdata.users.employees.EmployeeAddCommandData;
 import com.github.haseoo.courier.enums.EmployeeType;
+import com.github.haseoo.courier.models.LogisticianModel;
+import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeData;
 import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.EmployeeService;
@@ -20,8 +23,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
-    private final CourierService courierService;
-    private final LogisticianService logisticianService;
     private final ModelMapper modelMapper;
 
     @GetMapping
@@ -32,19 +33,8 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-   /*@GetMapping("/courier")
-   public List<CourierView> getCourierList() {
-        return courierService.getList()
-                .stream()
-                .map(courierData -> modelMapper.map(courierData, CourierView.class))
-                .collect(Collectors.toList());
+    @GetMapping("{id}")
+    public EmployeeView getById(@PathVariable Long id) {
+        return modelMapper.map(employeeService.getById(id), EmployeeView.class);
     }
-
-    @GetMapping("/logistician")
-    public List<LogisticianView> getLogisiticianList() {
-        return logisticianService.getList()
-                .stream()
-                .map(logisticianData -> modelMapper.map(logisticianData, LogisticianView.class))
-                .collect(Collectors.toList());
-    }*/
 }

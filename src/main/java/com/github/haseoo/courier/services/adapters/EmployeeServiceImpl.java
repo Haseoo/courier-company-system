@@ -1,5 +1,7 @@
 package com.github.haseoo.courier.services.adapters;
 
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
+import com.github.haseoo.courier.models.EmployeeModel;
 import com.github.haseoo.courier.repositories.ports.EmployeeRepository;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeData;
 import com.github.haseoo.courier.services.ports.EmployeeService;
@@ -21,5 +23,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .stream()
                 .map(EmployeeData::of)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public EmployeeData getById(Long id) {
+        return EmployeeData.of(employeeRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id)));
     }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -16,6 +17,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public List<EmployeeModel> getList() {
         return employeeJPARepository.findAll();
+    }
+
+    @Override
+    public Optional<EmployeeModel> getById(Long id) {
+        return employeeJPARepository.findById(id);
     }
 
     @Override
