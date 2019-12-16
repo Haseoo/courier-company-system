@@ -1,6 +1,7 @@
 package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.UserNotFoundException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.UsernameIsTaken;
 import com.github.haseoo.courier.models.UserModel;
 import com.github.haseoo.courier.repositories.ports.UserRepository;
 import com.github.haseoo.courier.servicedata.users.UserData;
@@ -37,5 +38,12 @@ public class UserServiceImpl implements UserService {
         UserModel userModel = userRepository.getById(id).orElseThrow(() -> new UserNotFoundException(id));
         userModel.setActive(true);
         return UserData.of(userRepository.saveAndFlush(userModel));
+    }
+
+    @Override
+    public void checkUsername(String username) {
+        userRepository.getByUsername(username).ifPresent(userModel -> {
+            throw new UsernameIsTaken(userModel.getUserName());
+        });
     }
 }

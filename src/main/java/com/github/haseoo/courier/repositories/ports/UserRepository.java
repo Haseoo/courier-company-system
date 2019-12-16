@@ -10,5 +10,7 @@ public interface UserRepository {
 
     Optional<UserModel> getById(Long id);
 
+    Optional<UserModel> getByUsername(String username);
+
     UserModel saveAndFlush(UserModel userModel);
 }

@@ -21,5 +21,6 @@ public class ExceptionMessages {
     public static final String INVALID_ENUM_TYPE = "Provided invalid enum type";
     public static final String MAGAZINE_DOES_NOT_EXIST_EXCEPTION_FORMAT = "Magazine with id %s does not exist";
     public static final String ADDRESS_DOES_NOT_EXIST_EXCEPTION_FORMAT = "Address with id %s does not exist";
+    public static final String USERNAME_IS_TAKEN_EXCEPTION_FORMAT = "Username %s is already taken";
 
 }
