@@ -25,6 +25,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<UserModel> getByUsername(String username) {
+        return userJPARepository.findByUserName(username);
+    }
+
+    @Override
     public UserModel saveAndFlush(UserModel userModel) {
         return userJPARepository.saveAndFlush(userModel);
     }

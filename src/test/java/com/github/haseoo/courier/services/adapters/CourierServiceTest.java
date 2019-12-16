@@ -7,6 +7,7 @@ import com.github.haseoo.courier.repositories.ports.CourierRepository;
 import com.github.haseoo.courier.repositories.ports.EmployeeRepository;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
+import com.github.haseoo.courier.services.ports.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,8 @@ class CourierServiceTest {
     private CourierRepository courierRepository;
     @Mock
     private EmployeeRepository employeeRepository;
+    @Mock
+    private UserService userService;
     @Spy
     private ModelMapper modelMapper = ModelMapperConfig();
 

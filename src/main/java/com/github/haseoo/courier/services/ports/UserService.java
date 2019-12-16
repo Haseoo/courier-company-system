@@ -10,4 +10,6 @@ public interface UserService {
     UserData setAsInactive(Long id);
 
     UserData setAsActive(Long id);
+
+    void checkUsername(String username);
 }
