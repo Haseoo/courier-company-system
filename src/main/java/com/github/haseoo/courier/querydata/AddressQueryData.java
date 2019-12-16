@@ -1,6 +1,6 @@
 package com.github.haseoo.courier.querydata;
 
-import com.github.haseoo.courier.servicedata.address.AddressOperationData;
+import com.github.haseoo.courier.servicedata.places.AddressOperationData;
 import lombok.Builder;
 import lombok.Value;
 

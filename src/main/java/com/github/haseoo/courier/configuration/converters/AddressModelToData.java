@@ -1,7 +1,7 @@
 package com.github.haseoo.courier.configuration.converters;
 
 import com.github.haseoo.courier.models.AddressModel;
-import com.github.haseoo.courier.servicedata.address.AddressData;
+import com.github.haseoo.courier.servicedata.places.AddressData;
 
 public class AddressModelToData extends MapperConverter<AddressModel, AddressData> {
     @Override

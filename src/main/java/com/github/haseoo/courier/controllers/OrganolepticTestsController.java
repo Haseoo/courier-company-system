@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.controllers;
 
-import com.github.haseoo.courier.servicedata.address.AddressData;
-import com.github.haseoo.courier.servicedata.address.AddressOperationData;
+import com.github.haseoo.courier.servicedata.places.AddressData;
 import com.github.haseoo.courier.servicedata.users.UserData;
 import com.github.haseoo.courier.servicedata.users.employees.*;
 import com.github.haseoo.courier.services.ports.*;
@@ -55,8 +54,4 @@ public class OrganolepticTestsController {
         return addressService.getList();
     }
 
-    @PutMapping
-    public AddressData getAddress(@RequestBody AddressOperationData addressOperationData) {
-        return addressService.get(addressOperationData);
-    }
 }

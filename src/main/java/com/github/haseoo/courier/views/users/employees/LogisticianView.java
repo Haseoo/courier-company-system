@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.views.users.employees;
 
+import com.github.haseoo.courier.views.places.MagazineWoLogisticianView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,5 +18,5 @@ public class LogisticianView {
     private String name;
     private String surname;
     private String phoneNumber;
-    //magazine wo employees
+    private MagazineWoLogisticianView magazine;
 }
