@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.servicedata.address;
+package com.github.haseoo.courier.servicedata.places;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

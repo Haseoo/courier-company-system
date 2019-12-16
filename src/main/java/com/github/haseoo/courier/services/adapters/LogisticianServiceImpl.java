@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
@@ -36,6 +37,15 @@ public class LogisticianServiceImpl implements LogisticianService {
                 .stream()
                 .map(logisticianModel -> modelMapper.map(logisticianModel, LogisticianData.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void consumeAllById(List<Long> ids, Consumer<List<LogisticianModel>> consumer) {
+        consumer.accept(ids
+                .stream()
+                .map(id -> logisticianRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id)))
+                .collect(Collectors.toList())
+        );
     }
 
     @Override

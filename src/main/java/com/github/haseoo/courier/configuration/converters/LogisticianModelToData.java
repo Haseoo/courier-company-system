@@ -1,6 +1,7 @@
 package com.github.haseoo.courier.configuration.converters;
 
 import com.github.haseoo.courier.models.LogisticianModel;
+import com.github.haseoo.courier.servicedata.places.MagazineData;
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
 
 import static com.github.haseoo.courier.utilities.UserUtils.getEmployeeType;
@@ -8,6 +9,8 @@ import static com.github.haseoo.courier.utilities.UserUtils.getUserType;
 
 
 public class LogisticianModelToData extends MapperConverter<LogisticianModel, LogisticianData> {
+
+    AddressModelToData conv = new AddressModelToData();
 
     @Override
     protected LogisticianData convert(LogisticianModel logisticianModel) {
@@ -22,6 +25,15 @@ public class LogisticianModelToData extends MapperConverter<LogisticianModel, Lo
                 .pesel(logisticianModel.getPesel())
                 .employeeType(getEmployeeType(logisticianModel))
                 .userType(getUserType(logisticianModel))
+                .magazine(((logisticianModel.getMagazine() != null)
+                        ? MagazineData
+                        .builder()
+                        .active(logisticianModel.getMagazine().getActive())
+                        .address(conv.convert(logisticianModel.getMagazine().getAddress()))
+                        .id(logisticianModel.getMagazine().getId())
+                        .build()
+                        : null)
+                )
                 .build();
     }
 }

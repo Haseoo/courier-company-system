@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -16,6 +17,11 @@ public class MagazineRepositoryImpl implements MagazineRepository {
     @Override
     public List<MagazineModel> getList() {
         return magazineJPARepository.findAll();
+    }
+
+    @Override
+    public Optional<MagazineModel> getById(Long id) {
+        return magazineJPARepository.findById(id);
     }
 
     @Override

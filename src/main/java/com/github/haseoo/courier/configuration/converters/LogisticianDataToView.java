@@ -1,6 +1,7 @@
 package com.github.haseoo.courier.configuration.converters;
 
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
+import com.github.haseoo.courier.views.places.MagazineWoLogisticianView;
 import com.github.haseoo.courier.views.users.employees.LogisticianView;
 
 public class LogisticianDataToView extends MapperConverter<LogisticianData, LogisticianView> {
@@ -13,6 +14,7 @@ public class LogisticianDataToView extends MapperConverter<LogisticianData, Logi
                 .surname(logisticianData.getSurname())
                 .pesel(logisticianData.getPesel())
                 .phoneNumber(logisticianData.getPesel())
+                .magazine(((logisticianData.getMagazine() != null) ? MagazineWoLogisticianView.of(logisticianData.getMagazine()) : null))
                 .build();
     }
 }
