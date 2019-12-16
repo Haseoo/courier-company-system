@@ -11,7 +11,7 @@ import java.util.List;
 public class MagazineAddLogisiticiansCommandData {
     private List<Long> logisiticiansIds;
 
-    public MagazineAddLogisiticiansCommandData(@JsonProperty(value = "address", required = true) List<Long> logisiticiansIds) {
+    public MagazineAddLogisiticiansCommandData(@JsonProperty(value = "logisticiansIds", required = true) List<Long> logisiticiansIds) {
         this.logisiticiansIds = logisiticiansIds;
     }
 }

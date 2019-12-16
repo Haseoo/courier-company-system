@@ -12,6 +12,7 @@ import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperatio
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeEditOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
 import com.github.haseoo.courier.services.ports.LogisticianService;
+import com.github.haseoo.courier.services.ports.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import static com.github.haseoo.courier.enums.EmployeeType.LOGISTICIAN;
+import static com.github.haseoo.courier.utilities.UserUtils.validatePesel;
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
 
 @Service
@@ -28,6 +31,7 @@ import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
 public class LogisticianServiceImpl implements LogisticianService {
     private final EmployeeRepository employeeRepository;
     private final LogisticianRepository logisticianRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -43,18 +47,16 @@ public class LogisticianServiceImpl implements LogisticianService {
     public void consumeAllById(List<Long> ids, Consumer<List<LogisticianModel>> consumer) {
         consumer.accept(ids
                 .stream()
-                .map(id -> logisticianRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id)))
+                .map(id -> logisticianRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id, LOGISTICIAN)))
                 .collect(Collectors.toList())
         );
     }
 
     @Override
     public LogisticianData add(EmployeeAddOperationData addOperationData) {
-        if (employeeRepository.findActiveByPesel(addOperationData.getPesel())
-                .stream()
-                .anyMatch(employeeModel -> employeeModel instanceof LogisticianModel)) {
-            throw new ActiveLogisticianExistsException();
-        }
+        validatePesel(addOperationData.getPesel());
+        validatePeselExistence(addOperationData.getPesel());
+        userService.checkUsername(addOperationData.getUserName());
         return modelMapper.map(logisticianRepository
                         .saveAndFlush(modelMapper.map(addOperationData,
                                 LogisticianModel.class)),
@@ -65,14 +67,14 @@ public class LogisticianServiceImpl implements LogisticianService {
     public LogisticianData getById(Long id) {
         return modelMapper.map(logisticianRepository
                         .getById(id)
-                        .orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.LOGISTICIAN)),
+                        .orElseThrow(() -> new EmployeeNotFoundException(id, LOGISTICIAN)),
                 LogisticianData.class);
     }
 
     @Override
     @Transactional
     public LogisticianData edit(Long id, EmployeeEditOperationData editOperationData) {
-        LogisticianModel logisticianModel = logisticianRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.LOGISTICIAN));
+        LogisticianModel logisticianModel = logisticianRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id, LOGISTICIAN));
         if (peselChanged(editOperationData, logisticianModel)) {
             validatePeselExistence(editOperationData.getPesel());
         }

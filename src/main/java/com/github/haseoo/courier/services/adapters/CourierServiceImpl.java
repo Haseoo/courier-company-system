@@ -10,6 +10,7 @@ import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeEditOperationData;
 import com.github.haseoo.courier.services.ports.CourierService;
+import com.github.haseoo.courier.services.ports.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
 public class CourierServiceImpl implements CourierService {
     private final CourierRepository courierRepository;
     private final EmployeeRepository employeeRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -42,6 +44,7 @@ public class CourierServiceImpl implements CourierService {
     public CourierData add(EmployeeAddOperationData addOperationData) {
         validatePesel(addOperationData.getPesel());
         validatePeselExistence(addOperationData.getPesel());
+        userService.checkUsername(addOperationData.getUserName());
         return modelMapper.map(courierRepository
                         .saveAndFlush(modelMapper.map(addOperationData,
                                 CourierModel.class)),
