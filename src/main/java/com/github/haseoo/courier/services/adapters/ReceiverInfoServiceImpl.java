@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
@@ -32,6 +33,18 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
                                 .map(receiverInfoOperationData, ReceiverInfoModel.class)
                         )
                 ), ReceiverInfoData.class);
+    }
+
+    @Override
+    public void consume(ReceiverInfoOperationData receiverInfoOperationData, Consumer<ReceiverInfoModel> consumer) {
+        consumer.accept(receiverInfoRepository
+                .receiverInfoExists(ReceiverInfoQueryData.of(receiverInfoOperationData))
+                .orElseGet(() -> receiverInfoRepository
+                        .saveAndFlush(modelMapper
+                                .map(receiverInfoOperationData, ReceiverInfoModel.class)
+                        )
+                )
+        );
     }
 
     @Override
