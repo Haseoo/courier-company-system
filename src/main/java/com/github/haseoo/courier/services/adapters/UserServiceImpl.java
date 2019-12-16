@@ -8,6 +8,7 @@ import com.github.haseoo.courier.servicedata.users.UserData;
 import com.github.haseoo.courier.services.ports.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public UserData setAsInactive(Long id) {
         UserModel userModel = userRepository.getById(id).orElseThrow(() -> new UserNotFoundException(id));
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
         return UserData.of(userRepository.saveAndFlush(userModel));
     }
 
+    @Transactional
     @Override
     public UserData setAsActive(Long id) {
         UserModel userModel = userRepository.getById(id).orElseThrow(() -> new UserNotFoundException(id));

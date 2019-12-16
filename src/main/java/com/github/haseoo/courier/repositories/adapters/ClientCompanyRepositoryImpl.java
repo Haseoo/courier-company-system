@@ -6,6 +6,8 @@ import com.github.haseoo.courier.repositories.ports.ClientCompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class ClientCompanyRepositoryImpl implements ClientCompanyRepository {
@@ -14,5 +16,15 @@ public class ClientCompanyRepositoryImpl implements ClientCompanyRepository {
     @Override
     public ClientCompanyModel saveAndFlush(ClientCompanyModel clientCompanyModel) {
         return clientCompanyJPARepository.saveAndFlush(clientCompanyModel);
+    }
+
+    @Override
+    public Optional<ClientCompanyModel> getById(Long id) {
+        return clientCompanyJPARepository.findById(id);
+    }
+
+    @Override
+    public Optional<ClientCompanyModel> getByNip(String nip) {
+        return clientCompanyJPARepository.findByNip(nip);
     }
 }

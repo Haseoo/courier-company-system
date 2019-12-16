@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.controllers;
+package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeEditCommandData;

@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.controllers;
+package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.views.users.employees.CourierView;

@@ -1,4 +1,4 @@
-package com.github.haseoo.courier.commandsdata.users.employees;
+package com.github.haseoo.courier.commandsdata.users;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @Getter
-class UserAddCommandData {
+public class UserAddCommandData {
     private String userName;
     private char[] password;
 

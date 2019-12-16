@@ -22,5 +22,7 @@ public class ExceptionMessages {
     public static final String MAGAZINE_DOES_NOT_EXIST_EXCEPTION_FORMAT = "Magazine with id %s does not exist";
     public static final String ADDRESS_DOES_NOT_EXIST_EXCEPTION_FORMAT = "Address with id %s does not exist";
     public static final String USERNAME_IS_TAKEN_EXCEPTION_FORMAT = "Username %s is already taken";
-
+    public static final String CLIENT_NOT_FOUND_EXCEPTION_FORMAT = "Client %s with %s could not be found";
+    public static final String CLIENT_WITH_PESEL_EXIST_EXCEPTION = "Client with this pesel number already exists, please reactive your account instead creating new one";
+    public static final String CLIENT_WITH_NIP_EXIST_EXCEPTION = "Client with this nip number already exists, please reactive your account instead creating new one";
 }
