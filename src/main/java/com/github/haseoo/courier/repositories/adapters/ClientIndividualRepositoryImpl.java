@@ -6,6 +6,8 @@ import com.github.haseoo.courier.repositories.ports.ClientIndividualRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class ClientIndividualRepositoryImpl implements ClientIndividualRepository {
@@ -14,5 +16,15 @@ public class ClientIndividualRepositoryImpl implements ClientIndividualRepositor
     @Override
     public ClientIndividualModel saveAndFlush(ClientIndividualModel clientCompanyModel) {
         return clientIndividualJPARepository.saveAndFlush(clientCompanyModel);
+    }
+
+    @Override
+    public Optional<ClientIndividualModel> getById(Long id) {
+        return clientIndividualJPARepository.findById(id);
+    }
+
+    @Override
+    public Optional<ClientIndividualModel> getByPesel(String pesel) {
+        return clientIndividualJPARepository.findByPesel(pesel);
     }
 }

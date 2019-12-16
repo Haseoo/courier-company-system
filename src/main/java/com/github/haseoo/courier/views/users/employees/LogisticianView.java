@@ -1,6 +1,6 @@
 package com.github.haseoo.courier.views.users.employees;
 
-import com.github.haseoo.courier.views.places.MagazineWoLogisticianView;
+import com.github.haseoo.courier.views.places.MagazineWoLogisticiansView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,11 +12,12 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 @Builder
-public class LogisticianView {
+public class
+LogisticianView {
     private Long id;
     private String pesel;
     private String name;
     private String surname;
     private String phoneNumber;
-    private MagazineWoLogisticianView magazine;
+    private MagazineWoLogisticiansView magazine;
 }

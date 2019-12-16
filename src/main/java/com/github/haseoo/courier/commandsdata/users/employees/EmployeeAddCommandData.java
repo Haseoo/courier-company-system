@@ -2,6 +2,7 @@ package com.github.haseoo.courier.commandsdata.users.employees;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.haseoo.courier.commandsdata.users.UserAddCommandData;
 import com.github.haseoo.courier.enums.EmployeeType;
 import lombok.EqualsAndHashCode;
 import lombok.Value;

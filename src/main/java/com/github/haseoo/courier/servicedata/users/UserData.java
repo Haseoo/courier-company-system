@@ -25,6 +25,7 @@ public class UserData {
         return UserData
                 .builder()
                 .id(userModel.getId())
+                .userName(userModel.getUserName())
                 .active(userModel.getActive())
                 .password(userModel.getPassword())
                 .userType(UserUtils.getUserType(userModel))

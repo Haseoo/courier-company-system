@@ -8,13 +8,13 @@ import static lombok.AccessLevel.PRIVATE;
 
 @Builder(access = PRIVATE)
 @Getter
-public class MagazineWoLogisticianView {
+public class MagazineWoLogisticiansView {
     private Long id;
     private AddressView address;
     private Boolean active;
 
-    public static MagazineWoLogisticianView of(MagazineData magazineData) {
-        return MagazineWoLogisticianView
+    public static MagazineWoLogisticiansView of(MagazineData magazineData) {
+        return MagazineWoLogisticiansView
                 .builder()
                 .id(magazineData.getId())
                 .address(AddressView.of(magazineData.getAddress()))
