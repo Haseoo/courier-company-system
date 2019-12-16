@@ -1,8 +1,6 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveCourierExistsException;
-import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.ActiveLogisticianExistsException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
 import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.models.LogisticianModel;
