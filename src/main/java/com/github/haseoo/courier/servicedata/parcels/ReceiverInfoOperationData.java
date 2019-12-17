@@ -32,10 +32,10 @@ public class ReceiverInfoOperationData {
     public static ReceiverInfoOperationData of(ReceiverInfoModel receiverInfoModel) {
         return ReceiverInfoOperationData
                 .builder()
-                    .emailAddress(receiverInfoModel.getEmailAddress())
-                    .name(receiverInfoModel.getName())
-                    .phoneNumber(receiverInfoModel.getPhoneNumber())
-                    .surname(receiverInfoModel.getSurname())
+                .emailAddress(receiverInfoModel.getEmailAddress())
+                .name(receiverInfoModel.getName())
+                .phoneNumber(receiverInfoModel.getPhoneNumber())
+                .surname(receiverInfoModel.getSurname())
                 .build();
     }
 }

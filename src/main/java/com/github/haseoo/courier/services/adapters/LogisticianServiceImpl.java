@@ -56,15 +56,15 @@ public class LogisticianServiceImpl implements LogisticianService {
         validatePeselExistence(addOperationData.getPesel());
         userService.checkUsername(addOperationData.getUserName());
         return LogisticianData.of(logisticianRepository
-                        .saveAndFlush(modelMapper.map(addOperationData,
-                                LogisticianModel.class)));
+                .saveAndFlush(modelMapper.map(addOperationData,
+                        LogisticianModel.class)));
     }
 
     @Override
     public LogisticianData getById(Long id) {
         return LogisticianData.of(logisticianRepository
-                        .getById(id)
-                        .orElseThrow(() -> new EmployeeNotFoundException(id, LOGISTICIAN)));
+                .getById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id, LOGISTICIAN)));
     }
 
     @Override

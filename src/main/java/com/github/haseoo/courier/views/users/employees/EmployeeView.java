@@ -26,36 +26,36 @@ public class EmployeeView {
     public static EmployeeView of(EmployeeData employeeData) {
         return EmployeeView
                 .builder()
-                    .id(employeeData.getId())
-                    .name(employeeData.getName())
-                    .surname(employeeData.getSurname())
-                    .pesel(employeeData.getPesel())
-                    .phoneNumber(employeeData.getPhoneNumber())
-                    .employeeType(employeeData.getEmployeeType())
+                .id(employeeData.getId())
+                .name(employeeData.getName())
+                .surname(employeeData.getSurname())
+                .pesel(employeeData.getPesel())
+                .phoneNumber(employeeData.getPhoneNumber())
+                .employeeType(employeeData.getEmployeeType())
                 .build();
     }
 
     public static EmployeeView of(CourierData courierData) {
         return EmployeeView
                 .builder()
-                    .id(courierData.getId())
-                    .name(courierData.getName())
-                    .surname(courierData.getSurname())
-                    .pesel(courierData.getPesel())
-                    .phoneNumber(courierData.getPesel())
-                    .employeeType(courierData.getEmployeeType())
+                .id(courierData.getId())
+                .name(courierData.getName())
+                .surname(courierData.getSurname())
+                .pesel(courierData.getPesel())
+                .phoneNumber(courierData.getPesel())
+                .employeeType(courierData.getEmployeeType())
                 .build();
     }
 
     public static EmployeeView of(LogisticianData logisticianData) {
         return EmployeeView
                 .builder()
-                    .id(logisticianData.getId())
-                    .name(logisticianData.getName())
-                    .surname(logisticianData.getSurname())
-                    .pesel(logisticianData.getPesel())
-                    .phoneNumber(logisticianData.getPesel())
-                    .employeeType(logisticianData.getEmployeeType())
+                .id(logisticianData.getId())
+                .name(logisticianData.getName())
+                .surname(logisticianData.getSurname())
+                .pesel(logisticianData.getPesel())
+                .phoneNumber(logisticianData.getPesel())
+                .employeeType(logisticianData.getEmployeeType())
                 .build();
     }
 }

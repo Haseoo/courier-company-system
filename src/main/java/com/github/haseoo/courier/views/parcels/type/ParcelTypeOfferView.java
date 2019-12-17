@@ -23,10 +23,10 @@ public class ParcelTypeOfferView {
     public static ParcelTypeOfferView of(ParcelTypeData parcelTypeData) {
         return ParcelTypeOfferView
                 .builder()
-                    .name(parcelTypeData.getName())
-                    .description(parcelTypeData.getDescription())
-                    .price(parcelTypeData.getPrice())
-                    .active(parcelTypeData.getActive())
+                .name(parcelTypeData.getName())
+                .description(parcelTypeData.getDescription())
+                .price(parcelTypeData.getPrice())
+                .active(parcelTypeData.getActive())
                 .build();
     }
 }

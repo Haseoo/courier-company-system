@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.servicedata.users.employees;
 
 import com.github.haseoo.courier.models.LogisticianModel;
-import com.github.haseoo.courier.models.MagazineModel;
 import com.github.haseoo.courier.servicedata.places.AddressData;
 import com.github.haseoo.courier.servicedata.places.MagazineData;
 import com.github.haseoo.courier.utilities.UserUtils;
@@ -9,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.haseoo.courier.utilities.UserUtils.getEmployeeType;
-import static com.github.haseoo.courier.utilities.UserUtils.getUserType;
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter

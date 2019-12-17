@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import static com.github.haseoo.courier.utilities.UserUtils.getEmployeeType;
-import static com.github.haseoo.courier.utilities.UserUtils.getUserType;
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
@@ -20,16 +18,16 @@ public class CourierData extends EmployeeData {
 
     public static CourierData of(CourierModel courierModel) {
         return CourierData.builder()
-                    .id(courierModel.getId())
-                    .userName(courierModel.getUserName())
-                    .password(courierModel.getPassword())
-                    .active(courierModel.getActive())
-                    .name(courierModel.getName())
-                    .surname(courierModel.getSurname())
-                    .phoneNumber(courierModel.getPhoneNumber())
-                    .pesel(courierModel.getPesel())
-                    .employeeType(UserUtils.getEmployeeType(courierModel))
-                    .userType(UserUtils.getUserType(courierModel))
+                .id(courierModel.getId())
+                .userName(courierModel.getUserName())
+                .password(courierModel.getPassword())
+                .active(courierModel.getActive())
+                .name(courierModel.getName())
+                .surname(courierModel.getSurname())
+                .phoneNumber(courierModel.getPhoneNumber())
+                .pesel(courierModel.getPesel())
+                .employeeType(UserUtils.getEmployeeType(courierModel))
+                .userType(UserUtils.getUserType(courierModel))
                 .build();
     }
 }

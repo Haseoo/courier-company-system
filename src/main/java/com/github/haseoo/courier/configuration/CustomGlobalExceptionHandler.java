@@ -20,7 +20,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 
     }
-    
+
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<ErrorResponse> customHandleNotFound(AuthException ex) {
         ErrorResponse errors = new ErrorResponse(LocalDateTime.now(), ex.getMessage());

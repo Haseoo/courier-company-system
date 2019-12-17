@@ -16,8 +16,8 @@ public class UserLoginView {
     public static UserLoginView of(UserData userData) {
         return UserLoginView
                 .builder()
-                    .id(userData.getId())
-                    .userType(userData.getUserType())
+                .id(userData.getId())
+                .userType(userData.getUserType())
                 .build();
     }
 }

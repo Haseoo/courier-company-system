@@ -24,11 +24,11 @@ public class ParcelTypeData {
     public static ParcelTypeData of(ParcelTypeModel parcelTypeModel) {
         return ParcelTypeData
                 .builder()
-                    .id(parcelTypeModel.getId())
-                    .name(parcelTypeModel.getName())
-                    .description(parcelTypeModel.getDescription())
-                    .price(parcelTypeModel.getPrice())
-                    .active(parcelTypeModel.getActive())
+                .id(parcelTypeModel.getId())
+                .name(parcelTypeModel.getName())
+                .description(parcelTypeModel.getDescription())
+                .price(parcelTypeModel.getPrice())
+                .active(parcelTypeModel.getActive())
                 .build();
     }
 }

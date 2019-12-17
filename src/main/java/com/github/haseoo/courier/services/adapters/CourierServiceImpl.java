@@ -46,15 +46,15 @@ public class CourierServiceImpl implements CourierService {
         validatePeselExistence(addOperationData.getPesel());
         userService.checkUsername(addOperationData.getUserName());
         return CourierData.of(courierRepository
-                        .saveAndFlush(modelMapper.map(addOperationData,
-                                CourierModel.class)));
+                .saveAndFlush(modelMapper.map(addOperationData,
+                        CourierModel.class)));
     }
 
     @Override
     public CourierData getById(Long id) {
         return CourierData.of(courierRepository
-                        .getById(id)
-                        .orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.COURIER)));
+                .getById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.COURIER)));
     }
 
     @Override

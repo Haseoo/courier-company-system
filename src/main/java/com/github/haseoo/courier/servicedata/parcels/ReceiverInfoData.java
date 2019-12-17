@@ -15,11 +15,11 @@ public class ReceiverInfoData extends ReceiverInfoOperationData {
     public static ReceiverInfoData of(ReceiverInfoModel receiverInfoModel) {
         return ReceiverInfoData
                 .builder()
-                    .id(receiverInfoModel.getId())
-                    .emailAddress(receiverInfoModel.getEmailAddress())
-                    .name(receiverInfoModel.getName())
-                    .phoneNumber(receiverInfoModel.getPhoneNumber())
-                    .surname(receiverInfoModel.getSurname())
+                .id(receiverInfoModel.getId())
+                .emailAddress(receiverInfoModel.getEmailAddress())
+                .name(receiverInfoModel.getName())
+                .phoneNumber(receiverInfoModel.getPhoneNumber())
+                .surname(receiverInfoModel.getSurname())
                 .build();
     }
 }
