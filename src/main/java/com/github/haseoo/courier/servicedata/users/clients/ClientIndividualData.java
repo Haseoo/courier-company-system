@@ -21,16 +21,16 @@ public class ClientIndividualData extends ClientData {
     public static ClientIndividualData of(ClientIndividualModel model) {
         return ClientIndividualData
                 .builder()
-                .id(model.getId())
-                .userName(model.getUserName())
-                .password(model.getPassword())
-                .active(model.getActive())
-                .userType(UserUtils.getUserType(model))
-                .emailAddress(model.getEmailAddress())
-                .phoneNumber(model.getPhoneNumber())
-                .name(model.getName())
-                .surname(model.getSurname())
-                .pesel(model.getPesel())
+                    .id(model.getId())
+                    .userName(model.getUserName())
+                    .password(model.getPassword())
+                    .active(model.getActive())
+                    .userType(UserUtils.getUserType(model))
+                    .emailAddress(model.getEmailAddress())
+                    .phoneNumber(model.getPhoneNumber())
+                    .name(model.getName())
+                    .surname(model.getSurname())
+                    .pesel(model.getPesel())
                 .build();
     }
 
