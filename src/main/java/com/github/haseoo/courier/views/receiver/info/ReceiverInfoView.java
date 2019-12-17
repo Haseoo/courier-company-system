@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.views.receiver.info;
 
 
-import com.github.haseoo.courier.models.ReceiverInfoModel;
 import com.github.haseoo.courier.servicedata.parcels.ReceiverInfoData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,11 +23,11 @@ public class ReceiverInfoView {
     public static ReceiverInfoView of(ReceiverInfoData receiverInfoData) {
         return ReceiverInfoView
                 .builder()
-                    .emailAddress(receiverInfoData.getEmailAddress())
-                    .name(receiverInfoData.getName())
-                    .surname(receiverInfoData.getSurname())
-                    .phoneNumber(receiverInfoData.getPhoneNumber())
-                    .id(receiverInfoData.getId())
+                .emailAddress(receiverInfoData.getEmailAddress())
+                .name(receiverInfoData.getName())
+                .surname(receiverInfoData.getSurname())
+                .phoneNumber(receiverInfoData.getPhoneNumber())
+                .id(receiverInfoData.getId())
                 .build();
     }
 }

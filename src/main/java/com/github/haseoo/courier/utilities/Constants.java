@@ -16,4 +16,5 @@ public class Constants {
     public static final Integer TEN_CUT = 10;
     public static final Integer PESEL_LENGTH = 11;
     public static final List<Integer> peselWeights = unmodifiableList(Arrays.asList(1, 3, 7, 9, 1, 3, 7, 9, 1, 3));
+    public static final String ADMIN_USERNAME = "admin";
 }

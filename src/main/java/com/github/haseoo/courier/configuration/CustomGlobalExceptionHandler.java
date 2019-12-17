@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.configuration;
 
+import com.github.haseoo.courier.exceptions.AuthException;
 import com.github.haseoo.courier.exceptions.BusinessLogicException;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,16 @@ import java.time.LocalDateTime;
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BusinessLogicException.class)
-    public ResponseEntity<ErrorResponse> customHandleNotFound(Exception ex) {
+    public ResponseEntity<ErrorResponse> customHandleNotFound(BusinessLogicException ex) {
         ErrorResponse errors = new ErrorResponse(LocalDateTime.now(), ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<ErrorResponse> customHandleNotFound(AuthException ex) {
+        ErrorResponse errors = new ErrorResponse(LocalDateTime.now(), ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.FORBIDDEN);
 
     }
 

@@ -23,7 +23,7 @@ public class MagazineData {
     private Boolean active;
     private List<LogisticianData> logisticians;
 
-    public static MagazineData of (MagazineModel magazineModel) {
+    public static MagazineData of(MagazineModel magazineModel) {
         return MagazineData
                 .builder()
                 .id(magazineModel.getId())
