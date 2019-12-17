@@ -23,13 +23,13 @@ public class CourierController {
     public List<CourierView> getList() {
         return courierService.getList()
                 .stream()
-                .map(courierModel -> modelMapper.map(courierModel, CourierView.class))
+                .map(CourierView::of)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("{id}")
     public CourierView getById(@PathVariable Long id) {
-        return modelMapper.map(courierService.getById(id), CourierView.class);
+        return CourierView.of(courierService.getById(id));
     }
 
 }

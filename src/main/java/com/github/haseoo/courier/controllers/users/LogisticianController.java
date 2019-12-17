@@ -23,12 +23,12 @@ public class LogisticianController {
     public List<LogisticianView> getList() {
         return logisticianService.getList()
                 .stream()
-                .map(courierModel -> modelMapper.map(courierModel, LogisticianView.class))
+                .map(LogisticianView::of)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("{id}")
     public LogisticianView getById(@PathVariable Long id) {
-        return modelMapper.map(logisticianService.getById(id), LogisticianView.class);
+        return LogisticianView.of(logisticianService.getById(id));
     }
 }

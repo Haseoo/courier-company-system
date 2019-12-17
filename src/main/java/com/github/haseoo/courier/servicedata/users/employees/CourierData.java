@@ -1,10 +1,14 @@
 package com.github.haseoo.courier.servicedata.users.employees;
 
+import com.github.haseoo.courier.models.CourierModel;
+import com.github.haseoo.courier.utilities.UserUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import static com.github.haseoo.courier.utilities.UserUtils.getEmployeeType;
+import static com.github.haseoo.courier.utilities.UserUtils.getUserType;
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
@@ -13,4 +17,19 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PRIVATE)
 public class CourierData extends EmployeeData {
     /*private List<ParcelData> assignedParcels*/
+
+    public static CourierData of(CourierModel courierModel) {
+        return CourierData.builder()
+                    .id(courierModel.getId())
+                    .userName(courierModel.getUserName())
+                    .password(courierModel.getPassword())
+                    .active(courierModel.getActive())
+                    .name(courierModel.getName())
+                    .surname(courierModel.getSurname())
+                    .phoneNumber(courierModel.getPhoneNumber())
+                    .pesel(courierModel.getPesel())
+                    .employeeType(UserUtils.getEmployeeType(courierModel))
+                    .userType(UserUtils.getUserType(courierModel))
+                .build();
+    }
 }

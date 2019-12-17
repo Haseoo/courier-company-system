@@ -31,22 +31,22 @@ public class EmployeeController {
     public List<EmployeeView> getList() {
         return employeeService.getList()
                 .stream()
-                .map(employeeData -> modelMapper.map(employeeData, EmployeeView.class))
+                .map(EmployeeView::of)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("{id}")
     public EmployeeView getById(@PathVariable Long id) {
-        return modelMapper.map(employeeService.getById(id), EmployeeView.class);
+        return EmployeeView.of(employeeService.getById(id));
     }
 
     @PutMapping
     public EmployeeView add(@RequestBody EmployeeAddCommandData addCommandData) {
         if (addCommandData.getEmployeeType() == EmployeeType.COURIER) {
-            return modelMapper.map(courierService.add(EmployeeAddOperationData.of(addCommandData)), EmployeeView.class);
+            return EmployeeView.of(courierService.add(EmployeeAddOperationData.of(addCommandData)));
         }
         if (addCommandData.getEmployeeType() == EmployeeType.LOGISTICIAN) {
-            return modelMapper.map(logisticianService.add(EmployeeAddOperationData.of(addCommandData)), EmployeeView.class);
+            return EmployeeView.of(logisticianService.add(EmployeeAddOperationData.of(addCommandData)));
         }
         throw new IllegalArgumentException(INVALID_ENUM_TYPE);
     }
@@ -54,10 +54,10 @@ public class EmployeeController {
     @PostMapping("{id}")
     public EmployeeView add(@PathVariable Long id, @RequestBody EmployeeEditCommandData editOperationData) {
         if (editOperationData.getEmployeeType() == EmployeeType.COURIER) {
-            return modelMapper.map(courierService.edit(id, EmployeeEditOperationData.of(editOperationData)), EmployeeView.class);
+            return EmployeeView.of(courierService.edit(id, EmployeeEditOperationData.of(editOperationData)));
         }
         if (editOperationData.getEmployeeType() == EmployeeType.LOGISTICIAN) {
-            return modelMapper.map(logisticianService.edit(id, EmployeeEditOperationData.of(editOperationData)), EmployeeView.class);
+            return EmployeeView.of(logisticianService.edit(id, EmployeeEditOperationData.of(editOperationData)));
         }
         throw new IllegalArgumentException(INVALID_ENUM_TYPE);
     }

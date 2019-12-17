@@ -2,6 +2,7 @@ package com.github.haseoo.courier.servicedata.parcels;
 
 
 import com.github.haseoo.courier.commandsdata.parcels.ReceiverInfoCommandData;
+import com.github.haseoo.courier.models.ReceiverInfoModel;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -26,6 +27,16 @@ public class ReceiverInfoOperationData {
                 commandData.getEmailAddress(),
                 commandData.getPhoneNumber()
         );
+    }
+
+    public static ReceiverInfoOperationData of(ReceiverInfoModel receiverInfoModel) {
+        return ReceiverInfoOperationData
+                .builder()
+                    .emailAddress(receiverInfoModel.getEmailAddress())
+                    .name(receiverInfoModel.getName())
+                    .phoneNumber(receiverInfoModel.getPhoneNumber())
+                    .surname(receiverInfoModel.getSurname())
+                .build();
     }
 }
 //ADd parcel

@@ -35,7 +35,7 @@ public class CourierServiceImpl implements CourierService {
         return courierRepository
                 .getList()
                 .stream()
-                .map(courierModel -> modelMapper.map(courierModel, CourierData.class))
+                .map(CourierData::of)
                 .collect(Collectors.toList());
     }
 
@@ -45,18 +45,16 @@ public class CourierServiceImpl implements CourierService {
         validatePesel(addOperationData.getPesel());
         validatePeselExistence(addOperationData.getPesel());
         userService.checkUsername(addOperationData.getUserName());
-        return modelMapper.map(courierRepository
+        return CourierData.of(courierRepository
                         .saveAndFlush(modelMapper.map(addOperationData,
-                                CourierModel.class)),
-                CourierData.class);
+                                CourierModel.class)));
     }
 
     @Override
     public CourierData getById(Long id) {
-        return modelMapper.map(courierRepository
+        return CourierData.of(courierRepository
                         .getById(id)
-                        .orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.COURIER)),
-                CourierData.class);
+                        .orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.COURIER)));
     }
 
     @Override
@@ -67,7 +65,7 @@ public class CourierServiceImpl implements CourierService {
             validatePeselExistence(editOperationData.getPesel());
         }
         copyNonNullProperties(modelMapper.map(editOperationData, CourierModel.class), courierModel);
-        return modelMapper.map(courierRepository.saveAndFlush(courierModel), CourierData.class);
+        return CourierData.of(courierRepository.saveAndFlush(courierModel));
     }
 
     private void validatePeselExistence(String pesel) {

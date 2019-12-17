@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository
                 .getList()
                 .stream()
-                .map(addressModel -> modelMapper.map(addressModel, AddressData.class))
+                .map(AddressData::of)
                 .collect(Collectors.toList());
     }
 }

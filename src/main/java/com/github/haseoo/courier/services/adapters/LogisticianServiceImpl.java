@@ -37,7 +37,7 @@ public class LogisticianServiceImpl implements LogisticianService {
         return logisticianRepository
                 .getList()
                 .stream()
-                .map(logisticianModel -> modelMapper.map(logisticianModel, LogisticianData.class))
+                .map(LogisticianData::of)
                 .collect(Collectors.toList());
     }
 
@@ -55,18 +55,16 @@ public class LogisticianServiceImpl implements LogisticianService {
         validatePesel(addOperationData.getPesel());
         validatePeselExistence(addOperationData.getPesel());
         userService.checkUsername(addOperationData.getUserName());
-        return modelMapper.map(logisticianRepository
+        return LogisticianData.of(logisticianRepository
                         .saveAndFlush(modelMapper.map(addOperationData,
-                                LogisticianModel.class)),
-                LogisticianData.class);
+                                LogisticianModel.class)));
     }
 
     @Override
     public LogisticianData getById(Long id) {
-        return modelMapper.map(logisticianRepository
+        return LogisticianData.of(logisticianRepository
                         .getById(id)
-                        .orElseThrow(() -> new EmployeeNotFoundException(id, LOGISTICIAN)),
-                LogisticianData.class);
+                        .orElseThrow(() -> new EmployeeNotFoundException(id, LOGISTICIAN)));
     }
 
     @Override
@@ -77,7 +75,7 @@ public class LogisticianServiceImpl implements LogisticianService {
             validatePeselExistence(editOperationData.getPesel());
         }
         copyNonNullProperties(modelMapper.map(editOperationData, CourierModel.class), logisticianModel);
-        return modelMapper.map(logisticianRepository.saveAndFlush(logisticianModel), LogisticianData.class);
+        return LogisticianData.of(logisticianRepository.saveAndFlush(logisticianModel));
     }
 
     private void validatePeselExistence(String pesel) {

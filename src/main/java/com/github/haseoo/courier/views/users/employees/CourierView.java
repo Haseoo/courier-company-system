@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.views.users.employees;
 
+import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,4 +19,15 @@ public class CourierView {
     private String surname;
     private String phoneNumber;
     //parcels ids
+
+    public static CourierView of(CourierData courierData) {
+        return CourierView
+                .builder()
+                    .id(courierData.getId())
+                    .name(courierData.getName())
+                    .surname(courierData.getSurname())
+                    .pesel(courierData.getPesel())
+                    .phoneNumber(courierData.getPhoneNumber())
+                .build();
+    }
 }

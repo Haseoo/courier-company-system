@@ -22,22 +22,22 @@ public class ReceiverInfoController {
     public List<ReceiverInfoView> getReceiverInfo() {
         return receiverInfoService.getList()
                 .stream()
-                .map(receiverInfoData -> modelMapper.map(receiverInfoData, ReceiverInfoView.class))
+                .map(ReceiverInfoView::of)
                 .collect(Collectors.toList());
     }
 
     @PutMapping
     public ReceiverInfoView getOrElseAdd(@RequestBody ReceiverInfoCommandData commandData) {
-        return modelMapper.map(receiverInfoService.get(ReceiverInfoOperationData.of(commandData)), ReceiverInfoView.class);
+        return ReceiverInfoView.of(receiverInfoService.get(ReceiverInfoOperationData.of(commandData)));
     }
 
     @GetMapping("/{id}")
     public ReceiverInfoView getById(@PathVariable Long id) {
-        return modelMapper.map(receiverInfoService.getById(id), ReceiverInfoView.class);
+        return ReceiverInfoView.of(receiverInfoService.getById(id));
     }
 
     @PostMapping("/{id}")
     public ReceiverInfoView edit(@PathVariable Long id, @RequestBody ReceiverInfoCommandData commandData) {
-        return modelMapper.map(receiverInfoService.edit(id, ReceiverInfoOperationData.of(commandData)), ReceiverInfoView.class);
+        return ReceiverInfoView.of(receiverInfoService.edit(id, ReceiverInfoOperationData.of(commandData)));
     }
 }

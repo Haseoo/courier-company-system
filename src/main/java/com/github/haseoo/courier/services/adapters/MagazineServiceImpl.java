@@ -32,7 +32,7 @@ public class MagazineServiceImpl implements MagazineService {
     public List<MagazineData> getList() {
         return magazineRepository.getList()
                 .stream()
-                .map(magazineModel -> modelMapper.map(magazineModel, MagazineData.class))
+                .map(MagazineData::of)
                 .collect(Collectors.toList());
     }
 
@@ -40,14 +40,13 @@ public class MagazineServiceImpl implements MagazineService {
     public List<MagazineData> getActiveList() {
         return magazineRepository.getActiveMagazines()
                 .stream()
-                .map(magazineModel -> modelMapper.map(magazineModel, MagazineData.class))
+                .map(MagazineData::of)
                 .collect(Collectors.toList());
     }
 
     @Override
     public MagazineData getById(Long id) {
-        MagazineModel magazineModel = magazineRepository.getById(id).orElseThrow(() -> new MagazineDoesNotExist(id));
-        return modelMapper.map(magazineModel, MagazineData.class);
+        return MagazineData.of(magazineRepository.getById(id).orElseThrow(() -> new MagazineDoesNotExist(id)));
     }
 
     @Override
@@ -56,7 +55,7 @@ public class MagazineServiceImpl implements MagazineService {
         MagazineModel magazineModel = new MagazineModel();
         magazineModel.setActive(true);
         addressService.consume(magazineAddOperationData.getAddress(), magazineModel::setAddress);
-        return modelMapper.map(magazineRepository.saveAndFlush(magazineModel), MagazineData.class);
+        return MagazineData.of(magazineRepository.saveAndFlush(magazineModel));
     }
 
     @Transactional
@@ -64,7 +63,7 @@ public class MagazineServiceImpl implements MagazineService {
     public MagazineData edit(Long id, MagazineEditOperationData magazineEditOperationData) {
         MagazineModel magazineModel = magazineRepository.getById(id).orElseThrow(() -> new MagazineDoesNotExist(id));
         copyNonNullProperties(modelMapper.map(magazineEditOperationData, MagazineModel.class), magazineModel);
-        return modelMapper.map(magazineRepository.saveAndFlush(magazineModel), MagazineData.class);
+        return MagazineData.of(magazineRepository.saveAndFlush(magazineModel));
     }
 
     @Transactional
@@ -75,7 +74,7 @@ public class MagazineServiceImpl implements MagazineService {
             logisticiasList.forEach(logistician -> logistician.setMagazine(magazineModel));
             magazineModel.getLogisticians().addAll(logisticiasList);
         });
-        return modelMapper.map(magazineRepository.saveAndFlush(magazineModel), MagazineData.class);
+        return MagazineData.of(magazineRepository.saveAndFlush(magazineModel));
 
     }
 }

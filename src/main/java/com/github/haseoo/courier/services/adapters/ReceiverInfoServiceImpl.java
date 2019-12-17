@@ -26,13 +26,13 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
 
     @Override
     public ReceiverInfoData get(ReceiverInfoOperationData receiverInfoOperationData) {
-        return modelMapper.map(receiverInfoRepository
+        return ReceiverInfoData.of(receiverInfoRepository
                 .receiverInfoExists(ReceiverInfoQueryData.of(receiverInfoOperationData))
                 .orElseGet(() -> receiverInfoRepository
                         .saveAndFlush(modelMapper
                                 .map(receiverInfoOperationData, ReceiverInfoModel.class)
                         )
-                ), ReceiverInfoData.class);
+                ));
     }
 
     @Override
@@ -51,20 +51,19 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
     public ReceiverInfoData edit(Long id, ReceiverInfoOperationData receiverInfoOperationData) {
         ReceiverInfoModel receiverInfoModel = receiverInfoRepository.getById(id).orElseThrow(() -> new ReceiverInfoNotFound(id));
         copyNonNullProperties(modelMapper.map(receiverInfoOperationData, ReceiverInfoModel.class), receiverInfoModel);
-        return modelMapper.map(receiverInfoRepository.saveAndFlush(receiverInfoModel), ReceiverInfoData.class);
+        return ReceiverInfoData.of(receiverInfoRepository.saveAndFlush(receiverInfoModel));
     }
 
     @Override
     public ReceiverInfoData getById(Long id) {
-        ReceiverInfoModel receiverInfoModel = receiverInfoRepository.getById(id).orElseThrow(() -> new ReceiverInfoNotFound(id));
-        return modelMapper.map(receiverInfoModel, ReceiverInfoData.class);
+        return ReceiverInfoData.of(receiverInfoRepository.getById(id).orElseThrow(() -> new ReceiverInfoNotFound(id)));
     }
 
     @Override
     public List<ReceiverInfoData> getList() {
         return receiverInfoRepository.getList()
                 .stream()
-                .map(receiverInfoModel -> modelMapper.map(receiverInfoModel, ReceiverInfoData.class))
+                .map(ReceiverInfoData::of)
                 .collect(Collectors.toList());
     }
 }
