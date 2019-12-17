@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.views.parcels.type;
 
+import com.github.haseoo.courier.servicedata.parcels.ParcelTypeData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,14 @@ public class ParcelTypeOfferView {
     private String description;
     private BigDecimal price;
     private Boolean active;
+
+    public static ParcelTypeOfferView of(ParcelTypeData parcelTypeData) {
+        return ParcelTypeOfferView
+                .builder()
+                    .name(parcelTypeData.getName())
+                    .description(parcelTypeData.getDescription())
+                    .price(parcelTypeData.getPrice())
+                    .active(parcelTypeData.getActive())
+                .build();
+    }
 }

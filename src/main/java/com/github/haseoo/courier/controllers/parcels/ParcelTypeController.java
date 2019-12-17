@@ -25,8 +25,7 @@ public class ParcelTypeController {
     public List<ParcelTypeView> getParcelType() {
         return parcelTypeService.getList(false)
                 .stream()
-                .map(parcelTypeData -> modelMapper
-                        .map(parcelTypeData, ParcelTypeView.class))
+                .map(ParcelTypeView::of)
                 .collect(Collectors.toList());
     }
 
@@ -34,24 +33,23 @@ public class ParcelTypeController {
     public List<ParcelTypeOfferView> getOffer() {
         return parcelTypeService.getList(true)
                 .stream()
-                .map(parcelTypeData -> modelMapper
-                        .map(parcelTypeData, ParcelTypeOfferView.class))
+                .map(ParcelTypeOfferView::of)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ParcelTypeOfferView getById(@PathVariable Long id) {
-        return modelMapper.map(parcelTypeService.getById(id), ParcelTypeOfferView.class);
+        return ParcelTypeOfferView.of(parcelTypeService.getById(id));
     }
 
     @PutMapping
     public ParcelTypeView add(@RequestBody ParcelTypeCommandAddData commandData) {
-        return modelMapper.map(parcelTypeService.add(ParcelTypeAddOperationData.of(commandData)), ParcelTypeView.class);
+        return ParcelTypeView.of(parcelTypeService.add(ParcelTypeAddOperationData.of(commandData)));
     }
 
     @PostMapping("/{id}")
     public ParcelTypeView edit(@PathVariable Long id, @RequestBody ParcelTypeCommandEditData commandData) {
-        return modelMapper.map(parcelTypeService.edit(id, ParcelTypeEditOperationData.of(commandData)), ParcelTypeView.class);
+        return ParcelTypeView.of(parcelTypeService.edit(id, ParcelTypeEditOperationData.of(commandData)));
     }
 
     @DeleteMapping("/{id}")

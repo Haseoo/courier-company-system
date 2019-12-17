@@ -28,8 +28,7 @@ public class ParcelTypeServiceImpl implements ParcelTypeService {
     @Transactional
     @Override
     public ParcelTypeData add(ParcelTypeAddOperationData parcelType) {
-        return modelMapper.map(parcelTypeRepository.saveAndFlush(modelMapper.map(parcelType, ParcelTypeModel.class)),
-                ParcelTypeData.class);
+        return ParcelTypeData.of(parcelTypeRepository.saveAndFlush(modelMapper.map(parcelType, ParcelTypeModel.class)));
     }
 
     @Transactional
@@ -40,7 +39,7 @@ public class ParcelTypeServiceImpl implements ParcelTypeService {
             throw new ParcelTypeFeeCannotBeChanged(parcelTypeModel.getName());
         }
         copyNonNullProperties(modelMapper.map(parcelType, ParcelTypeModel.class), parcelTypeModel);
-        return modelMapper.map(parcelTypeRepository.saveAndFlush(parcelTypeModel), ParcelTypeData.class);
+        return ParcelTypeData.of(parcelTypeRepository.saveAndFlush(parcelTypeModel));
     }
 
     @Override
@@ -52,14 +51,13 @@ public class ParcelTypeServiceImpl implements ParcelTypeService {
             parcelModels = parcelTypeRepository.getList();
         }
         return parcelModels.stream()
-                .map(parcelTypeModel -> modelMapper.map(parcelTypeModel, ParcelTypeData.class))
+                .map(ParcelTypeData::of)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ParcelTypeData getById(Long id) {
-        ParcelTypeModel parcelTypeModel = parcelTypeRepository.getById(id).orElseThrow(() -> new ParcelTypeNotFound(id));
-        return modelMapper.map(parcelTypeModel, ParcelTypeData.class);
+        return ParcelTypeData.of(parcelTypeRepository.getById(id).orElseThrow(() -> new ParcelTypeNotFound(id)));
     }
 
     @Override

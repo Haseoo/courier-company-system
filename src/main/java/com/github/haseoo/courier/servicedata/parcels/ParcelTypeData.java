@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.servicedata.parcels;
 
+import com.github.haseoo.courier.models.ParcelTypeModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,4 +20,15 @@ public class ParcelTypeData {
     private String description;
     private BigDecimal price;
     private Boolean active;
+
+    public static ParcelTypeData of(ParcelTypeModel parcelTypeModel) {
+        return ParcelTypeData
+                .builder()
+                    .id(parcelTypeModel.getId())
+                    .name(parcelTypeModel.getName())
+                    .description(parcelTypeModel.getDescription())
+                    .price(parcelTypeModel.getPrice())
+                    .active(parcelTypeModel.getActive())
+                .build();
+    }
 }
