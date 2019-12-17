@@ -1,5 +1,7 @@
 package com.github.haseoo.courier.services.adapters;
 
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InactiveUserException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InvalidLoginOrPassword;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.UserNotFoundException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.UsernameIsTaken;
 import com.github.haseoo.courier.models.UserModel;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +44,18 @@ public class UserServiceImpl implements UserService {
         UserModel userModel = userRepository.getById(id).orElseThrow(() -> new UserNotFoundException(id));
         userModel.setActive(true);
         return UserData.of(userRepository.saveAndFlush(userModel));
+    }
+
+    @Override
+    public UserData login(String userName, char[] password) {
+        UserModel userModel = userRepository.getByUsername(userName).orElseThrow(InvalidLoginOrPassword::new);
+        if (!userModel.getActive()) {
+            throw new InactiveUserException(userName);
+        }
+        if (!Arrays.equals(userModel.getPassword(), password)) {
+            throw new InvalidLoginOrPassword();
+        }
+        return UserData.of(userModel);
     }
 
     @Override

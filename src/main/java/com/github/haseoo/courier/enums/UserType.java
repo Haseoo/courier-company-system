@@ -4,5 +4,6 @@ public enum UserType {
     INDIVIDUAL_CLIENT,
     COMPANY_CLIENT,
     COURIER,
-    LOGISTICIAN
+    LOGISTICIAN,
+    ADMIN
 }

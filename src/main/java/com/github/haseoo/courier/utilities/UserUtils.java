@@ -37,6 +37,9 @@ public class UserUtils {
     }
 
     public static UserType getUserType(UserModel userModel) {
+        if (userModel.getUserName().equals(ADMIN_USERNAME)) {
+            return UserType.ADMIN;
+        }
         return userTypeMap.get(userModel.getClass());
     }
 

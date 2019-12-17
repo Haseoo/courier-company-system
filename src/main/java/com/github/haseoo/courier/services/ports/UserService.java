@@ -11,5 +11,7 @@ public interface UserService {
 
     UserData setAsActive(Long id);
 
+    UserData login(String userName, char[] password);
+
     void checkUsername(String username);
 }

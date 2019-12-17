@@ -25,4 +25,6 @@ public class ExceptionMessages {
     public static final String CLIENT_NOT_FOUND_EXCEPTION_FORMAT = "Client %s with %s could not be found";
     public static final String CLIENT_WITH_PESEL_EXIST_EXCEPTION = "Client with this pesel number already exists, please reactive your account instead creating new one";
     public static final String CLIENT_WITH_NIP_EXIST_EXCEPTION = "Client with this nip number already exists, please reactive your account instead creating new one";
+    public static final String INCORRECT_USERNAME_OR_SECRET = "Incorrect username or password";
+    public static final String USER_INACTIVE_EXCEPTION_FORMAT = "User %s is inactive";
 }
