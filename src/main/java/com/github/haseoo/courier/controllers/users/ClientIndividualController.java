@@ -7,6 +7,7 @@ import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualEditD
 import com.github.haseoo.courier.services.ports.ClientIndividualService;
 import com.github.haseoo.courier.views.users.clients.ClientIndividualView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +26,7 @@ public class ClientIndividualController {
         return ClientIndividualView.of(clientIndividualService.add(ClientIndividualAddData.of(commandData)));
     }
 
+    @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
     @PostMapping("{id}")
     public ClientIndividualView edit(@PathVariable Long id, @RequestBody ClientIndividualEditCommandData commandData) {
         return ClientIndividualView.of(clientIndividualService.edit(id, ClientIndividualEditData.of(commandData)));

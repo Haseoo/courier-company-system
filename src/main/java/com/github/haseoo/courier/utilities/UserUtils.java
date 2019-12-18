@@ -2,21 +2,29 @@ package com.github.haseoo.courier.utilities;
 
 import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.enums.UserType;
+import com.github.haseoo.courier.exceptions.ResourceException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InvalidPeselException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InvalidPeselFormatException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.InvalidEmployeeInstanceException;
 import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.security.UserDetailsImpl;
+import com.github.haseoo.courier.security.UserRole;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.github.haseoo.courier.enums.UserType.ADMIN;
 import static com.github.haseoo.courier.utilities.Constants.*;
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class UserUtils {
     private static Map<Class<? extends UserModel>, UserType> userTypeMap;
+    private static Map<Class<? extends UserModel>, UserRole> userRoleMap = new HashMap<>();
 
     static {
         userTypeMap = new HashMap<>();
@@ -24,6 +32,10 @@ public class UserUtils {
         userTypeMap.put(LogisticianModel.class, UserType.LOGISTICIAN);
         userTypeMap.put(ClientIndividualModel.class, UserType.INDIVIDUAL_CLIENT);
         userTypeMap.put(ClientCompanyModel.class, UserType.COMPANY_CLIENT);
+        userRoleMap.put(ClientIndividualModel.class, UserRole.CLIENT);
+        userRoleMap.put(ClientCompanyModel.class, UserRole.CLIENT);
+        userRoleMap.put(CourierModel.class, UserRole.COURIER);
+        userRoleMap.put(LogisticianModel.class, UserRole.LOGISTICIAN);
     }
 
     public static EmployeeType getEmployeeType(EmployeeModel employeeModel) {
@@ -36,9 +48,16 @@ public class UserUtils {
         throw new InvalidEmployeeInstanceException();
     }
 
+    public static UserRole getUserRole(UserModel userModel) {
+        if (userModel.getUserName().equals(ADMIN_USERNAME)) {
+            return UserRole.ADMIN;
+        }
+        return userRoleMap.get(userModel.getClass());
+    }
+
     public static UserType getUserType(UserModel userModel) {
         if (userModel.getUserName().equals(ADMIN_USERNAME)) {
-            return UserType.ADMIN;
+            return ADMIN;
         }
         return userTypeMap.get(userModel.getClass());
     }
@@ -55,6 +74,18 @@ public class UserUtils {
         if (checksum != checkDigit) {
             throw new InvalidPeselException();
         }
+    }
+
+    public static void verifyEditResource(Long id) {
+        if (currentUser().getUserType() != ADMIN && currentUser().getId().equals(id)) {
+            throw new ResourceException();
+        }
+    }
+
+    public static UserDetailsImpl currentUser() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        return (UserDetailsImpl) authentication.getPrincipal();
     }
 
     private static int getCheckDigit(String pesel) {

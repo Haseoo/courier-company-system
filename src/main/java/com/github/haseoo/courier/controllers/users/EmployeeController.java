@@ -11,6 +11,7 @@ import com.github.haseoo.courier.services.ports.LogisticianService;
 import com.github.haseoo.courier.views.users.employees.EmployeeView;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class EmployeeController {
     private final LogisticianService logisticianService;
     private final ModelMapper modelMapper;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<EmployeeView> getList() {
         return employeeService.getList()
@@ -35,11 +37,13 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{id}")
     public EmployeeView getById(@PathVariable Long id) {
         return EmployeeView.of(employeeService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public EmployeeView add(@RequestBody EmployeeAddCommandData addCommandData) {
         if (addCommandData.getEmployeeType() == EmployeeType.COURIER) {
@@ -51,6 +55,7 @@ public class EmployeeController {
         throw new IllegalArgumentException(INVALID_ENUM_TYPE);
     }
 
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @PostMapping("{id}")
     public EmployeeView add(@PathVariable Long id, @RequestBody EmployeeEditCommandData editOperationData) {
         if (editOperationData.getEmployeeType() == EmployeeType.COURIER) {

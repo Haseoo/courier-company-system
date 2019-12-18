@@ -12,6 +12,7 @@ public class ExceptionMessages {
     public static final String EMPLOYEE_WITH_TYPE_NOT_FOUND_STRING_FORMAT = "Employee %s with %s id not found";
     public static final String EMPLOYEE_NOT_FOUND_STRING_FORMAT = "Employee with %s id not found";
     public static final String USER_NOT_FOUND_STRING_FORMAT = "User with %s id not found";
+    public static final String USER_NOT_FOUND_BY_NAME_STRING_FORMAT = "User with %s name not found";
     public static final String INVALID_PESEL_EXCEPTION = "Invalid PESEL";
     public static final String INVALID_PESEL_FORMAT_EXCEPTION = "Incorrect format. Pesel must have 11 digits";
     public static final String PARCEL_TYPE_NOT_FOUND_FORMAT_EXCEPTION = "Parcel type with id %s not found";
@@ -27,4 +28,5 @@ public class ExceptionMessages {
     public static final String CLIENT_WITH_NIP_EXIST_EXCEPTION = "Client with this nip number already exists, please reactive your account instead creating new one";
     public static final String INCORRECT_USERNAME_OR_SECRET = "Incorrect username or password";
     public static final String USER_INACTIVE_EXCEPTION_FORMAT = "User %s is inactive";
+    public static final String USER_DONT_HAVE_PERMISSION_TO_RESOURCE = "User don't have permission to this resource";
 }

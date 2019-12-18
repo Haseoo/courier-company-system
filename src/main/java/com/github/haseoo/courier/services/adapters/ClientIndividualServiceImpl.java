@@ -11,6 +11,7 @@ import com.github.haseoo.courier.services.ports.ClientIndividualService;
 import com.github.haseoo.courier.services.ports.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
     private final ClientIndividualRepository clientIndividualRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ClientIndividualData getById(Long id) {
@@ -37,15 +39,21 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
         clientIndividualRepository.getByPesel(addData.getPesel()).ifPresent(model -> {
             throw new ClientWithPeselExists();
         });
+        ClientIndividualModel modelToAdd = modelMapper.map(addData, ClientIndividualModel.class);
+        modelToAdd.setPassword(passwordEncoder.encode(String.valueOf(addData.getPassword())).toCharArray());
         validatePesel(addData.getPesel());
-        return ClientIndividualData.of(clientIndividualRepository.saveAndFlush(modelMapper.map(addData, ClientIndividualModel.class)));
+        return ClientIndividualData.of(clientIndividualRepository.saveAndFlush(modelToAdd));
     }
 
     @Transactional
     @Override
     public ClientIndividualData edit(Long id, ClientIndividualEditData editData) {
         ClientIndividualModel clientIndividualModel = clientIndividualRepository.getById(id).orElseThrow(() -> new ClientNotFound(id, INDIVIDUAL));
-        copyNonNullProperties(modelMapper.map(editData, ClientIndividualModel.class), clientIndividualModel);
+        ClientIndividualModel modelToEdit = modelMapper.map(editData, ClientIndividualModel.class);
+        if (editData.getPassword() != null) {
+            modelToEdit.setPassword(passwordEncoder.encode(String.valueOf(editData.getPassword())).toCharArray());
+        }
+        copyNonNullProperties(modelToEdit, clientIndividualModel);
         return ClientIndividualData.of(clientIndividualRepository.saveAndFlush(clientIndividualModel));
     }
 }

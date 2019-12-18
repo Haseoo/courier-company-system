@@ -7,6 +7,7 @@ import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyEditData
 import com.github.haseoo.courier.services.ports.ClientCompanyService;
 import com.github.haseoo.courier.views.users.clients.ClientCompanyView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +26,10 @@ public class ClientCompanyController {
         return ClientCompanyView.of(clientCompanyService.add(ClientCompanyAddData.of(commandData)));
     }
 
+    @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
     @PostMapping("{id}")
-    public ClientCompanyView edit(@PathVariable Long id, @RequestBody ClientCompanyEditCommandData commandData) {
+    public ClientCompanyView edit(@PathVariable Long id,
+                                  @RequestBody ClientCompanyEditCommandData commandData) {
         return ClientCompanyView.of(clientCompanyService.edit(id, ClientCompanyEditData.of(commandData)));
     }
 }
