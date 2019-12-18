@@ -4,6 +4,7 @@ import com.github.haseoo.courier.services.ports.LogisticianService;
 import com.github.haseoo.courier.views.users.employees.LogisticianView;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class LogisticianController {
     private final ModelMapper modelMapper;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
     public List<LogisticianView> getList() {
         return logisticianService.getList()
                 .stream()
@@ -27,6 +29,7 @@ public class LogisticianController {
                 .collect(Collectors.toList());
     }
 
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
     @GetMapping("{id}")
     public LogisticianView getById(@PathVariable Long id) {
         return LogisticianView.of(logisticianService.getById(id));

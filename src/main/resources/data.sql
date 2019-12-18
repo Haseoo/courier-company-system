@@ -1,1 +1,1 @@
-INSERT INTO COMPANYUSER values(1, true, 'admin1', 'admin');
+INSERT INTO COMPANYUSER values(1, true, '$2a$12$QOpC9AXqeKDBcNMWHFr/oOEjcJqxD1IkbZsvshHsTRvsIsLpVbji6', 'admin');

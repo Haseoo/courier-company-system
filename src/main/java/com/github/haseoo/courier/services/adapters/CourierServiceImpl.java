@@ -13,6 +13,7 @@ import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class CourierServiceImpl implements CourierService {
     private final EmployeeRepository employeeRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<CourierData> getList() {
@@ -45,9 +47,9 @@ public class CourierServiceImpl implements CourierService {
         validatePesel(addOperationData.getPesel());
         validatePeselExistence(addOperationData.getPesel());
         userService.checkUsername(addOperationData.getUserName());
-        return CourierData.of(courierRepository
-                .saveAndFlush(modelMapper.map(addOperationData,
-                        CourierModel.class)));
+        CourierModel modelToAdd = modelMapper.map(addOperationData, CourierModel.class);
+        modelToAdd.setPassword(passwordEncoder.encode(String.valueOf(addOperationData.getPassword())).toCharArray());
+        return CourierData.of(courierRepository.saveAndFlush(modelToAdd));
     }
 
     @Override
@@ -61,10 +63,14 @@ public class CourierServiceImpl implements CourierService {
     @Transactional
     public CourierData edit(Long id, EmployeeEditOperationData editOperationData) {
         CourierModel courierModel = courierRepository.getById(id).orElseThrow(() -> new EmployeeNotFoundException(id, EmployeeType.COURIER));
+        CourierModel modelToUpdate = modelMapper.map(editOperationData, CourierModel.class);
         if (peselChanged(editOperationData, courierModel)) {
             validatePeselExistence(editOperationData.getPesel());
         }
-        copyNonNullProperties(modelMapper.map(editOperationData, CourierModel.class), courierModel);
+        if (editOperationData.getPassword() != null) {
+            modelToUpdate.setPassword(passwordEncoder.encode(String.valueOf(editOperationData.getPassword())).toCharArray());
+        }
+        copyNonNullProperties(modelToUpdate, courierModel);
         return CourierData.of(courierRepository.saveAndFlush(courierModel));
     }
 

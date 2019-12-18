@@ -13,6 +13,7 @@ import com.github.haseoo.courier.services.ports.LogisticianService;
 import com.github.haseoo.courier.services.ports.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ public class LogisticianServiceImpl implements LogisticianService {
     private final LogisticianRepository logisticianRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<LogisticianData> getList() {
@@ -50,14 +52,16 @@ public class LogisticianServiceImpl implements LogisticianService {
         );
     }
 
+    @Transactional
     @Override
     public LogisticianData add(EmployeeAddOperationData addOperationData) {
         validatePesel(addOperationData.getPesel());
         validatePeselExistence(addOperationData.getPesel());
+        LogisticianModel modelToAdd = modelMapper.map(addOperationData, LogisticianModel.class);
+        modelToAdd.setPassword(passwordEncoder.encode(String.valueOf(addOperationData.getPassword())).toCharArray());
         userService.checkUsername(addOperationData.getUserName());
         return LogisticianData.of(logisticianRepository
-                .saveAndFlush(modelMapper.map(addOperationData,
-                        LogisticianModel.class)));
+                .saveAndFlush(modelToAdd));
     }
 
     @Override
@@ -74,7 +78,11 @@ public class LogisticianServiceImpl implements LogisticianService {
         if (peselChanged(editOperationData, logisticianModel)) {
             validatePeselExistence(editOperationData.getPesel());
         }
-        copyNonNullProperties(modelMapper.map(editOperationData, CourierModel.class), logisticianModel);
+        CourierModel modelToEdit = modelMapper.map(editOperationData, CourierModel.class);
+        if (editOperationData.getPassword() != null) {
+            modelToEdit.setPassword(passwordEncoder.encode(String.valueOf(editOperationData.getPassword())).toCharArray());
+        }
+        copyNonNullProperties(modelToEdit, logisticianModel);
         return LogisticianData.of(logisticianRepository.saveAndFlush(logisticianModel));
     }
 

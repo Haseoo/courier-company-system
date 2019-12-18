@@ -12,7 +12,7 @@ public class LoginCommandData {
     private char[] password;
 
     @JsonCreator
-    public LoginCommandData(@JsonProperty(value = "userName", required = true) String userName,
+    public LoginCommandData(@JsonProperty(value = "username", required = true) String userName,
                             @JsonProperty(value = "password", required = true) char[] password) {
         this.userName = userName;
         this.password = password;
