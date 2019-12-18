@@ -18,10 +18,8 @@ import static com.github.haseoo.courier.security.Constants.AUTH_HEADER;
 import static com.github.haseoo.courier.security.Constants.BEARER_TOKEN_BEGIN;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     @Autowired
     private JwtTokenProvider tokenProvider;
-
     @Autowired
     private UserDetalisServiceImpl userDetailsService;
 
