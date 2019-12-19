@@ -8,8 +8,8 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReceiverInfoOperationData {
     @NonNull
     private String name;
@@ -27,6 +27,7 @@ public class ReceiverInfoOperationData {
                 commandData.getEmailAddress(),
                 commandData.getPhoneNumber()
         );
+
     }
 
     public static ReceiverInfoOperationData of(ReceiverInfoModel receiverInfoModel) {

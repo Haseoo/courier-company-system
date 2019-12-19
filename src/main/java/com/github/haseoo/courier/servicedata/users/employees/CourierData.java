@@ -3,15 +3,15 @@ package com.github.haseoo.courier.servicedata.users.employees;
 import com.github.haseoo.courier.models.CourierModel;
 import com.github.haseoo.courier.utilities.UserUtils;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import lombok.experimental.SuperBuilder;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Getter
+@EqualsAndHashCode(callSuper = true)
+@Value
 @SuperBuilder
-@ToString
 @AllArgsConstructor(access = PRIVATE)
 public class CourierData extends EmployeeData {
     /*private List<ParcelData> assignedParcels*/

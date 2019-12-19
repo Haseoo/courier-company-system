@@ -1,13 +1,15 @@
 package com.github.haseoo.courier.servicedata.users.employees;
 
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeEditCommandData;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Value;
 
-@Getter
+import static lombok.AccessLevel.PRIVATE;
+
+@Value
 @Builder
-//@NoArgsConstructor
-//@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = PRIVATE)
 public class EmployeeEditOperationData {
     private char[] password;
     private String name;

@@ -3,6 +3,7 @@ package com.github.haseoo.courier.controllers.users;
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeEditCommandData;
 import com.github.haseoo.courier.enums.EmployeeType;
+import com.github.haseoo.courier.security.UserDetalisServiceImpl;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeEditOperationData;
 import com.github.haseoo.courier.services.ports.CourierService;
@@ -10,7 +11,6 @@ import com.github.haseoo.courier.services.ports.EmployeeService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
 import com.github.haseoo.courier.views.users.employees.EmployeeView;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final CourierService courierService;
     private final LogisticianService logisticianService;
-    private final ModelMapper modelMapper;
+    private final UserDetalisServiceImpl userDetalisService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
@@ -58,6 +58,7 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @PostMapping("{id}")
     public EmployeeView add(@PathVariable Long id, @RequestBody EmployeeEditCommandData editOperationData) {
+        userDetalisService.verifyEditResource(id);
         if (editOperationData.getEmployeeType() == EmployeeType.COURIER) {
             return EmployeeView.of(courierService.edit(id, EmployeeEditOperationData.of(editOperationData)));
         }

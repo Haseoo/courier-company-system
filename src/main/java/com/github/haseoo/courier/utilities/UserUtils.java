@@ -2,17 +2,12 @@ package com.github.haseoo.courier.utilities;
 
 import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.enums.UserType;
-import com.github.haseoo.courier.exceptions.ResourceException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InvalidPeselException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.InvalidPeselFormatException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.InvalidEmployeeInstanceException;
 import com.github.haseoo.courier.models.*;
-import com.github.haseoo.courier.security.UserDetailsImpl;
 import com.github.haseoo.courier.security.UserRole;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,17 +71,6 @@ public class UserUtils {
         }
     }
 
-    public static void verifyEditResource(Long id) {
-        if (currentUser().getUserType() != ADMIN && currentUser().getId().equals(id)) {
-            throw new ResourceException();
-        }
-    }
-
-    public static UserDetailsImpl currentUser() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
 
     private static int getCheckDigit(String pesel) {
         return Integer.parseInt(pesel.substring(pesel.length() - 1));

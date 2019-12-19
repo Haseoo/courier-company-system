@@ -3,16 +3,14 @@ package com.github.haseoo.courier.servicedata.parcels;
 import com.github.haseoo.courier.commandsdata.parcels.ParcelTypeCommandEditData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.math.BigDecimal;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Getter
-@Builder
-@NoArgsConstructor
+@Value
+@Builder(access = PRIVATE)
 @AllArgsConstructor(access = PRIVATE)
 public class ParcelTypeEditOperationData {
     private String name;

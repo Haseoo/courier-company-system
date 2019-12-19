@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.github.haseoo.courier.enums.ClientType.COMPANY;
-import static com.github.haseoo.courier.utilities.UserUtils.verifyEditResource;
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
 
 @Service
@@ -48,7 +47,6 @@ public class ClientCompanyServiceImpl implements ClientCompanyService {
     @Transactional
     @Override
     public ClientCompanyData edit(Long id, ClientCompanyEditData editData) {
-        verifyEditResource(id);
         ClientCompanyModel clientCompanyModel = clientCompanyRepository.getById(id).orElseThrow(() -> new ClientNotFound(id, COMPANY));
         ClientCompanyModel modelToEdit = modelMapper.map(editData, ClientCompanyModel.class);
         if (editData.getPassword() != null) {

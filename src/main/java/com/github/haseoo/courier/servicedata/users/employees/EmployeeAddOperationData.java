@@ -1,14 +1,16 @@
 package com.github.haseoo.courier.servicedata.users.employees;
 
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeAddCommandData;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NonNull;
+import lombok.Value;
 
-@Getter
+import static lombok.AccessLevel.PRIVATE;
+
+@Value
 @Builder
-//@NoArgsConstructor
-//@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = PRIVATE)
 public class EmployeeAddOperationData {
     @NonNull
     private String userName;
