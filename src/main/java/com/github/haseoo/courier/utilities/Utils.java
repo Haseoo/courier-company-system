@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.utilities;
 
+import com.github.haseoo.courier.exceptions.serviceexceptions.InvalidEmailAddress;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -8,12 +9,19 @@ import org.springframework.beans.BeanWrapperImpl;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.github.haseoo.courier.utilities.Constants.EMAIL_REGEX_EXPRESSION;
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class Utils {
     public static void copyNonNullProperties(Object src, Object target) {
         BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
+    }
+
+    public static void validateEmailAddress(String emailAddress) {
+        if (!emailAddress.matches(EMAIL_REGEX_EXPRESSION)) {
+            throw new InvalidEmailAddress(emailAddress);
+        }
     }
 
     private static String[] getNullPropertyNames(Object source) {

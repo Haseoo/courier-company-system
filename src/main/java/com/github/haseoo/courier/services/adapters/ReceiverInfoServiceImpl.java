@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
+import static com.github.haseoo.courier.utilities.Utils.validateEmailAddress;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
 
     @Override
     public ReceiverInfoData get(ReceiverInfoOperationData receiverInfoOperationData) {
+        validateEmailAddress(receiverInfoOperationData.getEmailAddress());
         return ReceiverInfoData.of(receiverInfoRepository
                 .receiverInfoExists(ReceiverInfoQueryData.of(receiverInfoOperationData))
                 .orElseGet(() -> receiverInfoRepository
@@ -37,6 +39,7 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
 
     @Override
     public void consume(ReceiverInfoOperationData receiverInfoOperationData, Consumer<ReceiverInfoModel> consumer) {
+        validateEmailAddress(receiverInfoOperationData.getEmailAddress());
         consumer.accept(receiverInfoRepository
                 .receiverInfoExists(ReceiverInfoQueryData.of(receiverInfoOperationData))
                 .orElseGet(() -> receiverInfoRepository
@@ -47,6 +50,7 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
         );
     }
 
+    /*METHOD TO REMOVE!!!!!!!*/
     @Override
     public ReceiverInfoData edit(Long id, ReceiverInfoOperationData receiverInfoOperationData) {
         ReceiverInfoModel receiverInfoModel = receiverInfoRepository.getById(id).orElseThrow(() -> new ReceiverInfoNotFound(id));
