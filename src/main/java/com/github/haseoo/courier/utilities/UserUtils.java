@@ -71,7 +71,6 @@ public class UserUtils {
         }
     }
 
-
     private static int getCheckDigit(String pesel) {
         return Integer.parseInt(pesel.substring(pesel.length() - 1));
     }

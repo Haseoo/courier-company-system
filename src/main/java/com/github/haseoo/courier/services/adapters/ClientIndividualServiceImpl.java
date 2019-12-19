@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static com.github.haseoo.courier.enums.ClientType.INDIVIDUAL;
 import static com.github.haseoo.courier.utilities.UserUtils.validatePesel;
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
+import static com.github.haseoo.courier.utilities.Utils.validateEmailAddress;
 
 @Service
 @RequiredArgsConstructor
@@ -35,10 +36,7 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
     @Transactional
     @Override
     public ClientIndividualData add(ClientIndividualAddData addData) {
-        userService.checkUsername(addData.getUserName());
-        clientIndividualRepository.getByPesel(addData.getPesel()).ifPresent(model -> {
-            throw new ClientWithPeselExists();
-        });
+        validateAddData(addData);
         ClientIndividualModel modelToAdd = modelMapper.map(addData, ClientIndividualModel.class);
         modelToAdd.setPassword(passwordEncoder.encode(String.valueOf(addData.getPassword())).toCharArray());
         validatePesel(addData.getPesel());
@@ -49,11 +47,24 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
     @Override
     public ClientIndividualData edit(Long id, ClientIndividualEditData editData) {
         ClientIndividualModel clientIndividualModel = clientIndividualRepository.getById(id).orElseThrow(() -> new ClientNotFound(id, INDIVIDUAL));
+        ClientIndividualModel modelToEdit = prepareEditModel(editData);
+        copyNonNullProperties(modelToEdit, clientIndividualModel);
+        return ClientIndividualData.of(clientIndividualRepository.saveAndFlush(clientIndividualModel));
+    }
+
+    private ClientIndividualModel prepareEditModel(ClientIndividualEditData editData) {
         ClientIndividualModel modelToEdit = modelMapper.map(editData, ClientIndividualModel.class);
         if (editData.getPassword() != null) {
             modelToEdit.setPassword(passwordEncoder.encode(String.valueOf(editData.getPassword())).toCharArray());
         }
-        copyNonNullProperties(modelToEdit, clientIndividualModel);
-        return ClientIndividualData.of(clientIndividualRepository.saveAndFlush(clientIndividualModel));
+        return modelToEdit;
+    }
+
+    private void validateAddData(ClientIndividualAddData addData) {
+        userService.checkUsername(addData.getUserName());
+        clientIndividualRepository.getByPesel(addData.getPesel()).ifPresent(model -> {
+            throw new ClientWithPeselExists();
+        });
+        validateEmailAddress(addData.getEmailAddress());
     }
 }

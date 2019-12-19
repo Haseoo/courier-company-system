@@ -29,4 +29,5 @@ public class ExceptionMessages {
     public static final String INCORRECT_USERNAME_OR_SECRET = "Incorrect username or password";
     public static final String USER_INACTIVE_EXCEPTION_FORMAT = "User %s is inactive";
     public static final String USER_DONT_HAVE_PERMISSION_TO_RESOURCE = "User don't have permission to this resource";
+    public static final String INVALID_EMAIL_ADDRESS_EXCEPTION_FORMAT = "Email address %s in not a valid email address";
 }
