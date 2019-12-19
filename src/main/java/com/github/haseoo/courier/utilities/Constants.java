@@ -18,6 +18,7 @@ public class Constants {
     public static final List<Integer> peselWeights = unmodifiableList(Arrays.asList(1, 3, 7, 9, 1, 3, 7, 9, 1, 3));
     public static final String ADMIN_USERNAME = "admin";
     public static final Long MAX_AGE_SECS = 3600L;
+    public static final String EXCEPTION_TRACK_DELIMITER = "\n";
 
 
     public static String[] corsAllowedMethods() {

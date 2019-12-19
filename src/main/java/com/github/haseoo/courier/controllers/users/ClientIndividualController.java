@@ -2,6 +2,7 @@ package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.commandsdata.users.clients.ClientIndividualAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientIndividualEditCommandData;
+import com.github.haseoo.courier.security.UserDetalisServiceImpl;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualEditData;
 import com.github.haseoo.courier.services.ports.ClientIndividualService;
@@ -15,13 +16,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ClientIndividualController {
     private final ClientIndividualService clientIndividualService;
+    private final UserDetalisServiceImpl userDetalisService;
 
     @GetMapping("{id}")
     public ClientIndividualView getById(@PathVariable Long id) {
         return ClientIndividualView.of(clientIndividualService.getById(id));
     }
 
-    @PutMapping
+    @PutMapping("/register")
     public ClientIndividualView add(@RequestBody ClientIndividualAddCommandData commandData) {
         return ClientIndividualView.of(clientIndividualService.add(ClientIndividualAddData.of(commandData)));
     }
@@ -29,6 +31,7 @@ public class ClientIndividualController {
     @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
     @PostMapping("{id}")
     public ClientIndividualView edit(@PathVariable Long id, @RequestBody ClientIndividualEditCommandData commandData) {
+        userDetalisService.verifyEditResource(id);
         return ClientIndividualView.of(clientIndividualService.edit(id, ClientIndividualEditData.of(commandData)));
     }
 }

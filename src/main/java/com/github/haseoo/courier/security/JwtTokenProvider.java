@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Date;
 
+import static com.github.haseoo.courier.utilities.Constants.EXCEPTION_TRACK_DELIMITER;
+
 @Slf4j
 @Component
 public class JwtTokenProvider {
@@ -50,7 +52,7 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (JwtException ex) {
-            log.error(Arrays.toString(ex.getStackTrace()));
+            log.error(String.join(EXCEPTION_TRACK_DELIMITER, Arrays.toString(ex.getStackTrace())));
         }
         return false;
     }

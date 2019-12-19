@@ -1,14 +1,13 @@
 package com.github.haseoo.courier.servicedata.parcels;
 
 import com.github.haseoo.courier.models.ReceiverInfoModel;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
-@Getter
+@Value
 @SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReceiverInfoData extends ReceiverInfoOperationData {
     private Long id;
 

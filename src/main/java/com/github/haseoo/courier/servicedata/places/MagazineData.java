@@ -4,8 +4,7 @@ import com.github.haseoo.courier.models.MagazineModel;
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +12,8 @@ import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Getter
+@Value
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 public class MagazineData {
     private Long id;

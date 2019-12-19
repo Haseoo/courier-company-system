@@ -5,12 +5,12 @@ import com.github.haseoo.courier.servicedata.places.AddressData;
 import com.github.haseoo.courier.servicedata.places.MagazineData;
 import com.github.haseoo.courier.utilities.UserUtils;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Value;
 import lombok.experimental.SuperBuilder;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Getter
+@Value
 @SuperBuilder
 @AllArgsConstructor(access = PRIVATE)
 public class LogisticianData extends EmployeeData {

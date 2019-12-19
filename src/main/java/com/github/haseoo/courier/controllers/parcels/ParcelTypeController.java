@@ -9,6 +9,7 @@ import com.github.haseoo.courier.views.parcels.type.ParcelTypeOfferView;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeView;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,16 +44,19 @@ public class ParcelTypeController {
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ParcelTypeView add(@RequestBody ParcelTypeCommandAddData commandData) {
         return ParcelTypeView.of(parcelTypeService.add(ParcelTypeAddOperationData.of(commandData)));
     }
 
     @PostMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ParcelTypeView edit(@PathVariable Long id, @RequestBody ParcelTypeCommandEditData commandData) {
         return ParcelTypeView.of(parcelTypeService.edit(id, ParcelTypeEditOperationData.of(commandData)));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(@PathVariable Long id) {
         parcelTypeService.delete(id);
     }

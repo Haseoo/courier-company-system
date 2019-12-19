@@ -11,6 +11,11 @@ public class Constants {
     public static final String BEARER_TOKEN_BEGIN = "Bearer ";
 
     public static String[] getUnprotectedEndpoints() {
-        return new String[]{"/swagger-ui.html", "/h2-console/**", "/login"};
+        return new String[]{"/swagger-ui.html",
+                "/h2-console/**",
+                "/api/login",
+                "/api/client/individual/register",
+                "/api/client/company/register",
+                "/offer"};
     }
 }

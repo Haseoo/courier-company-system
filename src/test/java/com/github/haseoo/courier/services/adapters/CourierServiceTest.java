@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -37,6 +38,8 @@ class CourierServiceTest {
     private EmployeeRepository employeeRepository;
     @Mock
     private UserService userService;
+    @Mock
+    private PasswordEncoder passwordEncoder;
     @Spy
     private ModelMapper modelMapper = ModelMapperConfig();
 
@@ -77,6 +80,7 @@ class CourierServiceTest {
         //given
         when(courierRepository.saveAndFlush(any())).thenReturn(getCourierModel());
         EmployeeAddOperationData in = getCourierOperationData();
+        when(passwordEncoder.encode(any())).thenReturn(String.valueOf(in.getPassword()));
         ArgumentCaptor<CourierModel> argument = ArgumentCaptor.forClass(CourierModel.class);
         //when
         sut.add(in);

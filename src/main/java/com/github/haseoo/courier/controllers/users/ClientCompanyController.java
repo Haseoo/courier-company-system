@@ -2,6 +2,7 @@ package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.commandsdata.users.clients.ClientCompanyAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientCompanyEditCommandData;
+import com.github.haseoo.courier.security.UserDetalisServiceImpl;
 import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyEditData;
 import com.github.haseoo.courier.services.ports.ClientCompanyService;
@@ -10,18 +11,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/api/client/company")
 @RequiredArgsConstructor
 public class ClientCompanyController {
     private final ClientCompanyService clientCompanyService;
+    private final UserDetalisServiceImpl userDetalisService;
 
     @GetMapping("{id}")
     public ClientCompanyView getById(@PathVariable Long id) {
         return ClientCompanyView.of(clientCompanyService.getById(id));
     }
 
-    @PutMapping
+    @PutMapping("/register")
     public ClientCompanyView add(@RequestBody ClientCompanyAddCommandData commandData) {
         return ClientCompanyView.of(clientCompanyService.add(ClientCompanyAddData.of(commandData)));
     }
@@ -30,6 +33,7 @@ public class ClientCompanyController {
     @PostMapping("{id}")
     public ClientCompanyView edit(@PathVariable Long id,
                                   @RequestBody ClientCompanyEditCommandData commandData) {
+        userDetalisService.verifyEditResource(id);
         return ClientCompanyView.of(clientCompanyService.edit(id, ClientCompanyEditData.of(commandData)));
     }
 }

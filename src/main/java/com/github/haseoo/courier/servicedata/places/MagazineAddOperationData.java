@@ -1,14 +1,16 @@
 package com.github.haseoo.courier.servicedata.places;
 
 import com.github.haseoo.courier.commandsdata.places.MagazineAddCommandData;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NonNull;
+import lombok.Value;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Getter
+@Value
 @Builder(access = PRIVATE)
+@AllArgsConstructor(access = PRIVATE)
 public class MagazineAddOperationData {
     @NonNull
     private AddressOperationData address;

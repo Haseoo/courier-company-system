@@ -6,6 +6,7 @@ import com.github.haseoo.courier.services.ports.ReceiverInfoService;
 import com.github.haseoo.courier.views.receiver.info.ReceiverInfoView;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class ReceiverInfoController {
     }
 
     @PostMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ReceiverInfoView edit(@PathVariable Long id, @RequestBody ReceiverInfoCommandData commandData) {
         return ReceiverInfoView.of(receiverInfoService.edit(id, ReceiverInfoOperationData.of(commandData)));
     }
