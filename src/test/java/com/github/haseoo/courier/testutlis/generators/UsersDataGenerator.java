@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.testutlis.generators;
 
+import com.github.haseoo.courier.enums.ClientType;
 import com.github.haseoo.courier.models.*;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,7 @@ public class UsersDataGenerator {
         clientIndividualModel.setPhoneNumber(TEST_PHONE_NUMBER);
         clientIndividualModel.setUserName(TEST_USER_NAME);
         clientIndividualModel.setPassword(TEST_USER_PASSWD.toCharArray());
+        clientIndividualModel.setClientType(ClientType.INDIVIDUAL);
         clientIndividualModel.setActive(true);
         return clientIndividualModel;
     }
@@ -65,6 +67,7 @@ public class UsersDataGenerator {
         clientCompanyModel.setUserName(TEST_USER_NAME);
         clientCompanyModel.setPassword(TEST_USER_PASSWD.toCharArray());
         clientCompanyModel.setCompanyName(TEST_COMPANY_NAME);
+        clientCompanyModel.setClientType(ClientType.COMPANY);
         clientCompanyModel.setActive(true);
         return clientCompanyModel;
     }
