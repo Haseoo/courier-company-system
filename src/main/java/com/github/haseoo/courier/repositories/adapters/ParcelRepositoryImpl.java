@@ -28,4 +28,9 @@ public class ParcelRepositoryImpl implements ParcelRepository {
     public ParcelModel saveAndFlush(ParcelModel parcelModel) {
         return parcelJPARepository.saveAndFlush(parcelModel);
     }
+
+    @Override
+    public void delete(Long id) {
+        parcelJPARepository.deleteById(id);
+    }
 }

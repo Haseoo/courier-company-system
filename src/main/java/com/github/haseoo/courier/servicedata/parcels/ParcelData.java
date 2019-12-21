@@ -38,7 +38,7 @@ public class ParcelData {
 
     public BigDecimal getEffectivePrice() {
         if (priority) {
-            return parcelFee.multiply(BigDecimal.valueOf(1.1));
+            return parcelType.getPrice().multiply(BigDecimal.valueOf(1.1)).add(parcelFee);
         }
         return parcelFee;
     }

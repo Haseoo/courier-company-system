@@ -12,4 +12,6 @@ public interface ParcelService {
     ParcelData edit(Long id, ParcelEditData parcelEditData);
 
     List<ParcelData> getList();
+
+    void delete(Long id);
 }

@@ -39,4 +39,10 @@ public class ParcelController {
     public ParcelViewAfterAddOrEdit edit(@PathVariable Long id, @RequestBody ParcelEditData parcelEditData) {
         return ParcelViewAfterAddOrEdit.of(parcelService.edit(id, parcelEditData));
     }
+
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
+    public void delete(@PathVariable Long id) {
+        parcelService.delete(id);
+    }
 }

@@ -92,6 +92,16 @@ public class ParcelServiceImpl implements ParcelService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(Long id) {
+        ParcelData parcelData = ParcelData.of(parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id)));
+        userDetailsService.verifyEditResource(parcelData.getSender().getId());
+        if (parcelData.getCurrentState().getState() != AT_SENDER) {
+            throw new IllegalParcelState();
+        }
+        parcelRepository.delete(id);
+    }
+
     private ParcelModel prepareParcelModel(ParcelAddData parcelAddData) {
         ParcelTypeModel parcelTypeModel = parcelTypeRepository
                 .getById(parcelAddData.getParcelTypeId())
