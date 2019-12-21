@@ -17,7 +17,7 @@ import static com.github.haseoo.courier.exceptions.ExceptionMessages.USER_NOT_FO
 
 @Service
 @RequiredArgsConstructor
-public class UserDetalisServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
@@ -32,12 +32,12 @@ public class UserDetalisServiceImpl implements UserDetailsService {
     }
 
     public void verifyEditResource(Long id) {
-        if (currentUser().getUserType() != ADMIN && currentUser().getId().equals(id)) {
+        if (currentUser().getUserType() != ADMIN && !currentUser().getId().equals(id)) {
             throw new ResourceException();
         }
     }
 
-    private UserDetailsImpl currentUser() {
+    public UserDetailsImpl currentUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         return (UserDetailsImpl) authentication.getPrincipal();

@@ -2,7 +2,7 @@ package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.commandsdata.users.clients.ClientCompanyAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientCompanyEditCommandData;
-import com.github.haseoo.courier.security.UserDetalisServiceImpl;
+import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyEditData;
 import com.github.haseoo.courier.services.ports.ClientCompanyService;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ClientCompanyController {
     private final ClientCompanyService clientCompanyService;
-    private final UserDetalisServiceImpl userDetalisService;
+    private final UserDetailsServiceImpl userDetalisService;
 
     @GetMapping("{id}")
     public ClientCompanyView getById(@PathVariable Long id) {

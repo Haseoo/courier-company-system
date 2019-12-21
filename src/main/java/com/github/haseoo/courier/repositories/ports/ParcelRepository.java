@@ -11,4 +11,6 @@ public interface ParcelRepository {
     Optional<ParcelModel> getById(Long id);
 
     ParcelModel saveAndFlush(ParcelModel parcelModel);
+
+    void delete(Long id);
 }

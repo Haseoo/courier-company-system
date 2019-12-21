@@ -27,7 +27,7 @@ import static com.github.haseoo.courier.security.Constants.getUnprotectedEndpoin
         prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetalisServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Bean

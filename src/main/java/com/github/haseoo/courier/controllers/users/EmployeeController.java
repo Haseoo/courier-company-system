@@ -3,7 +3,7 @@ package com.github.haseoo.courier.controllers.users;
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeEditCommandData;
 import com.github.haseoo.courier.enums.EmployeeType;
-import com.github.haseoo.courier.security.UserDetalisServiceImpl;
+import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeEditOperationData;
 import com.github.haseoo.courier.services.ports.CourierService;
@@ -26,7 +26,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final CourierService courierService;
     private final LogisticianService logisticianService;
-    private final UserDetalisServiceImpl userDetalisService;
+    private final UserDetailsServiceImpl userDetalisService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping

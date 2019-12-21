@@ -9,7 +9,6 @@ import com.github.haseoo.courier.services.ports.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -22,7 +21,6 @@ public class AddressServiceImpl implements AddressService {
     private final ModelMapper modelMapper;
 
     @Override
-    @Transactional
     public void consume(AddressOperationData addressOperationData, Consumer<AddressModel> consumer) {
         consumer.accept(addressRepository
                 .addressExist(AddressQueryData.of(addressOperationData))

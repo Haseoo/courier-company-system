@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.commandsdata.users.clients;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.haseoo.courier.commandsdata.users.UserEditCommandData;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ public class ClientCompanyEditCommandData extends UserEditCommandData {
     private String representativeEmailAddress;
     private String representativePhoneNumber;
 
+    @JsonCreator
     public ClientCompanyEditCommandData(@JsonProperty(value = "password") char[] password,
                                         @JsonProperty(value = "emailAddress") String emailAddress,
                                         @JsonProperty(value = "phoneNumber") String phoneNumber,

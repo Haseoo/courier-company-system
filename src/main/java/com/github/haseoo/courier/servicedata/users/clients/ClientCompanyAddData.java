@@ -1,6 +1,7 @@
 package com.github.haseoo.courier.servicedata.users.clients;
 
 import com.github.haseoo.courier.commandsdata.users.clients.ClientCompanyAddCommandData;
+import com.github.haseoo.courier.enums.ClientType;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
@@ -32,6 +33,8 @@ public class ClientCompanyAddData {
     private String representativeEmailAddress;
     @NonNull
     private String representativePhoneNumber;
+    @NonNull
+    private ClientType clientType;
 
     public static ClientCompanyAddData of(ClientCompanyAddCommandData commandData) {
         return ClientCompanyAddData
@@ -47,6 +50,7 @@ public class ClientCompanyAddData {
                 .representativeSurname(commandData.getRepresentativeSurname())
                 .representativeEmailAddress(commandData.getRepresentativeEmailAddress())
                 .representativePhoneNumber(commandData.getRepresentativePhoneNumber())
+                .clientType(ClientType.COMPANY)
                 .build();
     }
 }
