@@ -42,7 +42,7 @@ public class EmployeeView {
                 .name(courierData.getName())
                 .surname(courierData.getSurname())
                 .pesel(courierData.getPesel())
-                .phoneNumber(courierData.getPesel())
+                .phoneNumber(courierData.getPhoneNumber())
                 .employeeType(courierData.getEmployeeType())
                 .build();
     }

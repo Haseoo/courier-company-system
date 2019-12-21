@@ -30,4 +30,7 @@ public class ExceptionMessages {
     public static final String USER_INACTIVE_EXCEPTION_FORMAT = "User %s is inactive";
     public static final String USER_DONT_HAVE_PERMISSION_TO_RESOURCE = "User don't have permission to this resource";
     public static final String INVALID_EMAIL_ADDRESS_EXCEPTION_FORMAT = "Email address %s in not a valid email address";
+    public static final String ATTEMPT_TO_ADD_PARCEL_OF_INACTIVE_TYPE = "Attempting to add parcel with inactive type";
+    public static final String PARCEL_NOT_FOUND_EXCEPTION_FORMAT = "Parcel with id %s not found";
+    public static final String ILLEGAL_PARCEL_STATE = "This parcel has illegal state for this operation";
 }

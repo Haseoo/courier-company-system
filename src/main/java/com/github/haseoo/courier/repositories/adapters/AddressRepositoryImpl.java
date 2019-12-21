@@ -6,6 +6,7 @@ import com.github.haseoo.courier.repositories.jpa.AddressJPARepository;
 import com.github.haseoo.courier.repositories.ports.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class AddressRepositoryImpl implements AddressRepository {
         return addressJPARepository.saveAndFlush(addressModel);
     }
 
+    @Transactional
     @Override
     public Optional<AddressModel> addressExist(AddressQueryData addressQueryData) {
         return addressJPARepository

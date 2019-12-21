@@ -2,7 +2,7 @@ package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.commandsdata.users.clients.ClientIndividualAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientIndividualEditCommandData;
-import com.github.haseoo.courier.security.UserDetalisServiceImpl;
+import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualEditData;
 import com.github.haseoo.courier.services.ports.ClientIndividualService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ClientIndividualController {
     private final ClientIndividualService clientIndividualService;
-    private final UserDetalisServiceImpl userDetalisService;
+    private final UserDetailsServiceImpl userDetalisService;
 
     @GetMapping("{id}")
     public ClientIndividualView getById(@PathVariable Long id) {
