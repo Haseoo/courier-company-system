@@ -26,4 +26,15 @@ public class ClientView {
                 .clientType(clientData.getClientType())
                 .build();
     }
+
+    public static ClientView ofWithoutParcels(ClientData clientData) {
+        return ClientView
+                .builder()
+                .id(clientData.getId())
+                .active(clientData.getActive())
+                .emailAddress(clientData.getEmailAddress())
+                .phoneNumber(clientData.getPhoneNumber())
+                .clientType(clientData.getClientType())
+                .build();
+    }
 }

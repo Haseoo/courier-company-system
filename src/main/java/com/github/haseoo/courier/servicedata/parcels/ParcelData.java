@@ -51,15 +51,33 @@ public class ParcelData {
                         parcelModel
                                 .getParcelStates()
                                 .stream()
-                                .map(ParcelStateData::ofWithoutParcel)
+                                .map(ParcelStateData::of)
                                 .collect(Collectors.toList()) :
                         new ArrayList<>()))
                 .currentState(((parcelModel.getParcelStates() != null) ?
-                        ParcelStateData.ofWithoutParcel(parcelModel.getParcelStates()
+                        ParcelStateData.of(parcelModel.getParcelStates()
                                 .stream()
                                 .max(new ParcelStateRecordComparator())
                                 .orElse(defaultParcelStateRecord())) :
                         null))
+                .pin(parcelModel.getPin())
+                .parcelType(ParcelTypeData.ofWithoutList(parcelModel.getParcelType()))
+                .deliveryAddress(AddressData.of(parcelModel.getDeliveryAddress()))
+                .senderAddress(AddressData.of(parcelModel.getSenderAddress()))
+                .sender(ClientData.ofWithoutLists(parcelModel.getSender()))
+                .receiverContactData(ReceiverInfoData.of(parcelModel.getReceiverContactData()))
+                .expectedDeliveryTime(parcelModel.getExpectedDeliveryTime())
+                .priority(parcelModel.getPriority())
+                .parcelFee(parcelModel.getParcelFee())
+                .paid(parcelModel.getPaid())
+                .dateMoved(parcelModel.getDateMoved())
+                .build();
+    }
+
+    public static ParcelData ofWithoutStates(ParcelModel parcelModel) {
+        return ParcelData
+                .builder()
+                .id(parcelModel.getId())
                 .pin(parcelModel.getPin())
                 .parcelType(ParcelTypeData.ofWithoutList(parcelModel.getParcelType()))
                 .deliveryAddress(AddressData.of(parcelModel.getDeliveryAddress()))

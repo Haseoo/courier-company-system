@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.github.haseoo.courier.enums.ParcelStateType.AT_COURIER_FROM_SENDER;
-import static com.github.haseoo.courier.enums.ParcelStateType.AT_COURIER_TO_RECEIVER;
+import static com.github.haseoo.courier.enums.ParcelStateType.ASSIGNED;
 import static lombok.AccessLevel.PRIVATE;
 
 @EqualsAndHashCode(callSuper = true)
@@ -42,7 +41,8 @@ public class CourierData extends EmployeeData {
                                 .map(ParcelStateRecord::getParcel)
                                 .map(ParcelData::of)
                                 .filter(parcelData -> parcelData.getCurrentState().getState() == AT_COURIER_FROM_SENDER ||
-                                        parcelData.getCurrentState().getState() == AT_COURIER_TO_RECEIVER)
+                                        parcelData.getCurrentState().getState() == AT_COURIER_TO_RECEIVER ||
+                                        parcelData.getCurrentState().getState() == ASSIGNED)
                                 .collect(Collectors.toList()) :
                         new ArrayList<>()))
                 .build();

@@ -2,6 +2,7 @@ package com.github.haseoo.courier.views.places;
 
 import com.github.haseoo.courier.servicedata.places.MagazineData;
 import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
+import com.github.haseoo.courier.views.parcels.ParcelViewInMagazineLists;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,6 +18,7 @@ public class MagazineView {
     private AddressView address;
     private Boolean active;
     private List<Long> logisticiansIds;
+    private List<ParcelViewInMagazineLists> parcels;
 
     public static MagazineView of(MagazineData magazineData) {
         return MagazineView
@@ -28,6 +30,11 @@ public class MagazineView {
                         .stream()
                         .map(LogisticianData::getId)
                         .collect(Collectors.toList()))
+                .parcels(((magazineData.getParcels() != null) ?
+                        magazineData.getParcels()
+                                .stream()
+                                .map(ParcelViewInMagazineLists::of)
+                                .collect(Collectors.toList()) : null))
                 .build();
     }
 }

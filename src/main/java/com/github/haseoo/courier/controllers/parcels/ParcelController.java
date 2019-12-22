@@ -1,11 +1,13 @@
 package com.github.haseoo.courier.controllers.parcels;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelCommandAddData;
+import com.github.haseoo.courier.commandsdata.parcels.ReceiverInfoCommandData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelAddData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelEditData;
+import com.github.haseoo.courier.servicedata.parcels.ReceiverInfoOperationData;
 import com.github.haseoo.courier.services.ports.ParcelService;
-import com.github.haseoo.courier.views.places.ParcelViewAfterAddOrEdit;
-import com.github.haseoo.courier.views.places.ParcelViewForAdmin;
+import com.github.haseoo.courier.views.parcels.ParcelViewAfterAddOrEdit;
+import com.github.haseoo.courier.views.parcels.ParcelViewForAdmin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,13 @@ public class ParcelController {
     public ParcelViewAfterAddOrEdit edit(@PathVariable Long id, @RequestBody ParcelEditData parcelEditData) {
         return ParcelViewAfterAddOrEdit.of(parcelService.edit(id, parcelEditData));
     }
+
+    @PostMapping("/{id}/changeReceiver")
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
+    public ParcelViewAfterAddOrEdit edit(@PathVariable Long id, @RequestBody ReceiverInfoCommandData newReceiver) {
+        return ParcelViewAfterAddOrEdit.of(parcelService.changeReceiverForLogistician(id, ReceiverInfoOperationData.of(newReceiver)));
+    }
+
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")

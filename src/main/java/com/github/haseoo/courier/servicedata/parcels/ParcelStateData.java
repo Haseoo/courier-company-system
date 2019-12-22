@@ -25,19 +25,11 @@ public class ParcelStateData {
                 .builder()
                 .state(parcelStateRecord.getState())
                 .changeDate(parcelStateRecord.getChangeDate())
-                .parcel(ParcelData.of(parcelStateRecord.getParcel()))
-                .magazine(MagazineData.ofWithoutLists(parcelStateRecord.getMagazine()))
-                .courierData(CourierData.ofWithoutList(parcelStateRecord.getCourier()))
-                .build();
-    }
-
-    public static ParcelStateData ofWithoutParcel(ParcelStateRecord parcelStateRecord) {
-        return ParcelStateData
-                .builder()
-                .state(parcelStateRecord.getState())
-                .changeDate(parcelStateRecord.getChangeDate())
-                .magazine(MagazineData.ofWithoutLists(parcelStateRecord.getMagazine()))
-                .courierData(CourierData.ofWithoutList(parcelStateRecord.getCourier()))
+                .parcel(ParcelData.ofWithoutStates(parcelStateRecord.getParcel()))
+                .magazine(((parcelStateRecord.getMagazine() != null) ?
+                        MagazineData.ofWithoutLists(parcelStateRecord.getMagazine()) : null))
+                .courierData(((parcelStateRecord.getCourier() != null) ?
+                        CourierData.ofWithoutList(parcelStateRecord.getCourier()) : null))
                 .build();
     }
 }

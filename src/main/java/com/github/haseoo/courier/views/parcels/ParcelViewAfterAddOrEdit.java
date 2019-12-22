@@ -1,7 +1,8 @@
-package com.github.haseoo.courier.views.places;
+package com.github.haseoo.courier.views.parcels;
 
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeView;
+import com.github.haseoo.courier.views.places.AddressView;
 import com.github.haseoo.courier.views.receiver.info.ReceiverInfoView;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,11 +1,13 @@
 package com.github.haseoo.courier.controllers;
 
+import com.github.haseoo.courier.commandsdata.parcels.ParcelChangeStateMultipleCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineAddCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineAddLogisiticiansCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineEditCommandData;
 import com.github.haseoo.courier.servicedata.places.MagazineAddOperationData;
 import com.github.haseoo.courier.servicedata.places.MagazineEditOperationData;
 import com.github.haseoo.courier.services.ports.MagazineService;
+import com.github.haseoo.courier.services.ports.ParcelStateService;
 import com.github.haseoo.courier.views.places.MagazineView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MagazineController {
     private final MagazineService magazineService;
+    private final ParcelStateService parcelStateService;
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @GetMapping
@@ -48,5 +51,11 @@ public class MagazineController {
     @PostMapping("/{id}/logisticians")
     public MagazineView addLogisiticians(@PathVariable Long id, @RequestBody MagazineAddLogisiticiansCommandData logisiticiansCommandData) {
         return MagazineView.of(magazineService.addLogisitcians(id, logisiticiansCommandData.getLogisiticiansIds()));
+    }
+
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
+    @PostMapping("/{id}/parcels")
+    public MagazineView addParcels(@PathVariable Long id, @RequestBody ParcelChangeStateMultipleCommandData commandData) {
+        return MagazineView.of(parcelStateService.addParcelsToMagazine(id, commandData.getParcelsIds()));
     }
 }

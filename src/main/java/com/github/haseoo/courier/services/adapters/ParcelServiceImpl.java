@@ -17,12 +17,12 @@ import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.parcels.ParcelAddData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelEditData;
+import com.github.haseoo.courier.servicedata.parcels.ReceiverInfoOperationData;
 import com.github.haseoo.courier.services.ports.AddressService;
 import com.github.haseoo.courier.services.ports.ParcelService;
 import com.github.haseoo.courier.services.ports.ReceiverInfoService;
 import com.github.haseoo.courier.utilities.PinGenerator;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.github.haseoo.courier.enums.ParcelStateType.AT_SENDER;
-import static com.github.haseoo.courier.enums.ParcelStateType.RETURNED;
+import static com.github.haseoo.courier.enums.ParcelStateType.*;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +42,6 @@ public class ParcelServiceImpl implements ParcelService {
     private final ParcelTypeRepository parcelTypeRepository;
     private final ClientRepository clientRepository;
     private final PinGenerator pinGenerator;
-    private final ModelMapper modelMapper;
     private final UserDetailsServiceImpl userDetailsService;
 
     @Override
@@ -61,6 +59,37 @@ public class ParcelServiceImpl implements ParcelService {
     public ParcelData edit(Long id, ParcelEditData parcelEditData) {
         ParcelModel parcelModel = prepareEditedParcelModel(id, parcelEditData);
         return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+    }
+
+    @Override
+    @Transactional
+    public ParcelData changeReceiverForLogistician(Long id, ReceiverInfoOperationData receiverInfoOperationData) {
+        ParcelModel parcelModel = parcelRepository
+                .getById(id)
+                .orElseThrow(() -> new ParcelTypeNotFound(id));
+        if (ParcelData.of(parcelModel).getCurrentState().getState() != IN_MAGAZINE) {
+            throw new IllegalParcelState();
+        }
+        receiverInfoService.consume(receiverInfoOperationData, parcelModel::setReceiverContactData);
+        return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+    }
+
+    @Override
+    public List<ParcelData> getList() {
+        return parcelRepository.getList()
+                .stream()
+                .map(ParcelData::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(Long id) {
+        ParcelData parcelData = ParcelData.of(parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id)));
+        userDetailsService.verifyEditResource(parcelData.getSender().getId());
+        if (parcelData.getCurrentState().getState() != AT_SENDER) {
+            throw new IllegalParcelState();
+        }
+        parcelRepository.delete(id);
     }
 
     private ParcelModel prepareEditedParcelModel(Long id, ParcelEditData parcelEditData) {
@@ -82,24 +111,6 @@ public class ParcelServiceImpl implements ParcelService {
             parcelModel.setParcelFee(parcelEditData.getParcelFee());
         }
         return parcelModel;
-    }
-
-    @Override
-    public List<ParcelData> getList() {
-        return parcelRepository.getList()
-                .stream()
-                .map(ParcelData::of)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public void delete(Long id) {
-        ParcelData parcelData = ParcelData.of(parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id)));
-        userDetailsService.verifyEditResource(parcelData.getSender().getId());
-        if (parcelData.getCurrentState().getState() != AT_SENDER) {
-            throw new IllegalParcelState();
-        }
-        parcelRepository.delete(id);
     }
 
     private ParcelModel prepareParcelModel(ParcelAddData parcelAddData) {

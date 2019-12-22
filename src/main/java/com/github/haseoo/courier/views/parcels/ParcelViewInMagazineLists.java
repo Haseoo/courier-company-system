@@ -1,7 +1,9 @@
-package com.github.haseoo.courier.views.places;
+package com.github.haseoo.courier.views.parcels;
 
+import com.github.haseoo.courier.enums.ParcelStateType;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeView;
+import com.github.haseoo.courier.views.places.AddressView;
 import com.github.haseoo.courier.views.receiver.info.ReceiverInfoView;
 import com.github.haseoo.courier.views.users.clients.ClientView;
 import lombok.Builder;
@@ -14,15 +16,12 @@ import static lombok.AccessLevel.PRIVATE;
 
 @Value
 @Builder(access = PRIVATE)
-public class ParcelViewForAdmin {
+public class ParcelViewInMagazineLists {
     private Long id;
-    //private ParcelStateData currentState;
-    //private List<ParcelStateData> parcelStates;
-    private char[] pin;
     private ParcelTypeView parcelType;
     private AddressView deliveryAddress;
     private AddressView senderAddress;
-    private ClientView sender; //wo-parcels!!!!!!!!!!!!!!!!
+    private ClientView sender;
     private ReceiverInfoView receiverContactData;
     private LocalDate expectedDeliveryTime;
     private Boolean priority;
@@ -30,16 +29,16 @@ public class ParcelViewForAdmin {
     private Boolean paid;
     private Boolean dateMoved;
     private BigDecimal effectivePrice;
+    private ParcelStateType currentState;
 
-    public static ParcelViewForAdmin of(ParcelData parcelData) {
-        return ParcelViewForAdmin
+    public static ParcelViewInMagazineLists of(ParcelData parcelData) {
+        return ParcelViewInMagazineLists
                 .builder()
                 .id(parcelData.getId())
-                .pin(parcelData.getPin())
                 .parcelType(ParcelTypeView.of(parcelData.getParcelType()))
                 .deliveryAddress(AddressView.of(parcelData.getDeliveryAddress()))
                 .senderAddress(AddressView.of(parcelData.getSenderAddress()))
-                .sender(ClientView.of(parcelData.getSender()))
+                .sender(ClientView.ofWithoutParcels(parcelData.getSender()))
                 .receiverContactData(ReceiverInfoView.of(parcelData.getReceiverContactData()))
                 .expectedDeliveryTime(parcelData.getExpectedDeliveryTime())
                 .priority(parcelData.getPriority())
@@ -47,6 +46,7 @@ public class ParcelViewForAdmin {
                 .paid(parcelData.getPaid())
                 .dateMoved(parcelData.getDateMoved())
                 .effectivePrice(parcelData.getEffectivePrice())
+                .currentState(parcelData.getCurrentState().getState())
                 .build();
     }
 }

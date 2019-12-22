@@ -40,4 +40,3 @@ public class ReceiverInfoOperationData {
                 .build();
     }
 }
-//ADd parcel
