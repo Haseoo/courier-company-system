@@ -6,7 +6,6 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import static com.github.haseoo.courier.enums.ParcelStateType.AT_COURIER_FROM_SENDER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -40,7 +39,7 @@ public class ParcelStateRecord {
     public static ParcelStateRecord defaultParcelStateRecord() {
         ParcelStateRecord parcelStateRecord = new ParcelStateRecord();
         parcelStateRecord.setChangeDate(LocalDateTime.now());
-        parcelStateRecord.setState(AT_COURIER_FROM_SENDER);
+        parcelStateRecord.setState(ParcelStateType.AT_SENDER);
         return parcelStateRecord;
     }
 
