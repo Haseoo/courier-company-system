@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.ParcelStateType.ASSIGNED;
 import static com.github.haseoo.courier.enums.ParcelStateType.AT_COURIER;
+import static com.github.haseoo.courier.utilities.Utils.distinctByKey;
 import static lombok.AccessLevel.PRIVATE;
 
 @EqualsAndHashCode(callSuper = true)
@@ -43,6 +44,7 @@ public class CourierData extends EmployeeData {
                                 .map(ParcelData::of)
                                 .filter(parcelData -> parcelData.getCurrentState().getState() == AT_COURIER ||
                                         parcelData.getCurrentState().getState() == ASSIGNED)
+                                .filter(distinctByKey(ParcelData::getId))
                                 .collect(Collectors.toList()) :
                         new ArrayList<>()))
                 .build();

@@ -2,6 +2,7 @@ package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.enums.ParcelStateType;
 import com.github.haseoo.courier.exceptions.serviceexceptions.MagazineDoesNotExist;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IllegalParcelState;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
 import com.github.haseoo.courier.models.CourierModel;
@@ -17,13 +18,16 @@ import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import com.github.haseoo.courier.services.ports.ParcelStateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.EmployeeType.COURIER;
+import static com.github.haseoo.courier.enums.ParcelStateType.*;
 import static com.github.haseoo.courier.utilities.Constants.PARCEL_DEFAULT_WEEKS_TO_DELIVERY_AFTER_ADD_TO_MAGAZINE;
 
 @Service
@@ -34,6 +38,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     private final ParcelRepository parcelRepository;
 
     @Override
+    @Transactional
     public MagazineData addParcelsToMagazine(Long magazineId, List<Long> parcelIds) {
         MagazineModel magazineModel = magazineRepository.getById(magazineId).orElseThrow(() -> new MagazineDoesNotExist(magazineId));
         List<ParcelModel> parcelModels = getParcelModels(parcelIds);
@@ -45,42 +50,53 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     }
 
     @Override
+    @Transactional
     public CourierData assignParcelsToCourier(Long courierId, List<Long> parcelIds) {
         CourierModel courierModel = courierRepository.getById(courierId).orElseThrow(() -> new EmployeeNotFoundException(courierId, COURIER));
-        List<ParcelStateRecord> parcelStateRecords = getParcelStateRecords(courierModel, getParcelModels(parcelIds), ParcelStateType.ASSIGNED);
+        List<ParcelStateRecord> parcelStateRecords = getParcelStateRecords(courierModel, getParcelModels(parcelIds), ASSIGNED);
         courierModel.getParcelStates().addAll(parcelStateRecords);
         return CourierData.of(courierRepository.saveAndFlush(courierModel));
     }
 
     @Override
+    @Transactional
     public CourierData setAsPickedByCourier(Long courierId, List<Long> parcelIds) {
         CourierModel courierModel = courierRepository.getById(courierId).orElseThrow(() -> new EmployeeNotFoundException(courierId, COURIER));
         List<ParcelModel> parcelModels = getParcelModels(parcelIds);
-        List<ParcelStateRecord> parcelStateRecords = getParcelStateRecords(courierModel, parcelModels, ParcelStateType.AT_COURIER);
+        List<ParcelStateRecord> parcelStateRecords = getParcelStateRecords(courierModel, parcelModels, AT_COURIER);
         courierModel.getParcelStates().addAll(parcelStateRecords);
         setExpectedDeliveryTimeToday(parcelModels);
         return CourierData.of(courierRepository.saveAndFlush(courierModel));
     }
 
     @Override
+    @Transactional
     public ParcelData setParcelAsDelivered(Long courierId, Long parcelId) {
-        return changeOneParcelState(courierId, parcelId, ParcelStateType.DELIVERED);
+        return changeOneParcelState(courierId, parcelId, DELIVERED);
     }
 
     @Override
+    @Transactional
     public ParcelData setParcelReturned(Long courierId, Long parcelId) {
-        return changeOneParcelState(courierId, parcelId, ParcelStateType.RETURNED);
+        return changeOneParcelState(courierId, parcelId, RETURNED);
     }
 
-    private ParcelData changeOneParcelState(Long courierId, Long parcelId, ParcelStateType delivered) {
+    private ParcelData changeOneParcelState(Long courierId, Long parcelId, ParcelStateType newState) {
         CourierModel courierModel = courierRepository.getById(courierId).orElseThrow(() -> new EmployeeNotFoundException(courierId, COURIER));
         ParcelModel parcelModel = parcelRepository.getById(parcelId).orElseThrow(() -> new ParcelNotFound(parcelId));
-        ParcelStateRecord parcelStateRecord = prepareParcelStateRecord(parcelModel, courierModel, delivered);
+        verifyState(parcelModel, AT_COURIER);
+        ParcelStateRecord parcelStateRecord = prepareParcelStateRecord(parcelModel, courierModel, newState);
         parcelModel.getParcelStates().add(parcelStateRecord);
         return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
     }
 
     private ParcelStateRecord prepareParcelStateRecord(ParcelModel parcelModel, CourierModel courierModel, ParcelStateType parcelStateType) {
+        if (parcelStateType == ASSIGNED) {
+            verifyState(parcelModel, AT_SENDER, IN_MAGAZINE);
+        }
+        if (parcelStateType == AT_COURIER) {
+            verifyState(parcelModel, ASSIGNED);
+        }
         ParcelStateRecord parcelStateRecord = new ParcelStateRecord();
         parcelStateRecord.setChangeDate(LocalDateTime.now());
         parcelStateRecord.setParcel(parcelModel);
@@ -90,11 +106,12 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     }
 
     private ParcelStateRecord prepareParcelStateRecord(ParcelModel parcelModel, MagazineModel magazineModel) {
+        verifyState(parcelModel, AT_COURIER);
         ParcelStateRecord parcelStateRecord = new ParcelStateRecord();
         parcelStateRecord.setChangeDate(LocalDateTime.now());
         parcelStateRecord.setParcel(parcelModel);
         parcelStateRecord.setMagazine(magazineModel);
-        parcelStateRecord.setState(ParcelStateType.IN_MAGAZINE);
+        parcelStateRecord.setState(IN_MAGAZINE);
         return parcelStateRecord;
     }
 
@@ -131,6 +148,13 @@ public class ParcelStateServiceImpl implements ParcelStateService {
                 .stream()
                 .map(id -> parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id)))
                 .collect(Collectors.toList());
+    }
+
+    private void verifyState(ParcelModel parcelModel, ParcelStateType... acceptableStates) {
+        ParcelStateType currentState = ParcelData.of(parcelModel).getCurrentState().getState();
+        if (Arrays.stream(acceptableStates).noneMatch(acceptableState -> acceptableState == currentState)) {
+            throw new IllegalParcelState(parcelModel.getId(), currentState, acceptableStates);
+        }
     }
 
 }

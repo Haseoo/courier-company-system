@@ -8,6 +8,9 @@ import org.springframework.beans.BeanWrapperImpl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static com.github.haseoo.courier.utilities.Constants.EMAIL_REGEX_EXPRESSION;
 import static lombok.AccessLevel.PRIVATE;
@@ -35,5 +38,10 @@ public class Utils {
         }
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 }

@@ -5,7 +5,6 @@ public enum ParcelStateType {
     IN_MAGAZINE,
     ASSIGNED,
     AT_SENDER,
-    PENDING_FOR_PICKUP,
     AT_COURIER,
     RETURNED
 }

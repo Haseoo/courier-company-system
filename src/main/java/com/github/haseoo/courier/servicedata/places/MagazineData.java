@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.ParcelStateType.IN_MAGAZINE;
+import static com.github.haseoo.courier.utilities.Utils.distinctByKey;
 import static lombok.AccessLevel.PRIVATE;
 
 @Value
@@ -42,6 +43,7 @@ public class MagazineData {
                         .map(ParcelStateRecord::getParcel)
                         .map(ParcelData::of)
                         .filter(parcelData -> parcelData.getCurrentState().getState() == IN_MAGAZINE)
+                        .filter(distinctByKey(ParcelData::getId))
                         .collect(Collectors.toList())
                         : new ArrayList<>()))
                 .build();

@@ -33,4 +33,6 @@ public class ExceptionMessages {
     public static final String ATTEMPT_TO_ADD_PARCEL_OF_INACTIVE_TYPE = "Attempting to add parcel with inactive type";
     public static final String PARCEL_NOT_FOUND_EXCEPTION_FORMAT = "Parcel with id %s not found";
     public static final String ILLEGAL_PARCEL_STATE = "This parcel has illegal state for this operation";
+    public static final String ILLEGAL_PARCEL_STATE_EXCEPTION_FORMAT = "Parcel %s has illegal state for this operation. Parcel has state: %s and acceptable previous state could be: ";
+    public static final String ACCEPTABLE_STATES_LIST_FORMAT = "%s, ";
 }
