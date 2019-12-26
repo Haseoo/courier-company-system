@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
-@Table(name = "ParcelModel")
+@Table(name = "Parcel")
 public class ParcelModel {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -36,7 +36,7 @@ public class ParcelModel {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false, name = "receiverContactDataId")
     private ReceiverInfoModel receiverContactData;
-    private LocalDate expectedDeliveryTime;
+    private LocalDate expectedCourierArrivalDate;
     @Column(nullable = false)
     private Boolean priority;
     @Column(nullable = false)
@@ -45,6 +45,8 @@ public class ParcelModel {
     private Boolean paid;
     @Column(nullable = false, name = "isDateMoved")
     private Boolean dateMoved;
+    @Column(nullable = false, name = "isToReturn")
+    private Boolean toReturn = false;
 
     @OneToMany(fetch = LAZY, mappedBy = "parcel", cascade = ALL)
     private List<ParcelStateRecord> parcelStates;

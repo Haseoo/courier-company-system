@@ -40,6 +40,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetailsImpl currentUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
+        if (authentication.getPrincipal().equals("anonymousUser")) {
+            return null;
+        }
         return (UserDetailsImpl) authentication.getPrincipal();
     }
 }

@@ -1,6 +1,7 @@
 package com.github.haseoo.courier.servicedata.places;
 
 import com.github.haseoo.courier.commandsdata.places.AddressCommandData;
+import com.github.haseoo.courier.models.AddressModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,17 @@ public class AddressOperationData {
                 .postalCode(commandData.getPostalCode())
                 .buildingNumber(commandData.getBuildingNumber())
                 .flatNumber(commandData.getFlatNumber())
+                .build();
+    }
+
+    public static AddressOperationData of(AddressModel addressModel) {
+        return AddressOperationData
+                .builder()
+                .city(addressModel.getCity())
+                .street(addressModel.getStreet())
+                .postalCode(addressModel.getPostalCode())
+                .buildingNumber(addressModel.getBuildingNumber())
+                .flatNumber(addressModel.getFlatNumber())
                 .build();
     }
 }
