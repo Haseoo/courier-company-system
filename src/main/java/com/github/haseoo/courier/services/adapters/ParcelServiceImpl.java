@@ -1,37 +1,38 @@
 package com.github.haseoo.courier.services.adapters;
 
+import com.github.haseoo.courier.enums.ClientType;
 import com.github.haseoo.courier.enums.ParcelStateType;
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IllegalParcelState;
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelInactiveType;
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelTypeNotFound;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.*;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.clients.ClientNotFound;
-import com.github.haseoo.courier.models.ClientModel;
-import com.github.haseoo.courier.models.ParcelModel;
-import com.github.haseoo.courier.models.ParcelStateRecord;
-import com.github.haseoo.courier.models.ParcelTypeModel;
-import com.github.haseoo.courier.repositories.ports.ClientRepository;
-import com.github.haseoo.courier.repositories.ports.ParcelRepository;
-import com.github.haseoo.courier.repositories.ports.ParcelTypeRepository;
+import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.repositories.ports.*;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.parcels.ParcelAddData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelEditData;
 import com.github.haseoo.courier.servicedata.parcels.ReceiverInfoOperationData;
-import com.github.haseoo.courier.services.ports.AddressService;
-import com.github.haseoo.courier.services.ports.ParcelService;
-import com.github.haseoo.courier.services.ports.ReceiverInfoService;
+import com.github.haseoo.courier.servicedata.places.AddressData;
+import com.github.haseoo.courier.servicedata.places.AddressOperationData;
+import com.github.haseoo.courier.services.ports.*;
 import com.github.haseoo.courier.utilities.PinGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.ParcelStateType.*;
+import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
+import static com.github.haseoo.courier.utilities.Utils.addWorkdays;
+import static com.github.haseoo.courier.utilities.Utils.isParcelMoveable;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @RequiredArgsConstructor
@@ -41,8 +42,17 @@ public class ParcelServiceImpl implements ParcelService {
     private final ReceiverInfoService receiverInfoService;
     private final ParcelTypeRepository parcelTypeRepository;
     private final ClientRepository clientRepository;
+    private final ClientCompanyRepository clientCompanyRepository;
+    private final ClientIndividualRepository clientIndividualRepository;
     private final PinGenerator pinGenerator;
     private final UserDetailsServiceImpl userDetailsService;
+    private final EmailService emailService;
+    private final MagazineService magazineService;
+
+    @Value("${app.parcel.expectedCourierArrival.afterAddToMagazine}")
+    private Integer daysAfterAddToMagazine;
+    @Value("${app.magazine.maxMoveDayAfter}")
+    private Integer maxMoveDayOffset;
 
     @Override
     @Transactional
@@ -51,7 +61,9 @@ public class ParcelServiceImpl implements ParcelService {
         ParcelModel parcelModel = parcelRepository.saveAndFlush(prepareParcelModel(parcelAddData));
         parcelModel.setParcelStates(new ArrayList<>());
         parcelModel.getParcelStates().add(getFistState(parcelModel));
-        return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+        ParcelData parcelData = ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+        emailService.sentNotificationToSender(parcelData);
+        return parcelData;
     }
 
     @Override
@@ -63,15 +75,18 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     @Transactional
-    public ParcelData changeReceiverForLogistician(Long id, ReceiverInfoOperationData receiverInfoOperationData) {
+    public ParcelData setParcelToReturn(Long id) {
         ParcelModel parcelModel = parcelRepository
                 .getById(id)
                 .orElseThrow(() -> new ParcelTypeNotFound(id));
         if (ParcelData.of(parcelModel).getCurrentState().getState() != IN_MAGAZINE) {
             throw new IllegalParcelState();
         }
-        receiverInfoService.consume(receiverInfoOperationData, parcelModel::setReceiverContactData);
-        return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+        setReceiverAsSender(parcelModel);
+        addressService.consume(AddressOperationData.of(parcelModel.getSenderAddress()), parcelModel::setDeliveryAddress);
+        ParcelData parcelData = ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+        emailService.sentReturnNotification(parcelData);
+        return parcelData;
     }
 
     @Override
@@ -83,6 +98,11 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
+    public ParcelData getById(Long id) {
+        return ParcelData.of(parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id)));
+    }
+
+    @Override
     public void delete(Long id) {
         ParcelData parcelData = ParcelData.of(parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id)));
         userDetailsService.verifyEditResource(parcelData.getSender().getId());
@@ -90,6 +110,42 @@ public class ParcelServiceImpl implements ParcelService {
             throw new IllegalParcelState();
         }
         parcelRepository.delete(id);
+    }
+
+    @Override
+    public ParcelData moveDate(Long id, char[] pin, LocalDate newDate) {
+        ParcelModel parcelModel = parcelRepository
+                .getById(id)
+                .orElseThrow(() -> new ParcelTypeNotFound(id));
+        validatePin(pin, parcelModel);
+        validateMoveable(parcelModel);
+        validateNewDate(newDate, parcelModel);
+        parcelModel.setExpectedCourierArrivalDate(newDate);
+        return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+    }
+
+    private void validateNewDate(LocalDate newDate, ParcelModel parcelModel) {
+        if (newDate.isBefore(LocalDate.now())) {
+            throw new IllegalMoveDate();
+        }
+        if (DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate()) > maxMoveDayOffset) {
+            throw new IllegalMoveDate();
+        }
+        if (newDate.getDayOfWeek() == DayOfWeek.SATURDAY || newDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            throw new IllegalMoveDate();
+        }
+    }
+
+    private void validateMoveable(ParcelModel parcelModel) {
+        if (isParcelMoveable(ParcelData.of(parcelModel))) {
+            throw new IllegalParcelState();
+        }
+    }
+
+    private void validatePin(char[] pin, ParcelModel parcelModel) {
+        if (!Arrays.equals(pin, parcelModel.getPin())) {
+            throw new IncorrectParcelException();
+        }
     }
 
     private ParcelModel prepareEditedParcelModel(Long id, ParcelEditData parcelEditData) {
@@ -137,6 +193,7 @@ public class ParcelServiceImpl implements ParcelService {
         parcelModel.setParcelFee(parcelAddData.getParcelFee());
         parcelModel.setPaid(false);
         parcelModel.setDateMoved(false);
+        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), daysAfterAddToMagazine));
         return parcelModel;
     }
 
@@ -145,6 +202,7 @@ public class ParcelServiceImpl implements ParcelService {
         parcelStateRecord.setParcel(parcelModel);
         parcelStateRecord.setState(ParcelStateType.AT_SENDER);
         parcelStateRecord.setChangeDate(LocalDateTime.now());
+        magazineService.consumeClosestMagazine(AddressData.of(parcelModel.getDeliveryAddress()), parcelStateRecord::setMagazine);
         return parcelStateRecord;
     }
 
@@ -153,6 +211,26 @@ public class ParcelServiceImpl implements ParcelService {
         ParcelStateType currentState = ParcelData.of(parcelModel).getCurrentState().getState();
         if (!(currentState == AT_SENDER || currentState == RETURNED)) {
             throw new IllegalParcelState();
+        }
+    }
+
+    private void setReceiverAsSender(ParcelModel parcelModel) {
+        parcelModel.setToReturn(true);
+        ClientModel client = clientRepository
+                .getById(parcelModel.getSender().getId())
+                .orElseThrow(() -> new ClientNotFound(parcelModel.getSender().getId()));
+        if (client.getClientType() == ClientType.COMPANY) {
+            ClientCompanyModel clientCompany = clientCompanyRepository
+                    .getById(client.getId())
+                    .orElseThrow(() -> new ClientNotFound(client.getId()));
+            receiverInfoService.consume(ReceiverInfoOperationData.of(clientCompany), parcelModel::setReceiverContactData);
+        } else if (parcelModel.getSender().getClientType() == ClientType.INDIVIDUAL) {
+            ClientIndividualModel clientIndividual = clientIndividualRepository
+                    .getById(client.getId())
+                    .orElseThrow(() -> new ClientNotFound(client.getId()));
+            receiverInfoService.consume(ReceiverInfoOperationData.of(clientIndividual), parcelModel::setReceiverContactData);
+        } else {
+            throw new IllegalArgumentException(INVALID_ENUM_TYPE);
         }
     }
 }

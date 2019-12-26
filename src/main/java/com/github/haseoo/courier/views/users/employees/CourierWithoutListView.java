@@ -1,15 +1,10 @@
 package com.github.haseoo.courier.views.users.employees;
 
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
-import com.github.haseoo.courier.views.parcels.ParcelView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -17,27 +12,21 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 @Builder
-public class CourierView {
+public class CourierWithoutListView {
     private Long id;
     private String pesel;
     private String name;
     private String surname;
     private String phoneNumber;
-    private List<ParcelView.ParcelCourierView> assignedParcels;
 
-    public static CourierView of(CourierData courierData) {
-        return CourierView
+    public static CourierWithoutListView of(CourierData courierData) {
+        return CourierWithoutListView
                 .builder()
                 .id(courierData.getId())
                 .name(courierData.getName())
                 .surname(courierData.getSurname())
                 .pesel(courierData.getPesel())
                 .phoneNumber(courierData.getPhoneNumber())
-                .assignedParcels((courierData.getAssignedParcels() != null) ?
-                        courierData.getAssignedParcels()
-                                .stream()
-                                .map(ParcelView.ParcelCourierView::of)
-                                .collect(Collectors.toList()) : new ArrayList<>())
                 .build();
     }
 }

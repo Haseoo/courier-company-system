@@ -2,6 +2,8 @@ package com.github.haseoo.courier.servicedata.parcels;
 
 
 import com.github.haseoo.courier.commandsdata.parcels.ReceiverInfoCommandData;
+import com.github.haseoo.courier.models.ClientCompanyModel;
+import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.models.ReceiverInfoModel;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -37,6 +39,26 @@ public class ReceiverInfoOperationData {
                 .name(receiverInfoModel.getName())
                 .phoneNumber(receiverInfoModel.getPhoneNumber())
                 .surname(receiverInfoModel.getSurname())
+                .build();
+    }
+
+    public static ReceiverInfoOperationData of(ClientIndividualModel clientIndividualModel) {
+        return ReceiverInfoOperationData
+                .builder()
+                .emailAddress(clientIndividualModel.getEmailAddress())
+                .name(clientIndividualModel.getName())
+                .phoneNumber(clientIndividualModel.getPhoneNumber())
+                .surname(clientIndividualModel.getSurname())
+                .build();
+    }
+
+    public static ReceiverInfoOperationData of(ClientCompanyModel clientCompanyModel) {
+        return ReceiverInfoOperationData
+                .builder()
+                .emailAddress(clientCompanyModel.getEmailAddress())
+                .name(clientCompanyModel.getCompanyName())
+                .phoneNumber(clientCompanyModel.getPhoneNumber())
+                .surname("-")
                 .build();
     }
 }

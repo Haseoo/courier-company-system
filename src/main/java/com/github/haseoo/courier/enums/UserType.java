@@ -5,5 +5,6 @@ public enum UserType {
     COMPANY_CLIENT,
     COURIER,
     LOGISTICIAN,
-    ADMIN
+    ADMIN,
+    ANONYMOUS
 }

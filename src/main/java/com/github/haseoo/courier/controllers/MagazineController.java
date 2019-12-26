@@ -4,10 +4,13 @@ import com.github.haseoo.courier.commandsdata.parcels.ParcelChangeStateMultipleC
 import com.github.haseoo.courier.commandsdata.places.MagazineAddCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineAddLogisiticiansCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineEditCommandData;
+import com.github.haseoo.courier.commandsdata.places.MagazineParcelFilerCommandData;
 import com.github.haseoo.courier.servicedata.places.MagazineAddOperationData;
 import com.github.haseoo.courier.servicedata.places.MagazineEditOperationData;
 import com.github.haseoo.courier.services.ports.MagazineService;
 import com.github.haseoo.courier.services.ports.ParcelStateService;
+import com.github.haseoo.courier.utilities.ParcelViewCreator;
+import com.github.haseoo.courier.views.parcels.ParcelView;
 import com.github.haseoo.courier.views.places.MagazineView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,12 +19,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
+
 @RestController
 @RequestMapping("/magazine")
 @RequiredArgsConstructor
 public class MagazineController {
     private final MagazineService magazineService;
     private final ParcelStateService parcelStateService;
+    private final ParcelViewCreator parcelViewCreator;
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @GetMapping
@@ -54,8 +60,28 @@ public class MagazineController {
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
-    @PostMapping("/{id}/parcels")
+    @PostMapping("/{id}/parcels/add")
     public MagazineView addParcels(@PathVariable Long id, @RequestBody ParcelChangeStateMultipleCommandData commandData) {
         return MagazineView.of(parcelStateService.addParcelsToMagazine(id, commandData.getParcelsIds()));
     }
+
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
+    @PostMapping("/{id}/parcels")
+    public List<ParcelView> getParcels(@PathVariable Long id, @RequestBody MagazineParcelFilerCommandData commandData) {
+        switch (commandData.getType()) {
+            case TO_RETURN:
+                return magazineService.getParcelsToReturn(id)
+                        .stream()
+                        .map(parcelViewCreator::createParcelView)
+                        .collect(Collectors.toList());
+            case ASSIGNED_TO_MAGAZINE:
+                return magazineService.getAssignedAtSenderParcels(id)
+                        .stream()
+                        .map(parcelViewCreator::createParcelView)
+                        .collect(Collectors.toList());
+            default:
+                throw new IllegalArgumentException(INVALID_ENUM_TYPE);
+        }
+    }
+
 }

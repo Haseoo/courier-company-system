@@ -24,7 +24,7 @@ public class ParcelDataGenerator {
         parcelModel.setSenderAddress(addressModel);
         parcelModel.setSender(client);
         parcelModel.setReceiverContactData(receiverInfoModel);
-        parcelModel.setExpectedDeliveryTime(LocalDate.now());
+        parcelModel.setExpectedCourierArrivalDate(LocalDate.now());
         parcelModel.setPriority(false);
         parcelModel.setParcelFee(type.getPrice());
         parcelModel.setPaid(false);

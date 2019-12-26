@@ -1,6 +1,7 @@
 package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelChangeStateMultipleCommandData;
+import com.github.haseoo.courier.commandsdata.parcels.ParcelPickupCommandData;
 import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.ParcelStateService;
 import com.github.haseoo.courier.views.users.employees.CourierView;
@@ -41,8 +42,8 @@ public class CourierController {
 
     @PostMapping("/{id}/parcelPickup")
     @PreAuthorize("hasAnyRole({'ADMIN', 'COURIER'})")
-    public CourierView pickupParcels(@PathVariable Long id, @RequestBody ParcelChangeStateMultipleCommandData commandData) {
-        return CourierView.of(parcelStateService.setAsPickedByCourier(id, commandData.getParcelsIds()));
+    public CourierView pickupParcels(@PathVariable Long id, @RequestBody ParcelPickupCommandData commandData) {
+        return CourierView.of(parcelStateService.setAsPickedByCourier(id, commandData.getParcelsId(), commandData.isWasPaid()));
     }
 
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.haseoo.courier.enums.ParcelStateType.IN_MAGAZINE;
 import static com.github.haseoo.courier.models.ParcelStateRecord.defaultParcelStateRecord;
 
 @Value
@@ -30,17 +31,24 @@ public class ParcelData {
     private AddressData senderAddress;
     private ClientData sender;
     private ReceiverInfoData receiverContactData;
-    private LocalDate expectedDeliveryTime;
+    private LocalDate expectedCourierArrivalDate;
     private Boolean priority;
     private BigDecimal parcelFee;
     private Boolean paid;
     private Boolean dateMoved;
+    private Boolean toReturn;
 
     public BigDecimal getEffectivePrice() {
         if (priority) {
             return parcelType.getPrice().multiply(BigDecimal.valueOf(1.1)).add(parcelFee);
         }
         return parcelFee;
+    }
+
+    public boolean wasInMagazine() {
+        return parcelStates.stream()
+                .filter(parcelStateData -> parcelStateData.getState().equals(IN_MAGAZINE))
+                .count() > 1;
     }
 
     public static ParcelData of(ParcelModel parcelModel) {
@@ -66,11 +74,12 @@ public class ParcelData {
                 .senderAddress(AddressData.of(parcelModel.getSenderAddress()))
                 .sender(ClientData.ofWithoutLists(parcelModel.getSender()))
                 .receiverContactData(ReceiverInfoData.of(parcelModel.getReceiverContactData()))
-                .expectedDeliveryTime(parcelModel.getExpectedDeliveryTime())
+                .expectedCourierArrivalDate(parcelModel.getExpectedCourierArrivalDate())
                 .priority(parcelModel.getPriority())
                 .parcelFee(parcelModel.getParcelFee())
                 .paid(parcelModel.getPaid())
                 .dateMoved(parcelModel.getDateMoved())
+                .toReturn(parcelModel.getToReturn())
                 .build();
     }
 
@@ -84,11 +93,12 @@ public class ParcelData {
                 .senderAddress(AddressData.of(parcelModel.getSenderAddress()))
                 .sender(ClientData.ofWithoutLists(parcelModel.getSender()))
                 .receiverContactData(ReceiverInfoData.of(parcelModel.getReceiverContactData()))
-                .expectedDeliveryTime(parcelModel.getExpectedDeliveryTime())
+                .expectedCourierArrivalDate(parcelModel.getExpectedCourierArrivalDate())
                 .priority(parcelModel.getPriority())
                 .parcelFee(parcelModel.getParcelFee())
                 .paid(parcelModel.getPaid())
                 .dateMoved(parcelModel.getDateMoved())
+                .toReturn(parcelModel.getToReturn())
                 .build();
     }
 }

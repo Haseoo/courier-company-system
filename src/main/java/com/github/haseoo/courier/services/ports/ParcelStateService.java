@@ -11,9 +11,9 @@ public interface ParcelStateService {
 
     CourierData assignParcelsToCourier(Long courierId, List<Long> parcelIds);
 
-    CourierData setAsPickedByCourier(Long courierId, List<Long> parcelIds);
+    CourierData setAsPickedByCourier(Long courierId, Long parcelId, boolean wasPaid);
 
-    ParcelData setParcelAsDelivered(Long courierId, Long parcelId);
+    ParcelData setParcelAsDelivered(Long courierId, Long parcelId, boolean wasPaid);
 
-    ParcelData setParcelReturned(Long courierId, Long parcelId);
+    ParcelData setParcelReturned(Long courierId, Long parcelId, boolean wasPaid);
 }

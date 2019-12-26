@@ -44,7 +44,7 @@ public class ParcelViewForAdmin {
                 .senderAddress(AddressView.of(parcelData.getSenderAddress()))
                 .sender(ClientView.ofWithoutParcels(parcelData.getSender()))
                 .receiverContactData(ReceiverInfoView.of(parcelData.getReceiverContactData()))
-                .expectedDeliveryTime(parcelData.getExpectedDeliveryTime())
+                .expectedDeliveryTime(parcelData.getExpectedCourierArrivalDate())
                 .priority(parcelData.getPriority())
                 .parcelFee(parcelData.getParcelFee())
                 .paid(parcelData.getPaid())
