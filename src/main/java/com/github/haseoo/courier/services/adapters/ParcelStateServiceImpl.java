@@ -108,7 +108,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
 
     private void changeParcelStateToAssign(CourierModel courierModel, ParcelModel parcelModel) {
         ParcelData parcelData = ParcelData.of(parcelModel);
-        if (parcelData.getDateMoved() && !parcelData.getExpectedCourierArrivalDate().equals(LocalDate.now())) {
+        if (parcelData.getDateMoved() && LocalDate.now().isBefore(parcelData.getExpectedCourierArrivalDate())) {
             throw new IllegalParcelState();
         }
         verifyState(parcelModel, AT_SENDER, IN_MAGAZINE);
