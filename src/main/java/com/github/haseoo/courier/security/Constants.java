@@ -12,6 +12,7 @@ public class Constants {
 
     public static String[] getUnprotectedEndpoints() {
         return new String[]{"/swagger-ui.html",
+                "/api/parcelType/offer",
                 "/h2-console/**",
                 "/api/login",
                 "/api/client/individual/register",
