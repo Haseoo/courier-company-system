@@ -83,6 +83,7 @@ public class ParcelServiceImpl implements ParcelService {
             throw new IllegalParcelState();
         }
         setReceiverAsSender(parcelModel);
+        parcelModel.setPin(pinGenerator.getParcelPin());
         addressService.consume(AddressOperationData.of(parcelModel.getSenderAddress()), parcelModel::setDeliveryAddress);
         ParcelData parcelData = ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
         emailService.sentReturnNotification(parcelData);
@@ -121,11 +122,12 @@ public class ParcelServiceImpl implements ParcelService {
         validateMoveable(parcelModel);
         validateNewDate(newDate, parcelModel);
         parcelModel.setExpectedCourierArrivalDate(newDate);
+        parcelModel.setDateMoved(true);
         return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
     }
 
     private void validateNewDate(LocalDate newDate, ParcelModel parcelModel) {
-        if (newDate.isBefore(LocalDate.now())) {
+        if (newDate.isBefore(LocalDate.now()) || !newDate.isAfter(parcelModel.getExpectedCourierArrivalDate())) {
             throw new IllegalMoveDate();
         }
         if (DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate()) > maxMoveDayOffset) {
@@ -137,7 +139,7 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     private void validateMoveable(ParcelModel parcelModel) {
-        if (isParcelMoveable(ParcelData.of(parcelModel))) {
+        if (!isParcelMoveable(ParcelData.of(parcelModel))) {
             throw new IllegalParcelState();
         }
     }

@@ -46,9 +46,7 @@ public class ParcelData {
     }
 
     public boolean wasInMagazine() {
-        return parcelStates.stream()
-                .filter(parcelStateData -> parcelStateData.getState().equals(IN_MAGAZINE))
-                .count() > 1;
+        return parcelStates.stream().anyMatch(parcelStateData -> parcelStateData.getState().equals(IN_MAGAZINE));
     }
 
     public static ParcelData of(ParcelModel parcelModel) {
