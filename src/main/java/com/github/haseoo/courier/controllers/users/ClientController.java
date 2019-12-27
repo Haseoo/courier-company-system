@@ -5,6 +5,7 @@ import com.github.haseoo.courier.views.users.clients.ClientView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,12 @@ public class ClientController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping()
-    public List<ClientView> getById() {
+    public List<ClientView> getList() {
         return clientService.getList().stream().map(ClientView::of).collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}")
+    public ClientView getById(@PathVariable Long id) {
+        return ClientView.of(clientService.getById(id));
     }
 }
