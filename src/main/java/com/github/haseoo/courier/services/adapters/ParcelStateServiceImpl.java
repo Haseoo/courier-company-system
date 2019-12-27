@@ -74,7 +74,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     public CourierData setAsPickedByCourier(Long courierId, Long parcelId, boolean wasPaid) {
         ParcelModel parcelModel = parcelRepository.getById(parcelId).orElseThrow(() -> new ParcelNotFound(parcelId));
         CourierModel courierModel = courierRepository.getById(courierId).orElseThrow(() -> new EmployeeNotFoundException(courierId, COURIER));
-        if (ParcelData.of(parcelModel).getCurrentState().getState().equals(IN_MAGAZINE) && wasPaid) {
+        if (pickingFromMagazine(parcelModel) && wasPaid) {
             throw new PaidPickupFromMagazine();
         }
         changeParcelStateToAtCourier(courierModel, parcelModel, wasPaid);
@@ -91,6 +91,10 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     @Transactional
     public ParcelData setParcelReturned(Long courierId, Long parcelId, boolean wasPaid) {
         return changeOneParcelState(courierId, parcelId, RETURNED, wasPaid);
+    }
+
+    private boolean pickingFromMagazine(ParcelModel parcelModel) {
+        return ParcelData.of(parcelModel).getCurrentState().getState().equals(ASSIGNED) && ParcelData.of(parcelModel).wasInMagazine();
     }
 
     private void changeParcelStateToMagazine(MagazineModel magazineModel, ParcelModel parcelModel) {
@@ -166,8 +170,10 @@ public class ParcelStateServiceImpl implements ParcelStateService {
         else {
             parcelModel.setExpectedCourierArrivalDate(null);
             parcelModel.setDateMoved(false);
-            parcelModel.setPaid(wasPaid);
             parcelModel.setPin(pinGenerator.getParcelPin());
+        }
+        if (wasPaid) {
+            parcelModel.setPaid(true);
         }
     }
 

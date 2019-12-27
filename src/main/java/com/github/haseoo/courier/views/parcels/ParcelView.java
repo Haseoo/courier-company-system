@@ -38,6 +38,7 @@ public abstract class ParcelView {
     private BigDecimal parcelFee;
     private Boolean paid;
     private Boolean priority;
+    private Boolean toReturn;
 
     @EqualsAndHashCode(callSuper = true)
     @Getter
@@ -59,6 +60,7 @@ public abstract class ParcelView {
                     .parcelFee(parcelData.getParcelFee())
                     .paid(parcelData.getPaid())
                     .priority(parcelData.getPriority())
+                    .toReturn(parcelData.getToReturn())
                     .parcelStatesView(parcelData.getParcelStates()
                             .stream()
                             .map(parcelStateData -> ParcelStateView.of(parcelStateData, COMPANY_CLIENT))
@@ -88,6 +90,7 @@ public abstract class ParcelView {
                     .parcelFee(parcelData.getParcelFee())
                     .paid(parcelData.getPaid())
                     .priority(parcelData.getPriority())
+                    .toReturn(parcelData.getToReturn())
                     .parcelStatesView(parcelData.getParcelStates()
                             .stream()
                             .map(parcelStateData -> ParcelStateView.of(parcelStateData, COMPANY_CLIENT))
@@ -107,6 +110,7 @@ public abstract class ParcelView {
     public static class ParcelCourierView extends ParcelView {
         private PlaceView source;
         private PlaceView destination;
+        private ParcelStateType currentState;
 
         public static ParcelCourierView of(ParcelData parcelData) {
             return ParcelCourierView
@@ -119,8 +123,10 @@ public abstract class ParcelView {
                     .parcelFee(parcelData.getParcelFee())
                     .paid(parcelData.getPaid())
                     .priority(parcelData.getPriority())
+                    .toReturn(parcelData.getToReturn())
                     .source(getSource(parcelData))
                     .destination(getDestination(parcelData))
+                    .currentState(parcelData.getCurrentState().getState())
                     .build();
         }
     }
@@ -148,6 +154,7 @@ public abstract class ParcelView {
                     .parcelFee(parcelData.getParcelFee())
                     .paid(parcelData.getPaid())
                     .priority(parcelData.getPriority())
+                    .toReturn(parcelData.getToReturn())
                     .parcelStatesView(parcelData.getParcelStates()
                             .stream()
                             .map(parcelStateData -> ParcelStateView.of(parcelStateData, LOGISTICIAN))
@@ -185,6 +192,7 @@ public abstract class ParcelView {
                     .parcelFee(parcelData.getParcelFee())
                     .paid(parcelData.getPaid())
                     .priority(parcelData.getPriority())
+                    .toReturn(parcelData.getToReturn())
                     .pin(parcelData.getPin())
                     .parcelStatesView(parcelData.getParcelStates()
                             .stream()
