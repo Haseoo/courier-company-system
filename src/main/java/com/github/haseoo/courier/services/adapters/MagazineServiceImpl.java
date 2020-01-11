@@ -130,7 +130,7 @@ public class MagazineServiceImpl implements MagazineService {
 
     private List<MagazineModel> findClosestMagazine(AddressData address, List<MagazineModel> list, ClosestMagazineChain magazineChain) {
         List<MagazineModel> tmp;
-        while(magazineChain != null && !(tmp = magazineChain.filterList(list, address)).isEmpty()) {
+        while (magazineChain != null && !(tmp = magazineChain.filterList(list, address)).isEmpty()) {
             list = tmp;
             magazineChain = magazineChain.getNextSteep();
         }

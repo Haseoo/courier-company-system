@@ -1,11 +1,9 @@
 package com.github.haseoo.courier.utilities;
 
-import com.github.haseoo.courier.models.AddressModel;
 import com.github.haseoo.courier.models.MagazineModel;
 import com.github.haseoo.courier.servicedata.places.AddressData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
