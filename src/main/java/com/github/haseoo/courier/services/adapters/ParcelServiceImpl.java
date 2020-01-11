@@ -48,6 +48,7 @@ public class ParcelServiceImpl implements ParcelService {
     private final UserDetailsServiceImpl userDetailsService;
     private final EmailService emailService;
     private final MagazineService magazineService;
+    private final PostalCodeHelper postalCodeHelper;
 
     @Value("${app.parcel.expectedCourierArrival.afterAddToMagazine}")
     private Integer daysAfterAddToMagazine;
@@ -58,6 +59,7 @@ public class ParcelServiceImpl implements ParcelService {
     @Transactional
     public ParcelData add(ParcelAddData parcelAddData) {
         userDetailsService.verifyEditResource(parcelAddData.getSenderId());
+        validatePostalCode(parcelAddData.getSenderAddress(), parcelAddData.getDeliveryAddress());
         ParcelModel parcelModel = parcelRepository.saveAndFlush(prepareParcelModel(parcelAddData));
         parcelModel.setParcelStates(new ArrayList<>());
         parcelModel.getParcelStates().add(getFistState(parcelModel));
@@ -69,8 +71,16 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     @Transactional
     public ParcelData edit(Long id, ParcelEditData parcelEditData) {
+        validatePostalCode(parcelEditData.getSenderAddress(), parcelEditData.getDeliveryAddress());
         ParcelModel parcelModel = prepareEditedParcelModel(id, parcelEditData);
         return ParcelData.of(parcelRepository.saveAndFlush(parcelModel));
+    }
+
+    private void validatePostalCode(AddressOperationData senderAddress, AddressOperationData deliveryAddress) {
+        postalCodeHelper.validatePostalCode(senderAddress.getCity(),
+                senderAddress.getPostalCode());
+        postalCodeHelper.validatePostalCode(deliveryAddress.getCity(),
+                deliveryAddress.getPostalCode());
     }
 
     @Override
