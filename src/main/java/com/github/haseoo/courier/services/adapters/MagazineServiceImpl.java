@@ -12,23 +12,28 @@ import com.github.haseoo.courier.services.ports.AddressService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
 import com.github.haseoo.courier.services.ports.MagazineService;
 import com.github.haseoo.courier.services.ports.PostalCodeHelper;
+import com.github.haseoo.courier.utilities.ClosestMagazineChain;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.ParcelStateType.AT_SENDER;
 import static com.github.haseoo.courier.enums.ParcelStateType.IN_MAGAZINE;
+import static com.github.haseoo.courier.utilities.Constants.POSTAL_CODE_SERVICE_WARN_LOG_FORMAT;
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MagazineServiceImpl implements MagazineService {
     private final MagazineRepository magazineRepository;
     private final LogisticianService logisticianService;
@@ -93,14 +98,11 @@ public class MagazineServiceImpl implements MagazineService {
 
     @Override
     public void consumeClosestMagazine(AddressData address, Consumer<MagazineModel> consumer) {
-        List<MagazineModel> all = magazineRepository.getActiveMagazines();
-        List<MagazineModel> city = all.stream().filter(magazineModel -> magazineModel.getAddress().getCity().equals(address.getCity())).collect(Collectors.toList());
-        List<MagazineModel> postalCode = city.stream().filter(magazineModel -> magazineModel.getAddress().getPostalCode().equals(address.getPostalCode())).collect(Collectors.toList());
-        List<MagazineModel> street = city.stream().filter(magazineModel -> magazineModel.getAddress().getPostalCode().equals(address.getStreet())).collect(Collectors.toList());
-        consumer.accept(street.stream().findFirst()
-                .orElse(postalCode.stream().findFirst()
-                        .orElse(city.stream().findFirst()
-                                .orElse(all.stream().findFirst().orElseThrow(MagazineDoesNotExist::new)))));
+        List<MagazineModel> list = magazineRepository.getActiveMagazines();
+        boolean isPostalCodeInCity = isPostalCodeInCity(address);
+        ClosestMagazineChain magazineChain = ClosestMagazineChain.prepareChain(isPostalCodeInCity);
+        list = findClosestMagazine(address, list, magazineChain);
+        consumer.accept(list.stream().findAny().orElseThrow(MagazineDoesNotExist::new));
     }
 
     @Override
@@ -125,4 +127,24 @@ public class MagazineServiceImpl implements MagazineService {
                                 .equals(IN_MAGAZINE)).count() > timesAtMagazineToReturn)
                 .collect(Collectors.toList());
     }
+
+    private List<MagazineModel> findClosestMagazine(AddressData address, List<MagazineModel> list, ClosestMagazineChain magazineChain) {
+        List<MagazineModel> tmp;
+        while(magazineChain != null && !(tmp = magazineChain.filterList(list, address)).isEmpty()) {
+            list = tmp;
+            magazineChain = magazineChain.getNextSteep();
+        }
+        return list;
+    }
+
+    private boolean isPostalCodeInCity(AddressData address) {
+        boolean isPostalCodeInCity = false;
+        try {
+            isPostalCodeInCity = postalCodeHelper.isPostalCodeInCity(address.getPostalCode(), address.getCity());
+        } catch (IOException e) {
+            log.warn(String.format(POSTAL_CODE_SERVICE_WARN_LOG_FORMAT, e, e.getMessage()));
+        }
+        return isPostalCodeInCity;
+    }
+
 }
