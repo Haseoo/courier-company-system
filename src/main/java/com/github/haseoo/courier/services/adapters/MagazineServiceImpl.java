@@ -11,6 +11,7 @@ import com.github.haseoo.courier.servicedata.places.MagazineEditOperationData;
 import com.github.haseoo.courier.services.ports.AddressService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
 import com.github.haseoo.courier.services.ports.MagazineService;
+import com.github.haseoo.courier.services.ports.PostalCodeHelper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -33,6 +34,7 @@ public class MagazineServiceImpl implements MagazineService {
     private final LogisticianService logisticianService;
     private final AddressService addressService;
     private final ModelMapper modelMapper;
+    private final PostalCodeHelper postalCodeHelper;
 
     @Value("${app.magazine.timesAtMagazineToReturn}")
     private Integer timesAtMagazineToReturn;
@@ -61,6 +63,8 @@ public class MagazineServiceImpl implements MagazineService {
     @Override
     @Transactional
     public MagazineData add(MagazineAddOperationData magazineAddOperationData) {
+        postalCodeHelper.validatePostalCode(magazineAddOperationData.getAddress().getCity(),
+                magazineAddOperationData.getAddress().getPostalCode());
         MagazineModel magazineModel = new MagazineModel();
         magazineModel.setActive(true);
         addressService.consume(magazineAddOperationData.getAddress(), magazineModel::setAddress);

@@ -1,57 +1,22 @@
 package com.github.haseoo.courier.controllers;
 
-import com.github.haseoo.courier.servicedata.places.AddressData;
-import com.github.haseoo.courier.servicedata.users.UserData;
-import com.github.haseoo.courier.servicedata.users.employees.*;
-import com.github.haseoo.courier.services.ports.*;
+import com.github.haseoo.courier.services.adapters.PolishPostalCodeHelperImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController()
 @RequestMapping("/tests")
 public class OrganolepticTestsController {
-    private final CourierService courierService;
-    private final LogisticianService logisticianService;
-    private final EmployeeService employeeService;
-    private final UserService userService;
-    private final AddressService addressService;
+    private final PolishPostalCodeHelperImpl polishCodeHelper;
 
-    @GetMapping("/employee")
-    public List<EmployeeData> getList() {
-        return employeeService.getList();
-    }
-
-    @PutMapping("/courier")
-    public CourierData addCourier(@RequestBody EmployeeAddOperationData courierAddOperationData) {
-        return courierService.add(courierAddOperationData);
-    }
-
-    @PostMapping("/courier/{id}")
-    public CourierData editCourier(@PathVariable Long id, @RequestBody EmployeeEditOperationData c) {
-        return courierService.edit(id, c);
-    }
-
-    @GetMapping("/courier/{id}")
-    public CourierData getCourier(@PathVariable Long id) {
-        return courierService.getById(id);
-    }
-
-    @PutMapping("/logistician")
-    public LogisticianData addLogistician(@RequestBody EmployeeAddOperationData c) {
-        return logisticianService.add(c);
-    }
-
-    @DeleteMapping("/user{id}")
-    public UserData deleteUser(@PathVariable Long id) {
-        return userService.setAsInactive(id);
-    }
-
-    @GetMapping("/address")
-    public List<AddressData> getListAddress() {
-        return addressService.getList();
+    @GetMapping
+    public Boolean testPostalCode() throws IOException {
+        return polishCodeHelper.isPostalCodeInCity("25-123", "Kielce");
     }
 
 }
