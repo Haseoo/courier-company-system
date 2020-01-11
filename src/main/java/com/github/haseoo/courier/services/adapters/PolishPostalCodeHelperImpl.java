@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -52,7 +53,10 @@ public class PolishPostalCodeHelperImpl implements PostalCodeHelper {
             if (!readApiResponse(con, stringStream -> stringStream.anyMatch(city::equalsIgnoreCase))) {
                 throw new InvalidPostalCode(postalCode);
             }
-        } catch (IOException e) {
+        }catch (UnknownHostException e) {
+            //if service is not working it is not possible to validate postal code
+        }
+        catch (IOException e) {
             //if there were an server exception it means postal code is not valid
             throw new InvalidPostalCode(postalCode);
         }
