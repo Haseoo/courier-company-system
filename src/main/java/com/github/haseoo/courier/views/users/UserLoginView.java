@@ -12,6 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder(access = PRIVATE)
 public class UserLoginView {
     private Long id;
+    private String userName;
     private UserType userType;
     private JwtAuthenticationResponse response;
 
@@ -21,6 +22,7 @@ public class UserLoginView {
                 .id(userData.getId())
                 .userType(userData.getUserType())
                 .response(response)
+                .userName(userData.getUserName())
                 .build();
     }
 }
