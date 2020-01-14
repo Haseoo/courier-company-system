@@ -1,0 +1,86 @@
+<h2>List of magazines:</h2>
+<!-- <div *ngIf="isVisible && currentMagazine">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="city">City</label>
+      <input
+        type="text"
+        formControlName="city"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.userName.errors }"
+      />
+      <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+        <div *ngIf="f.userName.errors.required">First Name is required</div>
+      </div>
+      <label for="street">Street</label>
+      <input
+        type="text"
+        formControlName="street"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.street.errors }"
+      />
+      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+      </div>
+
+    </div>
+  </form>
+</div> -->
+
+    <table
+      class="table table-striped"
+      mat-table
+      *ngIf="
+        listOfActiveMagazines | async as listOfActiveMagazines;
+        else noData
+      "
+    >
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Address</th>
+          <th scope="col">Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let magazine of listOfActiveMagazines">
+          <td>
+            {{ magazine.id }}
+          </td>
+          <td>
+            {{
+              magazine.address.street +
+                " " +
+                magazine.address.buildingNumber +
+                "/" +
+                magazine.address.flatNumber +
+                " " +
+                magazine.address.city +
+                " " +
+                magazine.address.postalCode
+            }}
+          </td>
+          <td>
+            {{ magazine.active }}
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-primary">
+              Details
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="edit(magazine)"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noData>
+      An unidentified problem occurred, please try again later
+    </ng-template>

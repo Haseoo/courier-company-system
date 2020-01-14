@@ -1,0 +1,42 @@
+<h2>Registration</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" formControlName="username" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" formControlName="password" class="form-control" />
+  </div>
+
+    <div class="form-group">
+      <label for="emailAddress">Email</label>
+      <input type="text" formControlName="emailAddress" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">Number</label>
+      <input type="number" formControlName="phoneNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="companyName">Name</label>
+      <input type="text" formControlName="companyName" class="form-control" />
+    </div>
+    <!-- <div class="form-group">
+      <label for="surname">Surname</label>
+      <input type="text" formControlName="surname" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="pesel">Pesel</label>
+      <input type="text" formControlName="pesel" class="form-control" />
+    </div> -->
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
+      sign up
+    </button>
+    <a routerLink="/" class="btn btn-link">Cancel</a>
+  </div>
+</form>

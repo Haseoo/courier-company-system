@@ -1,0 +1,32 @@
+*{
+  /* padding: 0; */
+  margin: 0;
+}
+body {
+  background: linear-gradient(70deg, #e6e6e6, #f7f7f7);
+  color: #514B64;
+  height: auto;
+  overflow-y: auto;
+  min-height: 100vh;
+}
+
+header img {
+  max-width: 100%;
+  height: 30vh;
+}
+code {
+  background: #fff;
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  margin: 0 0.3rem;
+}
+main{
+  width: 30vw;
+  margin: 10px auto 0 auto;
+}
+main input{
+  width: 50%;
+}
+body div{
+  padding: 0;
+}
