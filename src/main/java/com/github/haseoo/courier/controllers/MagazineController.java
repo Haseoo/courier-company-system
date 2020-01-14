@@ -5,6 +5,8 @@ import com.github.haseoo.courier.commandsdata.places.MagazineAddCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineAddLogisiticiansCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineEditCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineParcelFilerCommandData;
+import com.github.haseoo.courier.enums.UserType;
+import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.places.MagazineAddOperationData;
 import com.github.haseoo.courier.servicedata.places.MagazineEditOperationData;
 import com.github.haseoo.courier.services.ports.MagazineService;
@@ -22,17 +24,21 @@ import java.util.stream.Collectors;
 import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
 
 @RestController
-@RequestMapping("/magazine")
+@RequestMapping("/api/magazine")
 @RequiredArgsConstructor
 public class MagazineController {
     private final MagazineService magazineService;
     private final ParcelStateService parcelStateService;
     private final ParcelViewCreator parcelViewCreator;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @GetMapping
     public List<MagazineView> getList() {
-        return magazineService.getList().stream().map(MagazineView::of).collect(Collectors.toList());
+        if (userDetailsService.currentUser().getUserType().equals(UserType.ADMIN))
+            return magazineService.getList().stream().map(MagazineView::of).collect(Collectors.toList());
+        else
+            return magazineService.getActiveList().stream().map(MagazineView::of).collect(Collectors.toList());
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
