@@ -33,8 +33,8 @@ public class Utils {
 
     public static boolean isParcelMoveable(ParcelData parcelData) {
         ParcelStateType currentState = parcelData.getCurrentState().getState();
-        return currentState != ParcelStateType.ASSIGNED &&
-                currentState != ParcelStateType.AT_COURIER &&
+        return (currentState == ParcelStateType.IN_MAGAZINE ||
+                currentState == ParcelStateType.AT_SENDER) &&
                 !parcelData.getDateMoved();
     }
 
