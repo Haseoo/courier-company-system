@@ -33,7 +33,5 @@ export class UserComponent implements OnInit {
   getUsers() {
     this.users = this.userService.getAll();
   }
-  // getUser(id: number) {
-  //   this.userInfo = this.userService.getById(id);
-  // }
+
 }

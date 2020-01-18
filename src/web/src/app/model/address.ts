@@ -4,4 +4,9 @@ export class Address {
   postalCode: string;
   buildingNumber: string;
   flatNumber: string;
+
+    public constructor(init?: Partial<Address>) {
+      Object.assign(this, init);
+  }
+
 }

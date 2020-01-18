@@ -23,11 +23,7 @@ const routes: Routes = [
     path: 'register/individual',
     component: RegisterIndividualComponent
   },
-  // {
-  //   path: 'home',
-  //   component: HomeComponent,
-  //   canActivate: [AuthGuard]
-  // },
+
   {
     path: 'register/company',
     component: RegisterCompanyComponent
@@ -44,14 +40,13 @@ const routes: Routes = [
   {
     path: 'admin/users',
     component: UserComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin/magazine',
     component: MagazineComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
-  // { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

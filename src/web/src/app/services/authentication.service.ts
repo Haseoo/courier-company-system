@@ -1,4 +1,4 @@
-import { Role } from './../model/role';
+import { Role } from '../model/enums/role';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

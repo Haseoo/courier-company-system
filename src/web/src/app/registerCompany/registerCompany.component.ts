@@ -1,4 +1,3 @@
-import { PeselValidator } from '../validators/peselValidator';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -34,11 +33,7 @@ export class RegisterCompanyComponent implements OnInit {
       emailAddress: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', Validators.required],
       companyName: ['', Validators.required]
-      // nip: ['', Validators.required],
-      // representativeName: ['', Validators.required],
-      // representativeSurname: ['', Validators.required],
-      // representativeEmail: ['', Validators.required, Validators.email],
-      // representativePhoneNumber: ['', Validators.required]
+      // TODO:add the rest of fields
     });
   }
   get f() { return this.registerForm.controls; }

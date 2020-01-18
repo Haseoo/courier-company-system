@@ -1,86 +1,177 @@
 <h2>List of magazines:</h2>
-<!-- <div *ngIf="isVisible && currentMagazine">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="city">City</label>
-      <input
-        type="text"
-        formControlName="city"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f.userName.errors }"
-      />
-      <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
-        <div *ngIf="f.userName.errors.required">First Name is required</div>
-      </div>
-      <label for="street">Street</label>
-      <input
-        type="text"
-        formControlName="street"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f.street.errors }"
-      />
-      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-        <div *ngIf="f.password.errors.required">Password is required</div>
-      </div>
 
+<div class="container">
+  <div
+    *ngIf="listOfActiveMagazines | async as listOfActiveMagazines;"
+  >
+    <div class="row">
+      <div class="col-md-1">ID</div>
+      <div class="col-md-6">Address</div>
+      <div class="col-md-1">Active</div>
+      <div class="col-md-1">Details</div>
+      <div class="col-md-1">Editable</div>
     </div>
-  </form>
-</div> -->
-
-    <table
-      class="table table-striped"
-      mat-table
-      *ngIf="
-        listOfActiveMagazines | async as listOfActiveMagazines;
-        else noData
-      "
-    >
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Address</th>
-          <th scope="col">Active</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let magazine of listOfActiveMagazines">
-          <td>
-            {{ magazine.id }}
-          </td>
-          <td>
-            {{
-              magazine.address.street +
-                " " +
-                magazine.address.buildingNumber +
-                "/" +
-                magazine.address.flatNumber +
-                " " +
-                magazine.address.city +
-                " " +
-                magazine.address.postalCode
-            }}
-          </td>
-          <td>
-            {{ magazine.active }}
-          </td>
-          <td>
-            <button type="button" class="btn btn-outline-primary">
-              Details
-            </button>
-          </td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              (click)="edit(magazine)"
-            >
-              Edit
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <ng-template #noData>
-      An unidentified problem occurred, please try again later
-    </ng-template>
+    <ng-container *ngFor="let magazine of listOfActiveMagazines">
+      <div class="row">
+        <div class="col-md-1">
+          {{ magazine.id }}
+        </div>
+        <div class="col-md-6">
+          {{
+            magazine.address.street +
+              " " +
+              magazine.address.buildingNumber +
+              "/" +
+              magazine.address.flatNumber +
+              " " +
+              magazine.address.city +
+              " " +
+              magazine.address.postalCode
+          }}
+        </div>
+        <div class="col-md-1">
+          {{ magazine.active }}
+        </div>
+        <div class="col-md-1">
+          <button type="button" (click) = "showDetails(magazine)" class="btn btn-outline-primary">
+            Details
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="edit(magazine)"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+      <div
+        class="row form "
+        style ="padding: 10px;"
+        *ngIf="isVisible && currentMagazine.id === magazine.id"
+      >
+        <form [formGroup]="magazineForm">
+          <div [formGroup]="magazineForm.controls['address']">
+            <div class="row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  formControlName="city"
+                  class="form-control"
+                  value="{{ currentMagazine.address.city }}"
+                  [ngClass]="{ 'is-invalid': submitted && f.city.errors }"
+                />
+                <div
+                  *ngIf="submitted && f.city.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.city.errors.required">City is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="postalCode">Postal Code</label>
+                <input
+                  type="text"
+                  formControlName="postalCode"
+                  class="form-control"
+                  value="{{ currentMagazine.address.postalCode }}"
+                  [ngClass]="{ 'is-invalid': submitted && f.postalCode.errors }"
+                />
+                <div
+                  *ngIf="submitted && f.postalCode.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.postalCode.errors.required">
+                    Postal Code is required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="street">Street</label>
+                <input
+                  type="text"
+                  formControlName="street"
+                  class="form-control"
+                  value="{{ currentMagazine.address.street }}"
+                  [ngClass]="{ 'is-invalid': submitted && f.street.errors }"
+                />
+                <div
+                  *ngIf="submitted && f.street.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.postalCode.errors.required">
+                    Postal Code is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <label for="buildingNumber">Building Number</label>
+                <input
+                  type="text"
+                  formControlName="buildingNumber"
+                  class="form-control"
+                  value="{{ currentMagazine.address.buildingNumber }}"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.buildingNumber.errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted && f.buildingNumber.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.buildingNumber.errors.required">
+                    Building Number is required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="flatNumber">Flat Number</label>
+                <input
+                  type="text"
+                  formControlName="flatNumber"
+                  class="form-control"
+                  value="{{ currentMagazine.address.flatNumber }}"
+                  [ngClass]="{ 'is-invalid': submitted && f.flatNumber.errors }"
+                />
+                <div
+                  *ngIf="submitted && f.flatNumber.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.flatNumber.errors.required">
+                    Flat Number is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <input
+              type="checkbox"
+              formControlName="active"
+              class="form-control"
+              [checked]="magazine.active"
+            />
+            <label for="active"> Active</label>
+          </div>
+          <div class="row btn-group">
+            <div>
+              <button type="button" style="margin-right: 10px;" class="btn btn-secondary"  role="group" (click)="onSubmit()">
+                Save
+              </button>
+            </div>
+            <div>
+              <button type="button" style="margin-left: 10px;" class="btn btn-secondary"  role="group" (click)="onCancel()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </ng-container>
+  </div>
+</div>

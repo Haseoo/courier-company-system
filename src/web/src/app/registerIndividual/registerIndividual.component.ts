@@ -26,9 +26,6 @@ export class RegisterIndividualComponent implements OnInit {
     private alertService: AlertService
   ) {
 
-    // if (this.authenticationService.currentUserValue) {
-    //   this.router.navigate(['/home']);
-    // }
   }
 
   ngOnInit() {

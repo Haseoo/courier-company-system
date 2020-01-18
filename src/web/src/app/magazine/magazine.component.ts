@@ -3,11 +3,10 @@ import { MagazineService } from './../services/magazine.service';
 import { Component, OnInit } from '@angular/core';
 import { Magazine } from '../model/magazine';
 import { AlertService } from '../services/alertService';
-import { UserService } from '../services/user.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Address } from '../model/address';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
 @Component({
   selector: 'app-magazine',
   templateUrl: './magazine.component.html',
@@ -20,15 +19,14 @@ export class MagazineComponent implements OnInit {
   listOfActiveMagazines: Observable<Array<Magazine>>;
   currentMagazine: Magazine;
 
-  registerForm: FormGroup;
+  magazineForm: FormGroup;
   loading = false;
   submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private alertService: AlertService,
-    private magazineService: MagazineService
+    private magazineService: MagazineService,
+    private router: Router
   ) {
 
   }
@@ -36,16 +34,52 @@ export class MagazineComponent implements OnInit {
 
   ngOnInit() {
     this.listOfActiveMagazines = this.magazineService.getAll();
-    if (this.isVisible === true) {
 
-    }
   }
+  createEditForm() {
+    this.magazineForm = this.formBuilder.group({
+      id: [this.currentMagazine.id],
+      address: this.formBuilder.group({
+        city: [this.currentMagazine.address.city, Validators.required],
+        street: [this.currentMagazine.address.street, [Validators.required]],
+        postalCode: [this.currentMagazine.address.postalCode, [Validators.required]],
+        buildingNumber: [this.currentMagazine.address.buildingNumber, Validators.required],
+        flatNumber: [this.currentMagazine.address.flatNumber, Validators.required]
+      }),
+      active: [this.currentMagazine.active, Validators.required]
+    });
+  }
+  get f() { return this.magazineForm.controls; }
+
   edit(magazine: Magazine) {
     this.isVisible = !this.isVisible;
     this.currentMagazine = magazine;
+    this.createEditForm();
   }
-  onSubmit(){
-
+  onSubmit() {
+    this.currentMagazine = new Magazine(this.magazineForm.value);
+    this.magazineService.edit(this.currentMagazine)
+      .subscribe(
+        data => {
+          this.router.navigate(['']);
+        },
+        error => {
+          console.log(error.error.message);
+          this.loading = false;
+        },
+      );
+    this.listOfActiveMagazines = this.magazineService.getAll();
+    this.isVisible = false;
+    this.currentMagazine = null;
+  }
+  onCancel() {
+    this.isVisible = false;
+    this.currentMagazine = null;
+  }
+  showDetails() {
+    this.listOfActiveMagazines.forEach(data => {
+      console.log(data);
+    });
   }
 
 }

@@ -13,19 +13,6 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser) {
-      // if (currentUser.userType === Role.ADMIN) {
-      //   this.router.navigate(['/admin']).catch((e: Error) => console.error(e));
-      //   return true;
-      // }
-      // if (currentUser.userType === Role.INDIVIDUAL_CLIENT || currentUser.userType === Role.COMPANY_CLIENT) {
-      //   this.router.navigate(['/client']);
-      // }
-      // if (currentUser.userType === Role.COURIER) {
-      //   this.router.navigate(['/courier']);
-      // }
-      // if (currentUser.userType === Role.LOGISTICIAN) {
-      //   this.router.navigate(['/logistician']);
-      // }
       return true;
     }
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
