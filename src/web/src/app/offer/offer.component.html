@@ -1,0 +1,28 @@
+<table
+  class="table table-striped"
+  mat-table
+  *ngIf="offer | async as offer; else noData"
+>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">price</th>
+    </tr>
+  </thead>
+  <tr *ngFor="let record of offer">
+    <td>
+      {{ record.name }}
+    </td>
+    <td>
+      {{ record.description }}
+    </td>
+    <td>
+      {{ record.price }}
+    </td>
+  </tr>
+</table>
+
+<ng-template #noData
+  >An unidentified problem occurred, please try again later
+</ng-template>

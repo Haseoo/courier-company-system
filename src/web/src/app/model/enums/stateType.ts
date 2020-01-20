@@ -1,0 +1,8 @@
+export enum StateType {
+    DELIVERED = 'DELIVERED',
+    IN_MAGAZINE = 'IN_MAGAZINE',
+    ASSIGNED = 'ASSIGNED',
+    AT_SENDER = 'AT_SENDER',
+    AT_COURIER = 'AT_COURIER',
+    RETURNED = 'RETURNED'
+}

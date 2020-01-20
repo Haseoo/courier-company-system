@@ -1,0 +1,14 @@
+h2 {
+  text-align: center;
+  color: darkgray;
+}
+.row{
+  display: flex;
+  justify-content: center;
+}
+[class= "row formgroup"]{
+  display: flex;
+}
+.row .form-group{
+  margin: 10px;
+}
