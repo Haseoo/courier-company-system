@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { first } from 'rxjs/operators';
+import { Role } from '../model';
 
 @Component({
   selector: 'app-login',
@@ -46,7 +47,9 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate(['']);
+          if (data.userType === Role.ADMIN) {
+            this.router.navigate(['/admin']);
+          }
         },
         error => {
           this.error = error.error.message;

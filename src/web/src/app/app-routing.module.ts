@@ -1,3 +1,4 @@
+import { AdminGuard } from './helpers/admin.guard';
 import { AppComponent } from './app.component';
 import { RegisterIndividualComponent } from './registerIndividual/registerIndividual.component';
 import { LoginComponent } from './login/login.component';
@@ -31,7 +32,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'offer',
@@ -40,12 +41,12 @@ const routes: Routes = [
   {
     path: 'admin/users',
     component: UserComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'admin/magazine',
     component: MagazineComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
 ];
 

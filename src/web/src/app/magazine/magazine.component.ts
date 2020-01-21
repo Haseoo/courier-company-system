@@ -2,10 +2,7 @@ import { Observable } from 'rxjs';
 import { MagazineService } from './../services/magazine.service';
 import { Component, OnInit } from '@angular/core';
 import { Magazine } from '../model/magazine';
-import { AlertService } from '../services/alertService';
-import { AuthenticationService } from '../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Address } from '../model/address';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-magazine',
@@ -61,7 +58,7 @@ export class MagazineComponent implements OnInit {
     this.magazineService.edit(this.currentMagazine)
       .subscribe(
         data => {
-          this.router.navigate(['']);
+          this.ngOnInit();
         },
         error => {
           console.log(error.error.message);

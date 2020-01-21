@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../model';
 import { UserService } from '../services/user.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -18,7 +19,8 @@ export class UserComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
 
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
@@ -32,6 +34,16 @@ export class UserComponent implements OnInit {
   }
   getUsers() {
     this.users = this.userService.getAll();
+  }
+  deactiveUser(user: User) {
+    this.userService.setAsInActive(user).subscribe(data => {
+      this.ngOnInit();
+    });
+  }
+  activeUser(user: User) {
+    this.userService.setAsActive(user).subscribe(data => {
+      this.ngOnInit();
+    });
   }
 
 }

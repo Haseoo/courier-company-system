@@ -18,9 +18,12 @@
       <td>
         {{ user.username }}
       </td>
-      <td>
-        <button>Active</button>
+      <td *ngIf="user.active; else isNotActive">
+        <button (click)="deactiveUser(user)" class="btn btn-outline-danger">Deactive</button>
       </td>
+      <ng-template #isNotActive>
+        <td><button (click) = "activeUser(user)" class="btn btn-outline-success">Active</button></td>
+      </ng-template>
     </tr>
   </tbody>
 </table>
