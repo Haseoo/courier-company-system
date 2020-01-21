@@ -12,3 +12,7 @@ h2 {
 .row .form-group{
   margin: 10px;
 }
+.magazine-header{
+  display: flex;
+  justify-content: center;
+}

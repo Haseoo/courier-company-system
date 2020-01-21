@@ -8,9 +8,6 @@ import { User } from '../model/user';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  changeActive(id: number) {
-
-  }
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Array<User>> {
@@ -24,7 +21,10 @@ export class UserService {
     user.password = user.password.split('');
     return this.http.put(environment.API_URL + `/client/individual/register`, user);
   }
-  deleteUser(user: User) {
-    return this.http.delete(environment.API_URL + '/user');
+  setAsInActive(user: User) {
+    return this.http.delete(environment.API_URL + '/user/' + user.id);
+  }
+  setAsActive(user: User) {
+    return this.http.post(environment.API_URL + '/user/' + user.id, user);
   }
 }
