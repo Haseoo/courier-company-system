@@ -16,3 +16,7 @@ h2 {
   display: flex;
   justify-content: center;
 }
+.notify-div{
+  text-align: center;
+  margin: 10px auto 0 auto;
+}

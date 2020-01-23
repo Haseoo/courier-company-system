@@ -5,7 +5,7 @@ import { ParcelMagazineView } from './views/parcelMagazineView';
 export class Magazine {
   id?: number;
   address: Address;
-  active: boolean;
+  active?: boolean;
   logisticans?: Logistician;
   parcels?: ParcelMagazineView;
 

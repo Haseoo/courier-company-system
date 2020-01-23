@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { AlertService } from '../services/alertService';
 @Component({
   selector: 'app-register-company',
   templateUrl: './registerCompany.component.html',
@@ -17,32 +18,35 @@ export class RegisterCompanyComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService,
     private userService: UserService,
+    private alertService: AlertService,
   ) {
 
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/home']);
-    }
   }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      userName: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       emailAddress: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
-      companyName: ['', Validators.required]
-      // TODO:add the rest of fields
+      phoneNumber: ['', [Validators.required]],
+      companyName: [null, Validators.required],
+      nip: ['', Validators.required],
+      representativeName: [null, Validators.required],
+      representativeSurname: [null, Validators.required],
+      representativeEmailAddress: [null, [Validators.required, Validators.email]],
+      representativePhoneNumber: [null, Validators.required]
     });
   }
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
+    console.log(this.f);
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
     }
+
     this.loading = true;
     this.userService.registerCompany(this.registerForm.value)
       .pipe(first())
@@ -52,6 +56,8 @@ export class RegisterCompanyComponent implements OnInit {
         },
         error => {
           this.loading = false;
+          this.alertService.error(error.error.message);
         });
   }
+
 }
