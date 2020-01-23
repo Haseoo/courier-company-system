@@ -87,8 +87,6 @@
     />
     <div *ngIf="submitted && f.pesel.errors" class="invalid-feedback">
       <div *ngIf="f.pesel.errors.required">Pesel is required</div>
-      <!-- don't display error -->
-      <div *ngIf="f.pesel.errors.validatePesel">Pesel is incorrect</div>
     </div>
   </div>
   <div class="form-group">

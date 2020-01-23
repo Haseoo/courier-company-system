@@ -19,4 +19,7 @@ export class MagazineService {
     delete magazine.id;
     return this.http.post(environment.API_URL + '/magazine/' + id, magazine);
   }
+  save(magazine: Magazine) {
+    return this.http.put(environment.API_URL + '/magazine/', magazine);
+  }
 }

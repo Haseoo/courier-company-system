@@ -1,3 +1,4 @@
+import { ClientCompany } from './../model/clientCompany';
 import { Observable } from 'rxjs';
 import { ClientIndividual } from './../model/clientIndividual';
 import { environment } from './../../environments/environment';
@@ -13,8 +14,8 @@ export class UserService {
   getAll(): Observable<Array<User>> {
     return this.http.get<Array<User>>(environment.API_URL + '/user');
   }
-  registerCompany(user: User) {
-
+  registerCompany(user: ClientCompany) {
+    user.password = user.password.split('');
     return this.http.put(environment.API_URL + `/client/company/register`, user);
   }
   registerIndividual(user: ClientIndividual) {
