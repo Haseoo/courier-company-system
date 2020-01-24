@@ -20,6 +20,8 @@ import { MagazinesComponent } from './magazines/magazines.component';
 import { MagazineComponent } from './magazine/magazine.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { LogisticianComponent } from './logistician/logistician.component';
+import { ClientComponent } from './client/client.component';
+import { CourierComponent } from './courier/courier.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { LogisticianComponent } from './logistician/logistician.component';
     MagazinesComponent,
     MagazineComponent,
     EmployeeComponent,
-    LogisticianComponent
+    LogisticianComponent,
+    ClientComponent,
+    CourierComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+.row{
+    padding: 10px 0 10px 0;
+}
+.button-wrapper{
+    padding: 10px 0 10px 0;
+    display: flex;
+    justify-content: center;
+}
+.wrapper {
+    width: 80%;
+    margin: auto;
+}
+.wrapper div.form{
+    width: 40%;
+    margin: auto;
+}
+.wrapper div.form button{
+    margin: 0 5px 0 5px;
+}
+

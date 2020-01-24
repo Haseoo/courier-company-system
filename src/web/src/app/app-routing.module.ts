@@ -1,3 +1,7 @@
+import { CourierGuard } from './helpers/courier.guard';
+import { CourierComponent } from './courier/courier.component';
+import { ClientGuard } from './helpers/client.guard';
+import { ClientCompany } from './model/clientCompany';
 import { LogisticianGuard } from './helpers/logistician.guard';
 import { LogisticianComponent } from './logistician/logistician.component';
 import { EmployeeComponent } from './employee/employee.component';
@@ -13,6 +17,7 @@ import { AdminComponent } from './admin';
 import { OfferComponent } from './offer/offer.component';
 import { UserComponent } from './user/user.component';
 import { MagazinesComponent } from './magazines/magazines.component';
+import { ClientComponent } from './client/client.component';
 
 
 const routes: Routes = [
@@ -64,6 +69,16 @@ const routes: Routes = [
     path: 'logistician',
     component: LogisticianComponent,
     canActivate: [LogisticianGuard]
+  },
+  {
+    path: 'client',
+    component: ClientComponent,
+    canActivate: [ClientGuard]
+  },
+  {
+    path: 'courier',
+    component: CourierComponent,
+    canActivate: [CourierGuard]
   }
 ];
 
