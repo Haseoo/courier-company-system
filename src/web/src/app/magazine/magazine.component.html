@@ -1,0 +1,72 @@
+<div *ngIf="magazine">
+  <div class="row title">
+    <h2>List of Parcels</h2>
+  </div>
+  <div>
+    <div class="row text-light bg-dark">
+      <div class="col-md-1">ID</div>
+      <div class="col-md-4">Delivery Address</div>
+      <div class="col-md-3">Expected Delivery Time</div>
+      <div class="col-md-3">Parcel Type</div>
+    </div>
+    <ng-container *ngFor="let parcel of magazine.parcels">
+      <div class="row bg-light text-dark" (click)="displayParcelDetails()">
+        <div class="col-md-1">{{ parcel.id }}</div>
+        <div class="col-md-4">{{ getAddress(parcel.deliveryAddress) }}</div>
+        <div class="col-md-3">{{ parcel.expectedDeliveryTime }}</div>
+        <div class="col-md-3">{{ parcel.parcelType.name }}</div>
+      </div>
+      <div class="row bg-light text-dark" *ngIf="parcelDetails">
+        <div class="container">
+            <div class="row">
+              <div class="col-md-2">Current State:</div>
+              <div class="col-md-4">{{ parcel.currentState | lowercase }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">Date moved:</div>
+                <div class="col-md-4">{{ parcel.dateMoved }}</div>
+              </div>
+            <div class="row">
+              <div class="col-md-2">Effective Price:</div>
+              <div class="col-md-4">{{ parcel.effectivePrice }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">Parcel Fee:</div>
+                <div class="col-md-4">{{ parcel.parcelFee }}</div>
+              </div>
+            <div class="row">
+              <div class="col-md-2">Paid:</div>
+              <div class="col-md-4">{{ parcel.paid }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">Priority:</div>
+                <div class="col-md-4">{{ parcel.priority }}</div>
+              </div>           
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="row title">
+    <h2>List of Logisticians</h2>
+  </div>
+  <div>
+    <div class="row bg-secondary text-white">
+      <div class="col-md-1">ID</div>
+      <div class="col-md-2">Name</div>
+      <div class="col-md-2">Surname</div>
+      <div class="col-md-2">Pesel</div>
+      <div class="col-md-2">Phone Number</div>
+      <div class="col-md-2">Email Address</div>
+    </div>
+    <ng-container *ngFor="let logistician of magazine.logisticians">
+      <div class="row bg-light text-dark">
+        <div class="col-md-1">{{logistician.id}}</div>
+        <div class="col-md-2">{{logistician.name}}</div>
+        <div class="col-md-2">{{logistician.surname}}</div>
+        <div class="col-md-2">{{logistician.pesel}}</div>
+        <div class="col-md-2">{{logistician.phoneNumber}}</div>
+        <div class="col-md-2">{{logistician.emailAddress}}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>

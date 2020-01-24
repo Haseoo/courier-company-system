@@ -49,6 +49,15 @@ export class LoginComponent implements OnInit {
           if (data.userType === Role.ADMIN) {
             this.router.navigate(['/admin']);
           }
+          if (data.userType === Role.COMPANY_CLIENT || data.userType === Role.INDIVIDUAL_CLIENT) {
+            this.router.navigate(['/client']);
+          }
+          if (data.userType === Role.LOGISTICIAN) {
+            this.router.navigate(['/logistician']);
+          }
+          if (data.userType === Role.COURIER) {
+            this.router.navigate(['/courier']);
+          }
         },
         error => {
           this.error = error.error.message;

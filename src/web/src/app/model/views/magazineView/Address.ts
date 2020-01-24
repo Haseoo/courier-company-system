@@ -4,4 +4,6 @@ export interface Address {
     flatNumber: string;
     postalCode: string;
     street: string;
+
+    
 }

@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean;
   isClient: boolean;
   isLogistician: boolean;
+  isCourier: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router) {
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = this.authenticationService.isLoggedIn();
     this.isClient = this.authenticationService.isClient();
     this.isLogistician = this.authenticationService.isLogistician();
+    this.isCourier = this.authenticationService.isCourier();
   }
 
   onLogout() {

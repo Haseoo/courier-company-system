@@ -47,6 +47,12 @@ export class AuthenticationService {
     }
     return false;
   }
+  isCourier() {
+    if (this.currentUserValue && this.currentUserValue.userType === Role.COURIER) {
+      return true;
+    }
+    return false;
+  }
   public get getUsername(): any {
     return this.currentUserValue.userName;
   }

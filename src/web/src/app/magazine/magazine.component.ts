@@ -1,4 +1,4 @@
-import { MagazineView } from '../model/views/magazineView';
+import { MagazineView, Address } from '../model/views/magazineView';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MagazineService } from '../services/magazine.service';
@@ -10,18 +10,26 @@ import { MagazineService } from '../services/magazine.service';
 export class MagazineComponent implements OnInit {
 
   magazine: MagazineView;
+  parcelDetails: boolean;
 
   constructor(private router: Router,
-              private magazineService: MagazineService,
-              private route: ActivatedRoute) { }
+    private magazineService: MagazineService,
+    private route: ActivatedRoute) { }
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.magazineService.getById(Number(id)).subscribe(res => {
       this.magazine = res;
     });
   }
-  gotoMagazines() {
-    this.router.navigate(['/admin/magazines']);
+  getAddress(address: Address): string {
+    return address.buildingNumber + '/' +
+      address.flatNumber + ' ' +
+      address.street + ' ' +
+      address.postalCode + ' ' +
+      address.city;
+  }
+  displayParcelDetails() {
+    this.parcelDetails = !this.parcelDetails;
   }
 
 }

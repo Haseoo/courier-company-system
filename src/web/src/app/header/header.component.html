@@ -49,13 +49,13 @@
     <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['admin/users']">Users</a>
+          <a class="nav-link" [routerLink]="['admin/users']">Add menu element</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['admin/employee']" >Employees</a>
+          <a class="nav-link" [routerLink]="['admin/employee']" >and change</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/admin/magazines']">Magazines</a>
+          <a class="nav-link" [routerLink]="['/admin/magazines']">route link</a>
         </li>
         <li class="nav-item">
         <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">Log out ({{getUsername()|lowercase}})</a>
@@ -70,13 +70,13 @@
     <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['admin/users']">Users</a>
+          <a class="nav-link" [routerLink]="['admin/users']">Add menu element</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['admin/employee']" >Employees</a>
+          <a class="nav-link" [routerLink]="['admin/employee']" >and change</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/admin/magazines']">Magazines</a>
+          <a class="nav-link" [routerLink]="['/admin/magazines']">route link</a>
         </li>
         <li class="nav-item">
         <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">Log out ({{getUsername()|lowercase}})</a>
@@ -87,5 +87,24 @@
 </nav>
 
 
-
+<nav *ngIf = "isLoggedIn && isCourier" class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <div id="navbarSupportedContent" class="collapse navbar-collapse">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['admin/users']">Add menu element</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['admin/employee']" >and change</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/admin/magazines']">route link</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">Log out ({{getUsername()|lowercase}})</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
