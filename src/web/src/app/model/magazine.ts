@@ -6,10 +6,11 @@ export class Magazine {
   id?: number;
   address: Address;
   active?: boolean;
-  logisticans?: Logistician;
-  parcels?: ParcelMagazineView;
+  logisticians?: Logistician[];
+  parcels?: ParcelMagazineView[];
 
-  public constructor(init?: Partial<Magazine>) {
-    Object.assign(this, init);
-}
+  public constructor() {
+    
+  }
+ 
 }

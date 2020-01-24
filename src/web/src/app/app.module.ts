@@ -16,7 +16,10 @@ import { OfferComponent } from './offer/offer.component';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 import { AlertComponent } from './alert/alert.component';
+import { MagazinesComponent } from './magazines/magazines.component';
 import { MagazineComponent } from './magazine/magazine.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { LogisticianComponent } from './logistician/logistician.component';
 
 
 @NgModule({
@@ -31,7 +34,10 @@ import { MagazineComponent } from './magazine/magazine.component';
     OfferComponent,
     HeaderComponent,
     UserComponent,
-    MagazineComponent
+    MagazinesComponent,
+    MagazineComponent,
+    EmployeeComponent,
+    LogisticianComponent
   ],
   imports: [
     BrowserModule,

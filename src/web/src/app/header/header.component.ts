@@ -1,6 +1,7 @@
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,8 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean;
   isAdmin: boolean;
+  isClient: boolean;
+  isLogistician: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router) {
@@ -22,7 +25,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.isAdmin = this.authenticationService.isAdmin();
     this.isLoggedIn = this.authenticationService.isLoggedIn();
-
+    this.isClient = this.authenticationService.isClient();
+    this.isLogistician = this.authenticationService.isLogistician();
   }
 
   onLogout() {
