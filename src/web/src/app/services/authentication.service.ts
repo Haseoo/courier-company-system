@@ -34,6 +34,19 @@ export class AuthenticationService {
     }
     return false;
   }
+  isClient() {
+    if (this.currentUserValue &&
+      (this.currentUserValue.userType === Role.COMPANY_CLIENT || this.currentUserValue.userType === Role.INDIVIDUAL_CLIENT)) {
+      return true;
+    }
+    return false;
+  }
+  isLogistician() {
+    if (this.currentUserValue && this.currentUserValue.userType === Role.LOGISTICIAN) {
+      return true;
+    }
+    return false;
+  }
   public get getUsername(): any {
     return this.currentUserValue.userName;
   }

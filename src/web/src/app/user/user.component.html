@@ -8,6 +8,7 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">username</th>
+      <th scope="col">type</th>
     </tr>
   </thead>
   <tbody>
@@ -17,6 +18,9 @@
       </td>
       <td>
         {{ user.username }}
+      </td>
+      <td>
+        {{ user.userType | lowercase }}
       </td>
       <td *ngIf="user.active; else isNotActive">
         <button (click)="deactiveUser(user)" class="btn btn-outline-danger">Deactive</button>

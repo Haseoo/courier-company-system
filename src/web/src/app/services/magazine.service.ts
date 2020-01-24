@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { MagazineView } from '../model/views/magazineView';
 
 
 @Injectable({ providedIn: 'root' })
@@ -21,5 +22,8 @@ export class MagazineService {
   }
   save(magazine: Magazine) {
     return this.http.put(environment.API_URL + '/magazine/', magazine);
+  }
+  getById(id: number) {
+    return this.http.get<MagazineView>(environment.API_URL + '/magazine/' + id);
   }
 }

@@ -11,7 +11,7 @@ export class SendersParcel {
     paid: boolean;
     parcelFee: number;
     parcelPrice: number;
-    parcelStatesView: ParcelStatesView;
+    parcelStatesView: ParcelStatesView[];
     parcelType: ParcelType;
     priority: boolean;
     receiverInfoView: ReceiverInfoView;

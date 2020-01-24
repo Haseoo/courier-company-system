@@ -1,16 +1,18 @@
+import { LogisticianGuard } from './helpers/logistician.guard';
+import { LogisticianComponent } from './logistician/logistician.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { MagazineComponent } from './magazine/magazine.component';
 import { AdminGuard } from './helpers/admin.guard';
 import { AppComponent } from './app.component';
 import { RegisterIndividualComponent } from './registerIndividual/registerIndividual.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { RegisterCompanyComponent } from './registerCompany/registerCompany.component';
-import { AuthGuard } from './helpers/auth.guard';
 import { AdminComponent } from './admin';
 import { OfferComponent } from './offer/offer.component';
 import { UserComponent } from './user/user.component';
-import { MagazineComponent } from './magazine/magazine.component';
+import { MagazinesComponent } from './magazines/magazines.component';
 
 
 const routes: Routes = [
@@ -44,10 +46,25 @@ const routes: Routes = [
     canActivate: [AdminGuard]
   },
   {
-    path: 'admin/magazine',
+    path: 'admin/magazines',
+    component: MagazinesComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/magazines/:id',
     component: MagazineComponent,
     canActivate: [AdminGuard]
   },
+  {
+    path: 'admin/employee',
+    component: EmployeeComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'logistician',
+    component: LogisticianComponent,
+    canActivate: [LogisticianGuard]
+  }
 ];
 
 @NgModule({
