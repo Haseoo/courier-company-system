@@ -1,6 +1,5 @@
 import { environment } from './../../environments/environment.prod';
 import { AlertService } from './../services/alertService';
-import { PeselValidator } from '../validators/peselValidator';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

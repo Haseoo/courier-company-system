@@ -56,6 +56,9 @@ export class AuthenticationService {
   public get getUsername(): any {
     return this.currentUserValue.userName;
   }
+  public get getId(): any {
+    return this.currentUserValue.id;
+  }
   login(username: string, password: string) {
     return this.http.post<any>((environment.API_URL + `/login`), { username, password })
       .pipe(map(user => {

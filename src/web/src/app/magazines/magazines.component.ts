@@ -68,7 +68,6 @@ export class MagazinesComponent implements OnInit {
           this.ngOnInit();
         },
         error => {
-          console.log(error.error.message);
           this.loading = false;
         },
       );

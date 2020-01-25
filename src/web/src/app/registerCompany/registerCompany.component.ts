@@ -41,7 +41,6 @@ export class RegisterCompanyComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
-    console.log(this.f);
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
