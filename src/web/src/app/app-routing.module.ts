@@ -1,3 +1,5 @@
+import { CheckComponent } from './check/check.component';
+import { ParcelComponent } from './parcel/parcel.component';
 import { CourierGuard } from './helpers/courier.guard';
 import { CourierComponent } from './courier/courier.component';
 import { ClientGuard } from './helpers/client.guard';
@@ -79,6 +81,15 @@ const routes: Routes = [
     path: 'courier',
     component: CourierComponent,
     canActivate: [CourierGuard]
+  },
+  {
+    path: 'check',
+    component: CheckComponent,
+    
+  },
+  {
+    path: 'check/parcel/:id',
+    component: ParcelComponent,
   }
 ];
 

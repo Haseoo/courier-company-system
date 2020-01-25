@@ -22,6 +22,8 @@ import { EmployeeComponent } from './employee/employee.component';
 import { LogisticianComponent } from './logistician/logistician.component';
 import { ClientComponent } from './client/client.component';
 import { CourierComponent } from './courier/courier.component';
+import { ParcelComponent } from './parcel/parcel.component';
+import { CheckComponent } from './check/check.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { CourierComponent } from './courier/courier.component';
     EmployeeComponent,
     LogisticianComponent,
     ClientComponent,
-    CourierComponent
+    CourierComponent,
+    ParcelComponent,
+    CheckComponent
   ],
   imports: [
     BrowserModule,
