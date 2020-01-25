@@ -1,4 +1,4 @@
-export class ParcelType {
+export interface ParcelType {
     id?: number;
     active: boolean;
     description: string;

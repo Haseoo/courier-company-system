@@ -1,7 +1,7 @@
 <table
   class="table table-striped"
   mat-table
-  *ngIf="offer | async as offer; else noData"
+  *ngIf="offer | async as offer"
 >
   <thead>
     <tr>
@@ -22,7 +22,3 @@
     </td>
   </tr>
 </table>
-
-<ng-template #noData
-  >An unidentified problem occurred, please try again later
-</ng-template>
