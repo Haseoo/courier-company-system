@@ -1,4 +1,4 @@
-export class ReceiverInfoView{
+export interface ReceiverInfoView{
     emailAddress: string;
     id?: number;
     name: string;

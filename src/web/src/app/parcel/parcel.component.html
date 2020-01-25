@@ -1,0 +1,71 @@
+<div class="container" *ngIf="parcel">
+  <div class="row text-light bg-dark">
+    <div class="col-sm">
+      ID
+    </div>
+    <div class="col-sm">
+      Expected Courier Arrival Date
+    </div>
+    <div class="col-sm">
+      Actual Status
+    </div>
+    <div class="col-sm">
+      Parcel Price
+    </div>
+    <div class="col-sm-2">
+      
+    </div>
+    <div class="col-sm-2">
+      
+    </div>
+  </div>
+  <div class="row record bg-light text-dark">
+    <div class="col-sm">
+      {{parcel.id}}
+    </div>
+    <div class="col-sm">
+      {{parcel.expectedCourierArrivalDate}}
+    </div>
+    <div class="col-sm">
+      {{parcel.parcelStatesView[parcel.parcelStatesView.length-1].stateType | titlecase}}
+    </div>
+    <div class="col-sm">
+      {{parcel.parcelFee}}
+    </div>
+    <div class="col-sm-2">
+      <button [disabled]="!parcel.moveable" (click)=showNewDateForm() class="btn btn-secondary">Change date</button>
+    </div>
+    <div class="col-sm-2">
+      <button (click)=showMoreInfo() class="btn btn-secondary">Show more info</button>
+    </div>
+  </div>
+  <div class="row" *ngIf="changeDate">
+    <div class="container">
+      <div class="row">
+        <label for="date" >New Date:</label>
+        <input type="date" id="date" datetime="yyyy-MM-dd" value="magazine.expectedCourierArrivalDate" (input) = "updateDate($event)">
+      </div>
+      <div class="row">
+        <label for="pin">PIN:</label>
+        <input type="password" id="pin" (input) = "updatePin($event)">
+      </div>
+      <div class="row">
+        <button class="btn btn-success" (click)= "changeDeliveryDate()">Change</button> 
+        <button class="btn btn-danger" (click) = "cancel()">Abort</button> 
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="infoAboutParcel">
+    
+    <div class="subtable">
+      <div class="row">
+        <td class="col-sm-2 text-dark">
+          Parcel Type:
+        </td>
+        <td class="col-sm-2 text-dark">
+          {{parcel.parcelType.active}}
+        </td>
+      </div>
+    </div>
+  </div>
+</div>
