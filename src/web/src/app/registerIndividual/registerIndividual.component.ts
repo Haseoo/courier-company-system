@@ -36,7 +36,7 @@ export class RegisterIndividualComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      pesel: ['', [Validators.required, PeselValidator.validatePesel]]
+      pesel: ['', [Validators.required]]
     });
   }
 

@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ParcelClientView } from '../model/views/parcelClientView';
@@ -15,10 +16,14 @@ export class CheckComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private parcelService: ParcelService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     
+  }
+  isClient(){
+    return this.authenticationService.isClient();
   }
 
 }

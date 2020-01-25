@@ -5,6 +5,7 @@ h2 {
 .row{
   display: flex;
   justify-content: center;
+  padding: 5px 0 5px 0;
 }
 [class= "row formgroup"]{
   display: flex;

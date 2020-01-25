@@ -78,6 +78,17 @@ const routes: Routes = [
     canActivate: [ClientGuard]
   },
   {
+    path: 'client/check',
+    component: CheckComponent,
+    canActivate: [ClientGuard]
+  },
+  {
+    path: 'client/check/parcel/:id',
+    component: ParcelComponent,
+    canActivate: [ClientGuard]
+
+  },
+  {
     path: 'courier',
     component: CourierComponent,
     canActivate: [CourierGuard]
@@ -85,12 +96,11 @@ const routes: Routes = [
   {
     path: 'check',
     component: CheckComponent,
-    
   },
   {
     path: 'check/parcel/:id',
     component: ParcelComponent,
-  }
+  },
 ];
 
 @NgModule({
