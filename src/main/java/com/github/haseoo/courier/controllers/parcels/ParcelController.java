@@ -58,7 +58,6 @@ public class ParcelController {
     }
 
     @PostMapping("/{id}/moveDate")
-    @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
     public ParcelView moveDate(@PathVariable Long id, @RequestBody ParcelDateMoveCommandData commandData) {
         return parcelViewCreator.createParcelView(parcelService.moveDate(id, commandData.getPin(), commandData.getNewDate()));
     }
