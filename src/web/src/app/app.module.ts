@@ -24,6 +24,7 @@ import { ClientComponent } from './client/client.component';
 import { CourierComponent } from './courier/courier.component';
 import { ParcelComponent } from './parcel/parcel.component';
 import { CheckComponent } from './check/check.component';
+import { SendComponent } from './send/send.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CheckComponent } from './check/check.component';
     ClientComponent,
     CourierComponent,
     ParcelComponent,
-    CheckComponent
+    CheckComponent,
+    SendComponent
   ],
   imports: [
     BrowserModule,

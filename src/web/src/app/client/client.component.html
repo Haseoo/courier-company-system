@@ -1,1 +1,126 @@
-<p>client works!</p>
+<div class="header-container">
+    <h2>List of parcels: </h2>
+</div>
+<div class = "container" *ngIf="currentClient">
+  <div *ngFor="let parcel of currentClient.sendParcels">
+    <div class="container">
+      <div class="row text-light bg-dark">
+        <div class="col-sm-1">
+          ID
+        </div>
+        <div class="col-sm-3">
+          Expected Courier Arrival Date
+        </div>
+        <div class="col-sm">
+          Actual Status
+        </div>
+        <div class="col-sm">
+          Parcel Price
+        </div>
+        <div class="col-sm"></div>
+      </div>
+      <div class="row record bg-light text-dark">
+        <div class="col-sm-1">
+          {{ parcel.id }}
+        </div>
+        <div class="col-sm-3">
+          {{ parcel.expectedCourierArrivalDate }}
+        </div>
+        <div class="col-sm">
+          {{
+            parcel.parcelStatesView[parcel.parcelStatesView.length - 1]
+              .stateType | titlecase
+          }}
+        </div>
+        <div class="col-sm">
+          {{ parcel.parcelFee }}
+        </div>
+        <div class="col-sm">
+          <button (click)="showMoreInfo(parcel)" class="btn btn-secondary">
+            Show more info
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="infoAboutParcel && currentParcel.id === parcel.id">
+      <div class="subtable">
+        <div class="row" style="display:flex; justify-content: space-between;">
+          <div class="col">
+            <div
+              class="row align-self-start"
+              style="border-right: solid 2px darkblue"
+            >
+              <div class="row text-dark">
+                Parcel Info:
+              </div>
+              <div class="row text-dark">
+                <div class="col">Type:</div>
+                <div class="col">{{ parcel.parcelType.name }}</div>
+              </div>
+              <div class="row text-dark">
+                <div class="col">Is paid</div>
+                <div class="col">{{ parcel.paid }}</div>
+              </div>
+              <div class="row text-dark">
+                <div class="col">Parcel Fee:</div>
+                <div class="col">{{ parcel.parcelFee }}</div>
+              </div>
+              <div class="row text-dark">
+                <div class="col">Is priority:</div>
+                <div class="col">{{ parcel.priority }}</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="row text-dark">
+                Receiver Info:
+              </div>
+              <div class="row text-dark">
+                <div class="col">Name:</div>
+                <div class="col">{{ parcel.receiverInfoView.name }}</div>
+              </div>
+              <div class="row text-dark">
+                <div class="col">Surname:</div>
+                <div class="col">{{ parcel.receiverInfoView.surname }}</div>
+              </div>
+              <div class="col text-dark">
+                <div class="col">Phone Number:</div>
+                <div class="col">{{ parcel.receiverInfoView.phoneNumber }}</div>
+              </div>
+              <div class="col text-dark">
+                <div class="col">Email Address:</div>
+                <div class="col">
+                  {{ parcel.receiverInfoView.emailAddress }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">Previous states:</div>
+          <div
+            class="row w-100 align-self-center"
+          >
+          <div class="col w-25 d-flex justify-content-center">State</div>
+          <div class="col w-25 d-flex justify-content-center">Date</div>
+          <div class="col w-50 d-flex justify-content-center">Magazine Address</div>
+        </div>
+          <div
+            class="row w-100 align-self-center"
+            *ngFor="let state of parcel.parcelStatesView"
+            style="display:flex; justify-content: center;"
+          >
+            <div class="col w-25 d-flex justify-content-center">
+              {{ state.stateType }}
+            </div>
+            <div class="col w-25 d-flex justify-content-center">
+                {{ state.changeTime | date: "short" }}
+              </div>
+              <div class="col w-50 d-flex justify-content-center">
+                  <ng-container *ngIf = "state.stateType === 'IN_MAGAZINE'">
+                    {{ state.city }}
+                  </ng-container>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

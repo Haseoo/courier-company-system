@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ParcelType } from '../model';
+import { CommandAddData } from '../model/commandData/commandAddData';
 
 
 @Injectable({ providedIn: 'root' })
@@ -22,5 +23,11 @@ export class ParcelService {
     commandData.parcelPin = commandData.parcelPin.split('');
     commandData.newDate = commandData.newDate.replace('/', '-');
     return this.http.post(environment.API_URL + '/parcel/' + id + '/moveDate', commandData);
+  }
+  getParcelType() {
+    return this.http.get<ParcelType[]>(environment.API_URL + '/parcelType');
+  }
+  save(commandAddData: CommandAddData) {
+    return this.http.put<ParcelClientView>(environment.API_URL + '/parcel', commandAddData);
   }
 }
