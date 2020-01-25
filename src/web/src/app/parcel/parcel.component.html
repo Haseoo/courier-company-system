@@ -1,70 +1,138 @@
 <div class="container" *ngIf="parcel">
   <div class="row text-light bg-dark">
-    <div class="col-sm">
+    <div class="col-sm-1">
       ID
     </div>
-    <div class="col-sm">
+    <div class="col-sm-3">
       Expected Courier Arrival Date
     </div>
-    <div class="col-sm">
+    <div class="col-sm-2">
       Actual Status
     </div>
-    <div class="col-sm">
+    <div class="col-sm-2">
       Parcel Price
     </div>
-    <div class="col-sm-2">
-      
-    </div>
-    <div class="col-sm-2">
-      
-    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"></div>
   </div>
   <div class="row record bg-light text-dark">
-    <div class="col-sm">
-      {{parcel.id}}
+    <div class="col-sm-1">
+      {{ parcel.id }}
     </div>
-    <div class="col-sm">
-      {{parcel.expectedCourierArrivalDate}}
-    </div>
-    <div class="col-sm">
-      {{parcel.parcelStatesView[parcel.parcelStatesView.length-1].stateType | titlecase}}
-    </div>
-    <div class="col-sm">
-      {{parcel.parcelFee}}
+    <div class="col-sm-3">
+      {{ parcel.expectedCourierArrivalDate }}
     </div>
     <div class="col-sm-2">
-      <button [disabled]="!parcel.moveable" (click)=showNewDateForm() class="btn btn-secondary">Change date</button>
+      {{
+        parcel.parcelStatesView[parcel.parcelStatesView.length - 1].stateType
+          | titlecase
+      }}
     </div>
     <div class="col-sm-2">
-      <button (click)=showMoreInfo() class="btn btn-secondary">Show more info</button>
+      {{ parcel.parcelFee }}
+    </div>
+    <div class="col-sm-2">
+      <button
+        [disabled]="!parcel.moveable"
+        (click)="showNewDateForm()"
+        class="btn btn-secondary"
+      >
+        Change date
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button (click)="showMoreInfo()" class="btn btn-secondary">
+        Show more info
+      </button>
     </div>
   </div>
   <div class="row" *ngIf="changeDate">
     <div class="container">
       <div class="row">
-        <label for="date" >New Date:</label>
-        <input type="date" id="date" datetime="yyyy-MM-dd" value="magazine.expectedCourierArrivalDate" (input) = "updateDate($event)">
+        <label for="date">New Date:</label>
+        <input
+          type="date"
+          id="date"
+          datetime="yyyy-MM-dd"
+          value="magazine.expectedCourierArrivalDate"
+          (input)="updateDate($event)"
+        />
       </div>
       <div class="row">
         <label for="pin">PIN:</label>
-        <input type="password" id="pin" (input) = "updatePin($event)">
+        <input type="password" id="pin" (input)="updatePin($event)" />
       </div>
       <div class="row">
-        <button class="btn btn-success" (click)= "changeDeliveryDate()">Change</button> 
-        <button class="btn btn-danger" (click) = "cancel()">Abort</button> 
+        <button class="btn btn-success" (click)="changeDeliveryDate()">
+          Change
+        </button>
+        <button class="btn btn-danger" (click)="cancel()">Abort</button>
       </div>
     </div>
   </div>
   <div class="row" *ngIf="infoAboutParcel">
-    
     <div class="subtable">
-      <div class="row">
-        <td class="col-sm-2 text-dark">
-          Parcel Type:
-        </td>
-        <td class="col-sm-2 text-dark">
-          {{parcel.parcelType.active}}
-        </td>
+      <div class="row" style="display:flex; justify-content: space-between;">
+        <div class="col">
+          <div
+            class="row align-self-start"
+            style="border-right: solid 2px darkblue"
+          >
+            <div class="row text-dark">
+              Parcel Info:
+            </div>
+            <div class="row text-dark">
+              <div class="col">Type:</div>
+              <div class="col">{{ parcel.parcelType.name }}</div>
+            </div>
+            <div class="row text-dark">
+              <div class="col">Is paid</div>
+              <div class="col">{{ parcel.paid }}</div>
+            </div>
+            <div class="row text-dark">
+              <div class="col">Parcel Fee:</div>
+              <div class="col">{{ parcel.parcelFee }}</div>
+            </div>
+            <div class="row text-dark">
+              <div class="col">Is priority:</div>
+              <div class="col">{{ parcel.priority }}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row text-dark">
+              Receiver Info:
+            </div>
+            <div class="row text-dark">
+              <div class="col">Name:</div>
+              <div class="col">{{ parcel.receiverInfoView.name }}</div>
+            </div>
+            <div class="row text-dark">
+              <div class="col">Surname:</div>
+              <div class="col">{{ parcel.receiverInfoView.surname }}</div>
+            </div>
+            <div class="col text-dark">
+              <div class="col">Phone Number:</div>
+              <div class="col">{{ parcel.receiverInfoView.phoneNumber }}</div>
+            </div>
+            <div class="col text-dark">
+              <div class="col">Email Address:</div>
+              <div class="col">{{ parcel.receiverInfoView.emailAddress }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">Previous states:</div>
+        <div
+          class="row w-100 align-self-center"
+          *ngFor="let state of parcel.parcelStatesView"
+          style="display:flex; justify-content: center;"
+        >
+          <div class="col w-50 d-flex justify-content-end">
+            {{ state.stateType }}
+          </div>
+          <div class="col w-50 d-flex justify-content-start">
+            {{ state.changeTime | date: "short" }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
