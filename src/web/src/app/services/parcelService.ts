@@ -1,4 +1,4 @@
-import { ParcelDateMoveCommandData } from '../model/ParcelDateMoveCommandData';
+import { ParcelDateMoveCommandData } from '../model/commandData/ParcelDateMoveCommandData';
 import { ParcelClientView } from './../model/views/parcelClientView';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
