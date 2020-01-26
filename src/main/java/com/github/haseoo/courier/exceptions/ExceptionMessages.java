@@ -41,4 +41,5 @@ public class ExceptionMessages {
     public static final String INCORRECT_PARCEL_PIN_EXCEPTION = "Entered incorrect parcel pin";
     public static final String ILLEGAL_MOVE_DATE_EXCEPTION = "Entered illegal new courrer arrival date";
     public static final String INVALID_POSTAL_CODE_FORMAT_EXCEPTION = "Postal code %s is invalid";
+    public static final String EMPTY_STRING_FIELD_FORMAT_EXCEPTION = "Field %s is empty";
 }
