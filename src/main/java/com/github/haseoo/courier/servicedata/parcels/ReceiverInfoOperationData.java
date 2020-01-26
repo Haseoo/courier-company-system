@@ -8,18 +8,20 @@ import com.github.haseoo.courier.models.ReceiverInfoModel;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @SuperBuilder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReceiverInfoOperationData {
-    @NonNull
+    @NotEmpty
     private String name;
-    @NonNull
+    @NotEmpty
     private String surname;
-    @NonNull
+    @NotEmpty
     private String emailAddress;
-    @NonNull
+    @NotEmpty
     private String phoneNumber;
 
     public static ReceiverInfoOperationData of(ReceiverInfoCommandData commandData) {

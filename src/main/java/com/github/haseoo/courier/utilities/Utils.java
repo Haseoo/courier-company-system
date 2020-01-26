@@ -1,6 +1,7 @@
 package com.github.haseoo.courier.utilities;
 
 import com.github.haseoo.courier.enums.ParcelStateType;
+import com.github.haseoo.courier.exceptions.serviceexceptions.EmptyStringField;
 import com.github.haseoo.courier.exceptions.serviceexceptions.InvalidEmailAddress;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import lombok.NoArgsConstructor;
@@ -54,6 +55,12 @@ public class Utils {
         }
 
         return result;
+    }
+
+    public static void validateStringField(String field, String fieldName) {
+        if (field != null && field.trim().length() <= 0) {
+            throw new EmptyStringField(fieldName);
+        }
     }
 
     private static String[] getNullPropertyNames(Object source) {

@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotEmpty;
+
+import static com.github.haseoo.courier.utilities.Utils.validateStringField;
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
@@ -15,18 +18,22 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 public class AddressOperationData {
-    @NonNull
+    @NotEmpty
     private String city;
-    @NonNull
+    @NotEmpty
     private String street;
-    @NonNull
+    @NotEmpty
     private String postalCode;
-    @NonNull
+    @NotEmpty
     private String buildingNumber;
     @NonNull
     private String flatNumber;
 
     public static AddressOperationData of(AddressCommandData commandData) {
+        validateStringField(commandData.getCity(), "city");
+        validateStringField(commandData.getStreet(), "street");
+        validateStringField(commandData.getPostalCode(), "postal code");
+        validateStringField(commandData.getBuildingNumber(), "building number");
         return AddressOperationData
                 .builder()
                 .city(commandData.getCity())
