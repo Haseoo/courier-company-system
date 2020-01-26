@@ -25,6 +25,8 @@ import { CourierComponent } from './courier/courier.component';
 import { ParcelComponent } from './parcel/parcel.component';
 import { CheckComponent } from './check/check.component';
 import { SendComponent } from './send/send.component';
+import { AssignComponent } from './assign/assign.component';
+import { ReturnComponent } from './return/return.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { SendComponent } from './send/send.component';
     CourierComponent,
     ParcelComponent,
     CheckComponent,
-    SendComponent
+    SendComponent,
+    AssignComponent,
+    ReturnComponent
   ],
   imports: [
     BrowserModule,

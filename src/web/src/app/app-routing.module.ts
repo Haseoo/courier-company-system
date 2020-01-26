@@ -1,10 +1,11 @@
+import { ReturnComponent } from './return/return.component';
+import { AssignComponent } from './assign/assign.component';
 import { SendComponent } from './send/send.component';
 import { CheckComponent } from './check/check.component';
 import { ParcelComponent } from './parcel/parcel.component';
 import { CourierGuard } from './helpers/courier.guard';
 import { CourierComponent } from './courier/courier.component';
 import { ClientGuard } from './helpers/client.guard';
-import { ClientCompany } from './model/clientCompany';
 import { LogisticianGuard } from './helpers/logistician.guard';
 import { LogisticianComponent } from './logistician/logistician.component';
 import { EmployeeComponent } from './employee/employee.component';
@@ -71,6 +72,21 @@ const routes: Routes = [
   {
     path: 'logistician',
     component: LogisticianComponent,
+    canActivate: [LogisticianGuard]
+  },
+  {
+    path: 'logistician/return',
+    component: ReturnComponent,
+    canActivate: [LogisticianGuard]
+  },
+  {
+    path: 'logistician/assign/:id',
+    component: AssignComponent,
+    canActivate: [LogisticianGuard]
+  },
+  {
+    path: 'logistician/assign',
+    component: AssignComponent,
     canActivate: [LogisticianGuard]
   },
   {

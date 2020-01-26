@@ -26,6 +26,7 @@ INSERT INTO public.receiverinfo (id, emailaddress, name, phonenumber, surname) V
 INSERT INTO public.parcel (id, isdatemoved, expectedcourierarrivaldate, ispaid, parcelfee, pin, priority, istoreturn, deliveryaddressid, parceltypeid, receivercontactdataid, clientid, senderaddressid) VALUES (5, false, '2019-12-26', true, 15.00, '2980', false, true, 5, 1, 3, 2, 5);
 INSERT INTO public.parcel (id, isdatemoved, expectedcourierarrivaldate, ispaid, parcelfee, pin, priority, istoreturn, deliveryaddressid, parceltypeid, receivercontactdataid, clientid, senderaddressid) VALUES (7, false, '2020-01-28', false, 1.00, '     ', false, false, 8, 1, 4, 3, 9);
 INSERT INTO public.parcel (id, isdatemoved, expectedcourierarrivaldate, ispaid, parcelfee, pin, priority, istoreturn, deliveryaddressid, parceltypeid, receivercontactdataid, clientid, senderaddressid) VALUES (8, true, '2019-12-27', true, 1.00, '3724', false, false, 8, 1, 4, 3, 9);
+INSERT INTO public.parcel (id, isdatemoved, expectedcourierarrivaldate, ispaid, parcelfee, pin, priority, istoreturn, deliveryaddressid, parceltypeid, receivercontactdataid, clientid, senderaddressid) VALUES (9, true, '2019-12-27', true, 1.00, '3723', false, false, 8, 1, 4, 3, 9);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (4, '2019-12-26 10:41:40.272553', 3, null, 1, 5);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (5, '2019-12-26 15:06:15.420902', 2, 4, null, 5);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (6, '2019-12-26 15:09:20.499102', 4, 4, null, 5);
@@ -77,5 +78,9 @@ INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazine
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (55, '2019-12-27 17:10:35.266274', 1, null, 1, 8);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (56, '2019-12-27 17:10:41.931402', 2, 4, null, 8);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (57, '2019-12-27 17:10:58.510396', 4, 4, null, 8);
-INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (58, '2019-12-27 17:14:38.211372', 0, 4, null, 8);
-INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (59, '2019-12-28 16:43:33.188074', 2, 4, null, 7);
+INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (58, '2019-12-27 17:14:38.211372', 1, null ,1, 8);
+INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (59, '2019-12-27 17:14:38.211372', 2, 4 ,null, 8);
+INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (60, '2019-12-27 17:14:38.211372', 4, 4 ,null, 8);
+INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (61, '2019-12-27 17:14:38.211372', 1, null ,1, 8);
+
+

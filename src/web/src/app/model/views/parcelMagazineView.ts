@@ -1,3 +1,4 @@
+import { Destination } from './../commandData/destination';
 import { ReceiverContactData } from '../receiverContactData';
 import { ParcelType } from '../parcelType';
 import { Address } from '../address';
@@ -6,6 +7,7 @@ export class ParcelMagazineView {
     currentState: string;
     dateMoved: boolean;
     deliveryAddress: Address;
+    destination?: Destination;
     effectivePrice: number;
     expectedDeliveryTime: string;
     id?: number;

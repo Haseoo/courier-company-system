@@ -8,8 +8,8 @@ import { CourierService } from './../services/courierService';
 import { Courier } from './../model/courier';
 import { Component, OnInit } from '@angular/core';
 import { Logistician } from '../model/logistician';
-import { Parcel } from '../model/parcel';
 import { Address } from '../model/address';
+import { ParcelMagazineView } from '../model/views/parcelMagazineView';
 
 @Component({
   selector: 'app-logistician',
@@ -21,7 +21,7 @@ export class LogisticianComponent implements OnInit {
   displayParcelsList = false;
   displayAsignParcelForm = false;
   couriers: Array<Courier>;
-  parcels: Array<Parcel>;
+  parcels: Array<ParcelMagazineView>;
   logistician: Logistician;
 
   constructor(private courierService: CourierService,

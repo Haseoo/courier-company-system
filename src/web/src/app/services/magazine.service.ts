@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MagazineView } from '../model/views/magazineView';
-import { Parcel } from '../model/parcel';
+import { ParcelMagazineView } from '../model/views/parcelMagazineView';
 
 
 @Injectable({ providedIn: 'root' })
@@ -29,6 +29,6 @@ export class MagazineService {
     return this.http.get<MagazineView>(environment.API_URL + '/magazine/' + id);
   }
   getParcelsById(id: number, magazine: MagazineParcelFilerCommandData) {
-    return this.http.post<Array<Parcel>>(environment.API_URL + '/magazine/' + id + '/parcels', magazine);
+    return this.http.post<Array<ParcelMagazineView>>(environment.API_URL + '/magazine/' + id + '/parcels', magazine);
   }
 }
