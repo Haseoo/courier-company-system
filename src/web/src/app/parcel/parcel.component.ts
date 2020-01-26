@@ -1,4 +1,4 @@
-import { ParcelDateMoveCommandData } from '../model/ParcelDateMoveCommandData';
+import { ParcelDateMoveCommandData } from '../model/commandData/ParcelDateMoveCommandData';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from './../services/alertService';
 import { ParcelClientView } from './../model/views/parcelClientView';

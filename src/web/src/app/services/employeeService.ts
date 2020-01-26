@@ -1,6 +1,3 @@
-import { ClientCompany } from './../model/clientCompany';
-import { Observable } from 'rxjs';
-import { ClientIndividual } from './../model/clientIndividual';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

@@ -1,9 +1,11 @@
+import { MagazineParcelFilerCommandData } from './../model/commandData/MagazineParcelFilerCommandData';
 import { Magazine } from './../model/magazine';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MagazineView } from '../model/views/magazineView';
+import { Parcel } from '../model/parcel';
 
 
 @Injectable({ providedIn: 'root' })
@@ -25,5 +27,8 @@ export class MagazineService {
   }
   getById(id: number) {
     return this.http.get<MagazineView>(environment.API_URL + '/magazine/' + id);
+  }
+  getParcelsById(id: number, magazine: MagazineParcelFilerCommandData) {
+    return this.http.post<Array<Parcel>>(environment.API_URL + '/magazine/' + id + '/parcels', magazine);
   }
 }
