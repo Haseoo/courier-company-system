@@ -120,9 +120,11 @@ public class MagazineServiceImpl implements MagazineService {
     public List<ParcelData> getParcelsToReturn(Long id) {
         return getById(id).getParcels()
                 .stream()
+                .filter(parcelData -> !parcelData.getToReturn())
                 .filter(parcelData -> parcelData
                         .getParcelStates()
-                        .stream().filter(parcelStateData -> parcelStateData
+                        .stream()
+                        .filter(parcelStateData -> parcelStateData
                                 .getState()
                                 .equals(IN_MAGAZINE)).count() > timesAtMagazineToReturn)
                 .collect(Collectors.toList());
