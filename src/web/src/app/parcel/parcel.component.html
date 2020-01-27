@@ -110,11 +110,11 @@
               <div class="col">Surname:</div>
               <div class="col">{{ parcel.receiverInfoView.surname }}</div>
             </div>
-            <div class="col text-dark">
+            <div class="row text-dark">
               <div class="col">Phone Number:</div>
               <div class="col">{{ parcel.receiverInfoView.phoneNumber }}</div>
             </div>
-            <div class="col text-dark">
+            <div class="row text-dark">
               <div class="col">Email Address:</div>
               <div class="col">{{ parcel.receiverInfoView.emailAddress }}</div>
             </div>
@@ -136,4 +136,38 @@
       </div>
     </div>
   </div>
+</div>
+<div class="container" *ngIf = "!id">
+  <div class="container" *ngIf="parcel">
+    <div class="row text-light bg-dark">
+      <div class="col-sm-1">
+        ID
+      </div>
+      <div class="col-sm-3">
+        Expected Courier Arrival Date
+      </div>
+      <div class="col-sm-2">
+        Actual Status
+      </div>
+      <div class="col-sm-2">
+        Parcel Price
+      </div>
+    </div>
+    <div class="row record bg-light text-dark">
+      <div class="col-sm-1">
+        {{ parcel.id }}
+      </div>
+      <div class="col-sm-3">
+        {{ parcel.expectedCourierArrivalDate }}
+      </div>
+      <div class="col-sm-2">
+        {{
+          parcel.parcelStatesView[parcel.parcelStatesView.length - 1].stateType
+            | titlecase
+        }}
+      </div>
+      <div class="col-sm-2">
+        {{ parcel.parcelFee }}
+      </div>
+    </div>
 </div>

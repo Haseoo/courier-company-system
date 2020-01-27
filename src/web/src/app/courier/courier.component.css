@@ -1,0 +1,11 @@
+.row{
+    padding: 10px  10px ;
+}
+.header-container{
+    text-align: center;
+}
+div [class *= "col-md"]{
+    display: flex;
+    justify-content: center;
+    padding: 0 10px 0 10px;
+}

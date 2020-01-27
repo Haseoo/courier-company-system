@@ -62,10 +62,8 @@ export class AssignComponent implements OnInit {
   }
   assignToList(id: string) {
     this.toAssign.parcelsIds.push(Number(id));
-    console.log(this.toAssign);
   }
   assignAllParcel() {
-    console.log(this.toAssign);
     this.courierService.assignParcel(Number(this.parameter), this.toAssign).subscribe(data => {
       this.ngOnInit();
     },

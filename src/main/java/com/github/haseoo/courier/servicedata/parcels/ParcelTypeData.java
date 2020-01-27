@@ -34,7 +34,7 @@ public class ParcelTypeData {
                 .parcelsWithType(((parcelTypeModel.getParcels() != null) ?
                         parcelTypeModel.getParcels()
                                 .stream()
-                                .map(ParcelData::of)
+                                .map(ParcelData::ofWithoutStates)
                                 .collect(Collectors.toList()) :
                         new ArrayList<>()))
                 .build();

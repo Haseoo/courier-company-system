@@ -1,1 +1,72 @@
-<p>courier works!</p>
+<div class="header-container">
+  <h2>List of parcels:</h2>
+</div>
+<div class="container" *ngIf="courier">
+  <div class="row text-light bg-dark">
+    <div class="col-md-1">
+      ID
+    </div>
+    <div class="col-md-2">
+      Source address
+    </div>
+    <div class="col-md-1">
+      Parcel Type
+    </div>
+    <div class="col-md-2">
+      Destination address
+    </div>
+    <div class="col-md-1">
+      Current State
+    </div>
+    <div class="col-md-1">
+      Priority
+    </div>
+    <div class="col-md-1" *ngIf = "canBePaid() || existParcelsWithAssignedSate()">Is paid</div>
+    <div class="col-md-2"></div>
+  </div>
+  <ng-container *ngFor="let parcel of courier.assignedParcels">
+    <div class="row record bg-light text-dark">
+      <div class="col-md-1">
+        {{ parcel.id }}
+      </div>
+      <div class="col-md-2">
+        {{ addressToString(parcel.source.address) }}
+      </div>
+      <div class="col-md-1">
+        {{ parcel.parcelType.name }}
+      </div>
+      <div class="col-md-2">
+        {{ addressToString(parcel.destination.address) }}
+      </div>
+      <div class="col-md-1">
+        {{ parcel.currentState | titlecase }}
+      </div>
+
+      <div class="col-md-1">
+        {{ parcel.priority }}
+      </div>
+      <div class="col-md-1" *ngIf = "canBePaid() || currentState(parcel.currentState, 'ASSIGNED')">
+        <input type="checkbox" name="isPaid" [(ngModel)]="parcel.paid" (ngModelChange)="onChangeIsPaid(parcel.id,$event)">
+      </div>
+      <div
+        class="col-md-2"
+        *ngIf="currentState(parcel.currentState, 'ASSIGNED')"
+      >
+        <button class="btn btn-outline-success" (click)="pickUpParcel(parcel.id, parcel.paid)">Pick up</button>
+        
+      </div>
+      <div class="col-md-2" *ngIf="currentState(parcel.currentState, 'AT_COURIER')">
+          <select *ngIf="parcel.toReturn" [(ngModel)]="selectedState" (ngModelChange)= "setNewState($event)" >
+            <option value="RETURNED">RETURNED</option>
+            <option value="'TO_MAGAZINE'">TO_MAGAZINE</option>
+          </select>
+          <select *ngIf = "!parcel.toReturn" [(ngModel)]="selectedState" (ngModelChange)= "setNewState($event)" name="state" >
+            <option value="DELIVERED">DELIVERED</option>
+            <option valuer ="TO_MAGAZINE">TO_MAGAZINE</option>
+          </select>
+          
+          <button (click) = "changeState(parcel.id)">&#10004;</button>
+      </div>
+      </div>
+  </ng-container>
+</div>

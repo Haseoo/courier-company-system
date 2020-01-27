@@ -13,8 +13,8 @@ export class ParcelService {
 
   constructor(private http: HttpClient) { }
 
-  getOffer(): Observable<Array<ParcelType>> {
-    return this.http.get<Array<ParcelType>>(environment.API_URL + '/parcelType/offer');
+  getOffer(){
+    return this.http.get(environment.API_URL + '/parcelType/offer');
   }
   getParcelByClient(id: number) {
     return this.http.get<ParcelClientView>(environment.API_URL + '/parcel/get/' + id);
