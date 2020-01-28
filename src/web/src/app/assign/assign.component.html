@@ -1,4 +1,4 @@
-<div *ngIf="isParameter() && parcels">
+<div *ngIf="isParameter() && magazine">
   <div class="row text-light bg-dark">
     <div class="col-md-1">ID</div>
     <div class="col-md-2">Expected delivery time</div>
@@ -7,14 +7,14 @@
     <div class="col-md-2">Delivery address</div>
     <div class="col-md-2"></div>
   </div>
-  <ng-container *ngFor="let parcel of parcels">
+  <ng-container *ngFor="let parcel of magazine.parcels">
     <div class="row text-dark bg-light">
       <div class="col-md-1">{{ parcel.id }}</div>
       <div class="col-md-2">{{ parcel.expectedDeliveryTime }}</div>
       <div class="col-md-2">{{ parcel.priority }}</div>
       <div class="col-md-2">{{ parcel.parcelType.name }}</div>
       <div class="col-md-2">
-        {{ addressToString(parcel.destination.address) }}
+        {{ addressToString(parcel.deliveryAddress) }}
       </div>
 
       <div class="col-md-2">
@@ -22,5 +22,5 @@
       </div>
     </div>
   </ng-container>
-  <div *ngIf ="parcels.length != 0"><button class="btn btn-success" (click)="assignAllParcel()">Assign</button></div>
+  <div *ngIf ="magazine.parcels.length != 0"><button class="btn btn-success" (click)="assignAllParcel()">Assign</button></div>
 </div>

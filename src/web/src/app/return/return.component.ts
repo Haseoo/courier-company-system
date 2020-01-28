@@ -1,4 +1,3 @@
-import { Subscription } from 'rxjs';
 import { ParcelService } from './../services/parcelService';
 import { Component, OnInit } from '@angular/core';
 import { Logistician } from '../model/logistician';
@@ -25,14 +24,13 @@ export class ReturnComponent implements OnInit {
   toAssign = new ParcelChangeStateMultipleCommandData();
 
   constructor(private activeRoute: ActivatedRoute,
-    private logisticianService: LogisticianService,
-    private alertService: AlertService,
-    private magazineService: MagazineService,
-    private parcelService: ParcelService,
-    private authenticationService: AuthenticationService) { }
+              private logisticianService: LogisticianService,
+              private alertService: AlertService,
+              private magazineService: MagazineService,
+              private parcelService: ParcelService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    // this.alertService.clear();
     this.logisticianService.getById(this.authenticationService.getId).subscribe(
       data => {
         this.logistician = data;
@@ -48,12 +46,13 @@ export class ReturnComponent implements OnInit {
       .subscribe(data => {
         this.parcels = data;
       },
-      error=>{
+      error =>{
         this.alertService.error(error.error.message);
       });
+
   }
   addressToString(address: Address) {
-    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.city + ' ' + address.postalCode + ' ' + address.city;
+    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
 
   }
   markAsReturned(id: number) {

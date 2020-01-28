@@ -20,7 +20,7 @@ import { ParcelChangeStateMultipleCommandData } from '../model/commandData/parce
 export class AssignComponent implements OnInit {
   parameter: any;
   logistician: Logistician;
-  parcels: Array<ParcelMagazineView>;
+  magazine: any;
   toAssign = new  ParcelChangeStateMultipleCommandData();
 
   constructor(private activeRoute: ActivatedRoute,
@@ -48,16 +48,14 @@ export class AssignComponent implements OnInit {
     return false;
   }
   private getParcelsFromMagazine() {
-    this.magazineService.getParcelsById(this.logistician.magazine.id,
-      new MagazineParcelFilerCommandData(MagazineFilter.ASSIGNED_TO_MAGAZINE))
-      .subscribe(data => {
-        this.parcels = data;
+    this.magazineService.getMagazineById(this.logistician.magazine.id).subscribe(data => {
+        this.magazine = data;
       }, error => {
         this.alertService.error(error.error.message);
       });
   }
   addressToString(address: Address) {
-    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.city + ' ' + address.postalCode + ' ' + address.city;
+    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
 
   }
   assignToList(id: string) {
