@@ -10,6 +10,7 @@ export class ParcelMagazineView {
     destination?: Destination;
     effectivePrice: number;
     expectedDeliveryTime: string;
+    expectedCourierArrivalDate?: string;
     id?: number;
     paid: boolean;
     parcelFee: number;

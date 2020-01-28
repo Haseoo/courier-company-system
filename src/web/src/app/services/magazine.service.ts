@@ -1,3 +1,4 @@
+import { ParcelChangeStateMultipleCommandData } from './../model/commandData/parcelChangeStateMultipleCommandData';
 import { MagazineParcelFilerCommandData } from './../model/commandData/MagazineParcelFilerCommandData';
 import { Magazine } from './../model/magazine';
 import { Observable } from 'rxjs';
@@ -28,7 +29,13 @@ export class MagazineService {
   getById(id: number) {
     return this.http.get<MagazineView>(environment.API_URL + '/magazine/' + id);
   }
+  getMagazineById(id: number) {
+    return this.http.get(environment.API_URL + '/magazine/' + id);
+  }
   getParcelsById(id: number, magazine: MagazineParcelFilerCommandData) {
     return this.http.post<Array<ParcelMagazineView>>(environment.API_URL + '/magazine/' + id + '/parcels', magazine);
+  }
+  addParcels(magazineId: number, parcelsIds: ParcelChangeStateMultipleCommandData){
+    return this.http.post(environment.API_URL + '/magazine/' + magazineId + '/parcels/add', parcelsIds);
   }
 }

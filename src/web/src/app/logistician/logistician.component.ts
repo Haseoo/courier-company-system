@@ -25,10 +25,10 @@ export class LogisticianComponent implements OnInit {
   logistician: Logistician;
 
   constructor(private courierService: CourierService,
-    private authenticationService: AuthenticationService,
-    private logisticianService: LogisticianService,
-    private magazineService: MagazineService,
-    private alertService: AlertService) { }
+              private authenticationService: AuthenticationService,
+              private logisticianService: LogisticianService,
+              private magazineService: MagazineService,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.courierService.getAll().subscribe(data => {
@@ -56,7 +56,7 @@ export class LogisticianComponent implements OnInit {
       });
   }
   addressToString(address: Address) {
-    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.city + ' ' + address.postalCode + ' ' + address.city;
+    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
 
   }
   assignParcel() {

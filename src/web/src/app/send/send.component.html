@@ -327,7 +327,6 @@
       <div class="form-group">
         <label for="parcelTypeId">Type of Parcel</label>
         <select
-          (change)="setParcelFee()"
           formControlName="parcelTypeId"
           class="form-control"
         >
@@ -342,7 +341,6 @@
           type="text"
           formControlName="parcelFee"
           class="form-control w-50"
-          readonly
         />
       </div>
       <div class="form-group d-flex justify-content-start">

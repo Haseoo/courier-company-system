@@ -9,8 +9,4 @@ export class Magazine {
   logisticians?: Logistician[];
   parcels?: ParcelMagazineView[];
 
-  public constructor() {
-    
-  }
- 
 }

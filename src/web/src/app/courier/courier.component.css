@@ -9,3 +9,20 @@ div [class *= "col-md"]{
     justify-content: center;
     padding: 0 10px 0 10px;
 }
+button{
+    padding: 0 0px 0 0px;
+}
+.container{
+    /* width: 100vw; */
+    max-width: 1800px;
+}
+input[type='checkbox'] { 
+    transform: scale(2);
+    margin-top: 20px;
+}   
+select{
+    height: 50px;
+}
+button{
+    height: 50px;
+}
