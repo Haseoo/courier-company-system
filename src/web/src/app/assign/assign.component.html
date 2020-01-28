@@ -8,17 +8,19 @@
     <div class="col-md-2"></div>
   </div>
   <ng-container *ngFor="let parcel of magazine.parcels">
-    <div class="row text-dark bg-light">
-      <div class="col-md-1">{{ parcel.id }}</div>
-      <div class="col-md-2">{{ parcel.expectedDeliveryTime }}</div>
-      <div class="col-md-2">{{ parcel.priority }}</div>
-      <div class="col-md-2">{{ parcel.parcelType.name }}</div>
-      <div class="col-md-2">
-        {{ addressToString(parcel.deliveryAddress) }}
-      </div>
-
-      <div class="col-md-2">
-        <input type="checkbox" (click)="assignToList(parcel.id)" />
+    <div *ngIf = "dataIsCorrect(parcel.dateMoved, parcel.expectedDeliveryTime)">
+      <div class="row text-dark bg-light">
+        <div class="col-md-1">{{ parcel.id }}</div>
+        <div class="col-md-2">{{ parcel.expectedDeliveryTime }}</div>
+        <div class="col-md-2">{{ parcel.priority }}</div>
+        <div class="col-md-2">{{ parcel.parcelType.name }}</div>
+        <div class="col-md-2">
+          {{ addressToString(parcel.deliveryAddress) }}
+        </div>
+  
+        <div class="col-md-2">
+          <input type="checkbox" (click)="assignToList(parcel.id)" />
+        </div>
       </div>
     </div>
   </ng-container>

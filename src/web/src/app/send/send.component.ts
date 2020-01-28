@@ -61,7 +61,7 @@ export class SendComponent implements OnInit {
         phoneNumber: ['', Validators.required]
       }),
       parcelFee: ['', Validators.required],
-      priority: ['false', Validators.required],
+      priority: ['true', Validators.required],
       senderId: [this.authenticationService.getId]
     });
 

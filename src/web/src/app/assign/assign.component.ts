@@ -11,6 +11,7 @@ import { Logistician } from '../model/logistician';
 import { MagazineFilter } from '../model/enums/magazineFilter';
 import { Address } from '../model/address';
 import { ParcelChangeStateMultipleCommandData } from '../model/commandData/parcelChangeStateMultipleCommandData';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-asign',
@@ -21,14 +22,15 @@ export class AssignComponent implements OnInit {
   parameter: any;
   logistician: Logistician;
   magazine: any;
-  toAssign = new  ParcelChangeStateMultipleCommandData();
+  toAssign = new ParcelChangeStateMultipleCommandData();
 
   constructor(private activeRoute: ActivatedRoute,
-              private logisticianService: LogisticianService,
-              private alertService: AlertService,
-              private magazineService: MagazineService,
-              private courierService: CourierService,
-              private authenticationService: AuthenticationService) { }
+    private logisticianService: LogisticianService,
+    private alertService: AlertService,
+    private magazineService: MagazineService,
+    private courierService: CourierService,
+    private authenticationService: AuthenticationService) {
+  }
 
   ngOnInit() {
     this.parameter = this.activeRoute.snapshot.paramMap.get('id');
@@ -49,10 +51,10 @@ export class AssignComponent implements OnInit {
   }
   private getParcelsFromMagazine() {
     this.magazineService.getMagazineById(this.logistician.magazine.id).subscribe(data => {
-        this.magazine = data;
-      }, error => {
-        this.alertService.error(error.error.message);
-      });
+      this.magazine = data;
+    }, error => {
+      this.alertService.error(error.error.message);
+    });
   }
   addressToString(address: Address) {
     return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
@@ -69,6 +71,14 @@ export class AssignComponent implements OnInit {
         this.alertService.error(error.error.message);
       }
     );
+  }
+  dataIsCorrect(dataMoved: boolean, date: string) {
+    let expectetDate = new Date(date);
+    let now = new Date();
+    if (dataMoved && expectetDate > now) {
+        return false;
+    }
+    return true;
   }
 
 }
