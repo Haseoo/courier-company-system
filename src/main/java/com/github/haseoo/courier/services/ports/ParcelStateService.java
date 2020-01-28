@@ -16,4 +16,6 @@ public interface ParcelStateService {
     ParcelData setParcelAsDelivered(Long courierId, Long parcelId, boolean wasPaid);
 
     ParcelData setParcelReturned(Long courierId, Long parcelId, boolean wasPaid);
+
+    void removeCurrentState(Long id);
 }

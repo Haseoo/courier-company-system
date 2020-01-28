@@ -65,7 +65,7 @@ public class MagazineController {
         return MagazineView.of(magazineService.addLogisitcians(id, logisiticiansCommandData.getLogisiticiansIds()));
     }
 
-    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @PostMapping("/{id}/parcels/add")
     public MagazineView addParcels(@PathVariable Long id, @RequestBody ParcelChangeStateMultipleCommandData commandData) {
         return MagazineView.of(parcelStateService.addParcelsToMagazine(id, commandData.getParcelsIds()));

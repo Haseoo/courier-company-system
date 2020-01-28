@@ -14,6 +14,7 @@ import com.github.haseoo.courier.models.ParcelStateRecord;
 import com.github.haseoo.courier.repositories.ports.CourierRepository;
 import com.github.haseoo.courier.repositories.ports.MagazineRepository;
 import com.github.haseoo.courier.repositories.ports.ParcelRepository;
+import com.github.haseoo.courier.repositories.ports.ParcelStateRepository;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.places.MagazineData;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
@@ -24,12 +25,14 @@ import com.github.haseoo.courier.services.ports.ParcelStateService;
 import com.github.haseoo.courier.utilities.PinGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +46,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     private final MagazineRepository magazineRepository;
     private final CourierRepository courierRepository;
     private final ParcelRepository parcelRepository;
+    private final ParcelStateRepository parcelStateRepository;
     private final PinGenerator pinGenerator;
     private final EmailService emailService;
     private final MagazineService magazineService;
@@ -91,6 +95,17 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     @Transactional
     public ParcelData setParcelReturned(Long courierId, Long parcelId, boolean wasPaid) {
         return changeOneParcelState(courierId, parcelId, RETURNED, wasPaid);
+    }
+
+    @Transactional
+    @Override
+    public void removeCurrentState(Long id) {
+        ParcelModel parcel = parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id));
+        Long lastStateId = parcel.getParcelStates().stream()
+                .max(Comparator.comparing(ParcelStateRecord::getChangeDate))
+                .orElseThrow(IllegalParcelState::new)
+                .getId();
+        parcelStateRepository.deleteById(lastStateId);
     }
 
     private boolean pickingFromMagazine(ParcelModel parcelModel) {
