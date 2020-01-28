@@ -85,6 +85,11 @@ const routes: Routes = [
     canActivate: [LogisticianGuard]
   },
   {
+    path: 'logistician/magazines/:id',
+    component: MagazineComponent,
+    canActivate: [LogisticianGuard]
+  },
+  {
     path: 'logistician/assign',
     component: AssignComponent,
     canActivate: [LogisticianGuard]

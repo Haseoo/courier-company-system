@@ -17,6 +17,7 @@ export class ParcelComponent implements OnInit {
   infoAboutParcel = false;
   changeDate = false;
   parcelDate = new ParcelDateMoveCommandData();
+  id: string;
 
   constructor(private formBuilder: FormBuilder,
     private parcelService: ParcelService,
@@ -24,15 +25,20 @@ export class ParcelComponent implements OnInit {
     private alertService: AlertService) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.parcelService.getParcelByClient(Number(id)).subscribe((date) => {
-      this.parcel = date;
-      this.alertService.clear();
-    },
-      error => {
-        this.alertService.error('Parcel not found');
-      }
-    );
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.parcelService.getParcelByClient(Number(this.id)).subscribe((date) => {
+        this.parcel = date;
+        this.alertService.clear();
+      },
+        error => {
+          this.alertService.error('Parcel not found');
+        }
+      );
+    }
+    if (this.id === null) {
+      
+    }
   }
 
   showMoreInfo() {

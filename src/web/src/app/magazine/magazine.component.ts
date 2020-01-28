@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../services/authentication.service';
 import { MagazineView, Address } from '../model/views/magazineView';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -13,8 +14,9 @@ export class MagazineComponent implements OnInit {
   parcelDetails: boolean;
 
   constructor(private router: Router,
-    private magazineService: MagazineService,
-    private route: ActivatedRoute) { }
+              private authenticationService: AuthenticationService,
+              private magazineService: MagazineService,
+              private route: ActivatedRoute) { }
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.magazineService.getById(Number(id)).subscribe(res => {
@@ -30,6 +32,9 @@ export class MagazineComponent implements OnInit {
   }
   displayParcelDetails() {
     this.parcelDetails = !this.parcelDetails;
+  }
+  isAdmin() {
+    return this.authenticationService.isAdmin();
   }
 
 }

@@ -1,3 +1,4 @@
+import { LogisticianService } from './../services/logisticianService';
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit {
   isCourier: boolean;
 
   constructor(private authenticationService: AuthenticationService,
-              private router: Router) {
+    private LogisticianService: LogisticianService,
+    private router: Router) {
     router.events.subscribe((val) => {
       this.ngOnInit();
     });
@@ -38,5 +40,11 @@ export class HeaderComponent implements OnInit {
   getUsername() {
     return this.authenticationService.getUsername;
   }
-
+  getParcelList() {
+    let id: number;
+    this.LogisticianService.getById(this.authenticationService.getId).subscribe(data => {
+      id = data.magazine.id;
+      this.router.navigate(['logistician/magazines', id]);
+    });
+  }
 }

@@ -55,6 +55,9 @@
           <a class="nav-link" [routerLink]="['/client/send']" >Send</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/client']" >All parcels</a>
+        </li>
+        <li class="nav-item">
         <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">Log out [{{getUsername()|lowercase}}]</a>
         </li>
       </ul>
@@ -73,6 +76,9 @@
           <a class="nav-link" [routerLink]="['logistician/return']">Parcels to return</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" (click) = "getParcelList()" style="color: #007bff;" >Parcels in magazine</a>
+        </li>
+        <li class="nav-item">
         <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">Log out [{{getUsername()|lowercase}}]</a>
         </li>
       </ul>
@@ -86,13 +92,7 @@
     <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['admin/users']">Add menu element</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['admin/employee']" >and change</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/admin/magazines']">route link</a>
+          <a class="nav-link" [routerLink]="['courier']">Assigned parcels</a>
         </li>
         <li class="nav-item">
         <a class="nav-link" [routerLink]="['/login']" (click)="onLogout()">Log out [{{getUsername()|lowercase}}]</a>

@@ -52,27 +52,29 @@
       </div>
     </ng-container>
   </div>
-  <div class="row title">
-    <h2>List of Logisticians</h2>
-  </div>
-  <div>
-    <div class="row bg-secondary text-white">
-      <div class="col-md-1">ID</div>
-      <div class="col-md-2">Name</div>
-      <div class="col-md-2">Surname</div>
-      <div class="col-md-2">Pesel</div>
-      <div class="col-md-2">Phone Number</div>
-      <div class="col-md-2">Email Address</div>
+  <div *ngIf = "isAdmin()">
+    <div class="row title">
+      <h2>List of Logisticians</h2>
     </div>
-    <ng-container *ngFor="let logistician of magazine.logisticians">
-      <div class="row bg-light text-dark">
-        <div class="col-md-1">{{ logistician.id }}</div>
-        <div class="col-md-2">{{ logistician.name }}</div>
-        <div class="col-md-2">{{ logistician.surname }}</div>
-        <div class="col-md-2">{{ logistician.pesel }}</div>
-        <div class="col-md-2">{{ logistician.phoneNumber }}</div>
-        <div class="col-md-2">{{ logistician.emailAddress }}</div>
+    <div>
+      <div class="row bg-secondary text-white">
+        <div class="col-md-1">ID</div>
+        <div class="col-md-2">Name</div>
+        <div class="col-md-2">Surname</div>
+        <div class="col-md-2">Pesel</div>
+        <div class="col-md-2">Phone Number</div>
+        <div class="col-md-2">Email Address</div>
       </div>
-    </ng-container>
+      <ng-container *ngFor="let logistician of magazine.logisticians">
+        <div class="row bg-light text-dark">
+          <div class="col-md-1">{{ logistician.id }}</div>
+          <div class="col-md-2">{{ logistician.name }}</div>
+          <div class="col-md-2">{{ logistician.surname }}</div>
+          <div class="col-md-2">{{ logistician.pesel }}</div>
+          <div class="col-md-2">{{ logistician.phoneNumber }}</div>
+          <div class="col-md-2">{{ logistician.emailAddress }}</div>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </div>
