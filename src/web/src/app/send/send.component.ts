@@ -23,10 +23,10 @@ export class SendComponent implements OnInit {
     return this.addParcelForm.get(path).errors;
   }
   constructor(private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private parcelService: ParcelService,
-    private alertService: AlertService,
-    private router: Router) { }
+              private authenticationService: AuthenticationService,
+              private parcelService: ParcelService,
+              private alertService: AlertService,
+              private router: Router) { }
 
   ngOnInit() {
     this.parcelService.getParcelType().subscribe(date => {
@@ -60,15 +60,11 @@ export class SendComponent implements OnInit {
         emailAddress: ['', Validators.required],
         phoneNumber: ['', Validators.required]
       }),
-      parcelFee: [''],
-      priority: ['false', Validators.required],
+      parcelFee: ['', Validators.required],
+      priority: ['true', Validators.required],
       senderId: [this.authenticationService.getId]
     });
 
-  }
-  setParcelFee() {
-    const id = this.addParcelForm.get('parcelTypeId').value;
-    this.addParcelForm.get('parcelFee').setValue(Number([this.getPrice(id)]));
   }
   getPrice(id: number): number {
     this.typeOfParcels.forEach(data => {

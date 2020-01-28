@@ -1,4 +1,6 @@
 import { ParcelChangeStateForCourierCommandData } from './../model/commandData/ParcelChangeStateForCourierCommandData';
+import { LogisticianService } from './../services/logisticianService';
+import { ParcelChangeStateMultipleCommandData } from './../model/commandData/parcelChangeStateMultipleCommandData';
 import { ParcelPickupCommandData } from './../model/commandData/parcelPickupCommandData';
 import { StateType } from './../model/enums/stateType';
 import { AlertService } from './../services/alertService';
@@ -7,6 +9,8 @@ import { AuthenticationService } from './../services/authentication.service';
 import { Courier } from './../model/courier';
 import { Component, OnInit } from '@angular/core';
 import { Address } from '../model/address';
+import { MagazineService } from '../services/magazine.service';
+import { Magazine } from '../model/magazine';
 
 @Component({
   selector: 'app-courier',
@@ -14,26 +18,42 @@ import { Address } from '../model/address';
   styleUrls: ['./courier.component.css']
 })
 export class CourierComponent implements OnInit {
-
   courier: Courier;
-  selectedState = 'TO_MAGAZINE';
+  selectedState = new Map();
   canChangePaid = false;
+  isPaidMap = new Map();
   isChecked = false;
+  chosenMagazineIdMap = new Map();
+  magazineList: Array<Magazine>;
 
   constructor(private authenticationService: AuthenticationService,
     private alertService: AlertService,
+    private magazineService: MagazineService,
     private courierService: CourierService) { }
 
   ngOnInit() {
     this.courierService.getCourierById(this.authenticationService.getId).subscribe(data => {
       this.courier = data;
+      this.courier.assignedParcels.forEach((v) => {
+        this.isPaidMap.set(v.id, v.paid);
+        this.selectedState.set(v.id, 'DELIVERED');
+        this.magazineService.getAll().subscribe(data => {
+          this.magazineList = data;
+          data.forEach(mag => {
+            this.chosenMagazineIdMap.set(v.id, mag.id);
+          });
+        },
+          error => {
+            this.alertService.error(error.error.message);
+          });
+      });
     },
       error => {
         this.alertService.error(error.error.message);
       });
   }
   addressToString(address: Address) {
-    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.city + ' ' + address.postalCode + ' ' + address.city;
+    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
 
   }
   currentState(actual: string, other: string) {
@@ -44,7 +64,7 @@ export class CourierComponent implements OnInit {
   }
   pickUpParcel(id: number, wasPaid: boolean) {
     this.courierService.pickUpParcel(this.authenticationService.getId,
-      new ParcelPickupCommandData(id, wasPaid))
+      new ParcelPickupCommandData(id, !wasPaid))
       .subscribe(
         data => {
           this.ngOnInit();
@@ -53,44 +73,40 @@ export class CourierComponent implements OnInit {
           this.alertService.error(error.error.message);
         }
       );
-    console.log('ID:' + id);
-    console.log('wasPaid:' + wasPaid);
   }
-  setNewState(event: string) {
-    this.selectedState = event;
+  setNewState(parcelId: number, event: string) {
+    this.selectedState.set(parcelId, event);
+    
+
   }
   changeState(parcelId: number) {
-    let isPaid = false;
-    this.courier.assignedParcels.forEach((v) => {
-      if (parcelId === v.id) {
-        isPaid = v.paid;
-      }
-    });
-    this.courierService.changeStateForCourier(parcelId,
-      new ParcelChangeStateForCourierCommandData(this.selectedState, this.authenticationService.getId, isPaid)).subscribe(
+    if (this.selectedState.get(parcelId) === 'DELIVERED' || this.selectedState.get(parcelId) === 'RETURNED') {
+      const changeState = new ParcelChangeStateForCourierCommandData(this.selectedState.get(parcelId),
+        this.authenticationService.getId,
+        !this.isPaidMap.get(parcelId));
+      this.courierService.changeStateForCourier(parcelId, changeState).subscribe((data) => {
+        this.ngOnInit();
+      },
+        error => {
+          this.alertService.error(error.error.message);
+        });
+
+    } else if (this.selectedState.get(parcelId) === 'IN_MAGAZINE') {
+      const parcelsId = new ParcelChangeStateMultipleCommandData();
+      parcelsId.addToList(parcelId);
+      this.magazineService.addParcels(this.chosenMagazineIdMap.get(parcelId), parcelsId).subscribe(
         data => {
           this.ngOnInit();
         },
         error => {
           this.alertService.error(error.error.message);
         });
-  }
-  canBePaid() {
-    if (this.selectedState === 'DELIVERED' || this.selectedState === 'RETURNED') {
-      return true;
     }
-    return false;
+
   }
 
-  onChangeIsPaid(id: number, event: any) {
-    let parcelPosition = 0;
-    this.courier.assignedParcels.forEach((v) => {
-      if (id === v.id) {
-        return
-      }
-      parcelPosition++;
-    });
-    this.courier.assignedParcels[parcelPosition].paid = event;
+  onChangeIsPaid(id: number, event: string) {
+    this.isPaidMap.set(id, event);
   }
   existParcelsWithAssignedSate() {
     // tslint:disable-next-line: prefer-for-of
@@ -100,5 +116,8 @@ export class CourierComponent implements OnInit {
       }
     }
     return false;
+  }
+  setMagazineIdForParcel(parcelId: number, event: number) {
+    this.chosenMagazineIdMap.set(parcelId, event);
   }
 }
