@@ -82,4 +82,10 @@ public class ParcelController {
                 throw new IllegalArgumentException(INVALID_ENUM_TYPE);
         }
     }
+
+    @DeleteMapping("sate/{id}")
+    @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
+    public void removeLastState(@PathVariable Long id) {
+        parcelStateService.removeCurrentState(id);
+    }
 }

@@ -78,8 +78,8 @@ INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazine
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (56, '2019-12-27 17:10:41.931402', 2, 4, null, 8);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (57, '2019-12-27 17:10:58.510396', 4, 4, null, 8);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (58, '2019-12-27 17:14:38.211372', 1, null ,1, 8);
-INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (59, '2019-12-27 17:14:38.211372', 2, 4 ,null, 8);
-INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (60, '2019-12-27 17:14:38.211372', 4, 4 ,null, 8);
-INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (61, '2019-12-27 17:14:38.211372', 1, null ,1, 8);
+INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (59, '2019-12-27 17:15:38.211372', 2, 4 ,null, 8);
+INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (60, '2019-12-27 17:16:38.211372', 4, 4 ,null, 8);
+INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (61, '2019-12-27 17:17:38.211372', 1, null ,1, 8);
 
 
