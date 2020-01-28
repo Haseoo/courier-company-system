@@ -5,6 +5,7 @@ import { ParcelClientView } from './../model/views/parcelClientView';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ParcelService } from '../services/parcelService';
+import { Address } from '../model/address';
 
 @Component({
   selector: 'app-parcel',
@@ -20,9 +21,9 @@ export class ParcelComponent implements OnInit {
   id: string;
 
   constructor(private formBuilder: FormBuilder,
-    private parcelService: ParcelService,
-    private route: ActivatedRoute,
-    private alertService: AlertService) { }
+              private parcelService: ParcelService,
+              private route: ActivatedRoute,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -37,7 +38,6 @@ export class ParcelComponent implements OnInit {
       );
     }
     if (this.id === null) {
-      
     }
   }
 
@@ -67,6 +67,9 @@ export class ParcelComponent implements OnInit {
     this.changeDate = false;
     this.infoAboutParcel = false;
     this.alertService.clear();
+  }
+  addressToString(address: Address) {
+    return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
   }
 }
 

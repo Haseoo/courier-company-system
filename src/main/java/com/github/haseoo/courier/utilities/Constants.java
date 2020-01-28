@@ -23,7 +23,7 @@ public class Constants {
     public static final String EMAIL_REGEX_EXPRESSION = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
     public static final Integer PARCEL_PIN_LENGTH = 4;
     public static final List<Character> PIN_CHARACTERS = unmodifiableList(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
-    public static final BigDecimal PRIORITY_MULTILAYER = BigDecimal.valueOf(0.1);
+    public static final BigDecimal PRIORITY_MULTILAYER = BigDecimal.valueOf(1.1);
     public static final String POSTAL_CODE_SERVICE_HTTP_METHOD_NAME = "GET";
     public static final String POSTAL_CODE_SERVICE_HTTP_METHOD_HEADER_FILED_NAME = "Accept";
     public static final String POSTAL_CODE_SERVICE_HTTP_METHOD_MEDIA_TYPE = "application/json";
