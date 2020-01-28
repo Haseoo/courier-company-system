@@ -1,5 +1,4 @@
 import { ParcelChangeStateForCourierCommandData } from './../model/commandData/ParcelChangeStateForCourierCommandData';
-import { LogisticianService } from './../services/logisticianService';
 import { ParcelChangeStateMultipleCommandData } from './../model/commandData/parcelChangeStateMultipleCommandData';
 import { ParcelPickupCommandData } from './../model/commandData/parcelPickupCommandData';
 import { StateType } from './../model/enums/stateType';
@@ -27,9 +26,9 @@ export class CourierComponent implements OnInit {
   magazineList: Array<Magazine>;
 
   constructor(private authenticationService: AuthenticationService,
-    private alertService: AlertService,
-    private magazineService: MagazineService,
-    private courierService: CourierService) { }
+              private alertService: AlertService,
+              private magazineService: MagazineService,
+              private courierService: CourierService) { }
 
   ngOnInit() {
     this.courierService.getCourierById(this.authenticationService.getId).subscribe(data => {
@@ -37,6 +36,7 @@ export class CourierComponent implements OnInit {
       this.courier.assignedParcels.forEach((v) => {
         this.isPaidMap.set(v.id, v.paid);
         this.selectedState.set(v.id, 'DELIVERED');
+        // tslint:disable-next-line: no-shadowed-variable
         this.magazineService.getAll().subscribe(data => {
           this.magazineList = data;
           data.forEach(mag => {
@@ -76,8 +76,6 @@ export class CourierComponent implements OnInit {
   }
   setNewState(parcelId: number, event: string) {
     this.selectedState.set(parcelId, event);
-    
-
   }
   changeState(parcelId: number) {
     if (this.selectedState.get(parcelId) === 'DELIVERED' || this.selectedState.get(parcelId) === 'RETURNED') {
@@ -102,7 +100,6 @@ export class CourierComponent implements OnInit {
           this.alertService.error(error.error.message);
         });
     }
-
   }
 
   onChangeIsPaid(id: number, event: string) {

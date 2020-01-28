@@ -25,6 +25,9 @@
       Parcel price
     </div>
     <div class="col-md-1">
+      Parcel fee
+    </div>
+    <div class="col-md-1">
       wasPaid
     </div>
     <div class="col-md-1" >Is paid</div>
@@ -55,6 +58,9 @@
         {{parcel.parcelPrice}}
       </div>
       <div class="col-md-1">
+        {{parcel.parcelFee}}
+      </div>
+      <div class="col-md-1">
         {{parcel.paid}}
       </div>
       <div class="col-md-1" *ngIf = "!(selectedState.get(parcel.id) === 'IN_MAGAZINE') || currentState(parcel.currentState, 'ASSIGNED')">
@@ -70,8 +76,8 @@
       </div>
       <div class="col-md" *ngIf="currentState(parcel.currentState, 'AT_COURIER')">
         <ng-container *ngIf = "selectedState.get(parcel.id) === 'IN_MAGAZINE'">
-          <select *ngFor = "let magazine of magazineList">
-            <option value = "magazine.id" (change) = "setMagazineIdForParcel(parcel.id, $event.target.value)">
+          <select>
+            <option *ngFor = "let magazine of magazineList" value = "magazine.id" (change) = "setMagazineIdForParcel(parcel.id, $event.target.value)">
                 {{addressToString(magazine.address)}}
             </option>
           </select>

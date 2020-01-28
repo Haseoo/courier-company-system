@@ -1,37 +1,43 @@
 <div class="container" *ngIf="parcel">
   <div class="row text-light bg-dark">
-    <div class="col-sm-1">
+    <div class="col-md-1">
       ID
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-2">
       Expected Courier Arrival Date
     </div>
-    <div class="col-sm-2">
+    <div class="col-md-2">
       Actual Status
     </div>
-    <div class="col-sm-2">
+    <div class="col-md-1">
       Parcel Price
     </div>
-    <div class="col-sm-2"></div>
-    <div class="col-sm-2"></div>
+    <div class="col-md-2">
+      Delivery address
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
   </div>
   <div class="row record bg-light text-dark">
-    <div class="col-sm-1">
+    <div class="col-md-1">
       {{ parcel.id }}
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-2">
       {{ parcel.expectedCourierArrivalDate }}
     </div>
-    <div class="col-sm-2">
+    <div class="col-md-2">
       {{
         parcel.parcelStatesView[parcel.parcelStatesView.length - 1].stateType
           | titlecase
       }}
     </div>
-    <div class="col-sm-2">
-      {{ parcel.parcelFee }}
+    <div class="col-md-1">
+      {{ parcel.parcelPrice }}
     </div>
-    <div class="col-sm-2">
+    <div class="col-md-2">
+      {{addressToString(parcel.deliveryAddress)}}
+    </div>
+    <div class="col-md-2">
       <button
         [disabled]="!parcel.moveable"
         (click)="showNewDateForm()"
@@ -40,7 +46,7 @@
         Change date
       </button>
     </div>
-    <div class="col-sm-2">
+    <div class="col-md-2">
       <button (click)="showMoreInfo()" class="btn btn-secondary">
         Show more info
       </button>
@@ -140,33 +146,33 @@
 <div class="container" *ngIf = "!id">
   <div class="container" *ngIf="parcel">
     <div class="row text-light bg-dark">
-      <div class="col-sm-1">
+      <div class="col-md-1">
         ID
       </div>
-      <div class="col-sm-3">
+      <div class="col-md-3">
         Expected Courier Arrival Date
       </div>
-      <div class="col-sm-2">
+      <div class="col-md-2">
         Actual Status
       </div>
-      <div class="col-sm-2">
+      <div class="col-md-2">
         Parcel Price
       </div>
     </div>
     <div class="row record bg-light text-dark">
-      <div class="col-sm-1">
+      <div class="col-md-1">
         {{ parcel.id }}
       </div>
-      <div class="col-sm-3">
+      <div class="col-md-3">
         {{ parcel.expectedCourierArrivalDate }}
       </div>
-      <div class="col-sm-2">
+      <div class="col-md-2">
         {{
           parcel.parcelStatesView[parcel.parcelStatesView.length - 1].stateType
             | titlecase
         }}
       </div>
-      <div class="col-sm-2">
+      <div class="col-md-2">
         {{ parcel.parcelFee }}
       </div>
     </div>
