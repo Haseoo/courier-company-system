@@ -64,7 +64,7 @@
         {{parcel.paid}}
       </div>
       <div class="col-md-1" *ngIf = "!(selectedState.get(parcel.id) === 'IN_MAGAZINE') || currentState(parcel.currentState, 'ASSIGNED')">
-        <input type="checkbox" name="isPaid" [disabled] ="parcel.paid" (change)="onChangeIsPaid(parcel.id,$event)">
+        <input type="checkbox" name="isPaid" [disabled] ="parcel.paid" (click)="onChangeIsPaid(parcel.id,$event.target.value)">
       </div>
       <div *ngIf = "(selectedState.get(parcel.id) === 'IN_MAGAZINE') || currentState(parcel.currentState, 'ASSIGNED')"></div>
       <div
