@@ -63,8 +63,14 @@ export class CourierComponent implements OnInit {
     return false;
   }
   pickUpParcel(id: number, wasPaid: boolean) {
+    let paid;
+    if(wasPaid){
+      paid = false;
+    }else{
+      paid = this.isPaidMap.get(id);
+    }
     this.courierService.pickUpParcel(this.authenticationService.getId,
-      new ParcelPickupCommandData(id, !wasPaid))
+      new ParcelPickupCommandData(id, paid))
       .subscribe(
         data => {
           this.ngOnInit();
@@ -81,7 +87,7 @@ export class CourierComponent implements OnInit {
     if (this.selectedState.get(parcelId) === 'DELIVERED' || this.selectedState.get(parcelId) === 'RETURNED') {
       const changeState = new ParcelChangeStateForCourierCommandData(this.selectedState.get(parcelId),
         this.authenticationService.getId,
-        !this.isPaidMap.get(parcelId));
+        this.isPaidMap.get(parcelId));
       this.courierService.changeStateForCourier(parcelId, changeState).subscribe((data) => {
         this.ngOnInit();
       },
@@ -102,8 +108,9 @@ export class CourierComponent implements OnInit {
     }
   }
 
-  onChangeIsPaid(id: number, event: string) {
-    this.isPaidMap.set(id, event);
+  onChangeIsPaid(id: number, event: any) {
+    this.isPaidMap.set(id, !this.isPaidMap.get(id));
+    console.log('Paid map'+ id + '' + this.isPaidMap.get(id));
   }
   existParcelsWithAssignedSate() {
     // tslint:disable-next-line: prefer-for-of
