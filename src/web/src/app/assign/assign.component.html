@@ -2,8 +2,9 @@
   <div class="row text-light bg-dark">
     <div class="col-md-1">ID</div>
     <div class="col-md-2">Expected delivery time</div>
-    <div class="col-md-2">Priority</div>
-    <div class="col-md-2">Parcel type</div>
+    <div class="col-md-1">Priority</div>
+    <div class="col-md-1">Parcel type</div>
+    <div class="col-md-2">Source address</div>
     <div class="col-md-2">Delivery address</div>
     <div class="col-md-2"></div>
   </div>
@@ -12,8 +13,9 @@
       <div class="row text-dark bg-light">
         <div class="col-md-1">{{ parcel.id }}</div>
         <div class="col-md-2">{{ parcel.expectedDeliveryTime }}</div>
-        <div class="col-md-2">{{ parcel.priority }}</div>
-        <div class="col-md-2">{{ parcel.parcelType.name }}</div>
+        <div class="col-md-1">{{ parcel.priority }}</div>
+        <div class="col-md-1">{{ parcel.parcelType.name }}</div>
+        <div class="col-md-2">{{ addressToString(parcel.senderAddress)}}</div>
         <div class="col-md-2">
           {{ addressToString(parcel.deliveryAddress) }}
         </div>
