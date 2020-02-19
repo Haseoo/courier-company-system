@@ -13,6 +13,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: SonarQubePrepare@4
+  inputs:
+    SonarQube: 'SonarCube'
+    scannerMode: 'Other'
+    extraProperties: |
+      sonar.projectName=CourierSystem
+      sonar.projectKey=CourierSystemJava:develop
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
