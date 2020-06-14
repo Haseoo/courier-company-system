@@ -5,7 +5,6 @@ import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.repositories.jpa.ClientIndividualJPARepository;
 import com.github.haseoo.courier.repositories.ports.ClientIndividualRepository;
 import com.github.haseoo.courier.security.RandomText;
-import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -29,11 +28,13 @@ public class CustomOidcUserService extends OidcUserService {
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
         OidcUser oidcUser = super.loadUser(userRequest);
         Map attributes = oidcUser.getAttributes();
+        attributes.forEach((key, value) -> System.out.println(key + ":" + value));
         ClientIndividualDataDto clientIndividualDataDto = new ClientIndividualDataDto();
         clientIndividualDataDto.setEmailAddress((String) attributes.get("email"));
         clientIndividualDataDto.setIdDto((String) attributes.get("sub"));
-        clientIndividualDataDto.setActive(true);
-        clientIndividualDataDto.setName((String) attributes.get("name"));
+        clientIndividualDataDto.setImageUrl((String)attributes.get("picture"));
+        clientIndividualDataDto.setName((String) attributes.get("given_name"));
+        clientIndividualDataDto.setSurname((String) attributes.get("family_name"));
         updateUser(clientIndividualDataDto);
         return oidcUser;
     }
@@ -45,12 +46,10 @@ public class CustomOidcUserService extends OidcUserService {
             clientIndividualModel = new ClientIndividualModel();
         }
 
-        String splitData[] = clientIndividualDataDto.getName().split("\\s", 2);
-
         clientIndividualModel.setEmailAddress(clientIndividualDataDto.getEmailAddress());
         clientIndividualModel.setUserName(clientIndividualDataDto.getEmailAddress()+ RandomText.uniqueUsernamePostfix());
-        clientIndividualModel.setName(splitData[0]);
-        clientIndividualModel.setSurname(splitData[1]);
+        clientIndividualModel.setName(clientIndividualDataDto.getName());
+        clientIndividualModel.setSurname(clientIndividualDataDto.getSurname());
         clientIndividualModel.setClientType(ClientType.INDIVIDUAL);
         clientIndividualModel.setImageUrl(clientIndividualDataDto.getImageUrl());
         clientIndividualModel.setActive(true);
