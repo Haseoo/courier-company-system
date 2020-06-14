@@ -4,6 +4,7 @@ import com.github.haseoo.courier.enums.ClientType;
 import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.repositories.jpa.ClientIndividualJPARepository;
 import com.github.haseoo.courier.repositories.ports.ClientIndividualRepository;
+import com.github.haseoo.courier.security.RandomText;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,21 @@ public class CustomOidcUserService extends OidcUserService {
         return oidcUser;
     }
 
+
     private void updateUser(ClientIndividualDataDto clientIndividualDataDto) {
         ClientIndividualModel clientIndividualModel = clientIndividualRepository.getByEmailAddress(clientIndividualDataDto.getEmailAddress());
         if(clientIndividualModel == null) {
             clientIndividualModel = new ClientIndividualModel();
         }
+
+        String splitData[] = clientIndividualDataDto.getName().split("\\s", 2);
+
         clientIndividualModel.setEmailAddress(clientIndividualDataDto.getEmailAddress());
-        clientIndividualModel.setName(clientIndividualDataDto.getName());
+        clientIndividualModel.setUserName(clientIndividualDataDto.getEmailAddress()+ RandomText.uniqueUsernamePostfix());
+        clientIndividualModel.setName(splitData[0]);
+        clientIndividualModel.setSurname(splitData[1]);
         clientIndividualModel.setClientType(ClientType.INDIVIDUAL);
+        clientIndividualModel.setImageUrl(clientIndividualDataDto.getImageUrl());
         clientIndividualModel.setActive(true);
         clientIndividualJPARepository.save(clientIndividualModel);
     }
