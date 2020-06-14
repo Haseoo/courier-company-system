@@ -27,4 +27,9 @@ public class ClientIndividualRepositoryImpl implements ClientIndividualRepositor
     public Optional<ClientIndividualModel> getByPesel(String pesel) {
         return clientIndividualJPARepository.findByPesel(pesel);
     }
+
+    @Override
+    public ClientIndividualModel getByEmailAddress(String email){
+        return clientIndividualJPARepository.findByEmailAddress(email);
+    }
 }

@@ -1,6 +1,8 @@
 package com.github.haseoo.courier.security;
 
+import com.github.haseoo.courier.security.oauth2.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,9 +13,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.github.haseoo.courier.security.Constants.getUnprotectedEndpoints;
@@ -29,6 +34,12 @@ import static com.github.haseoo.courier.security.Constants.getUnprotectedEndpoin
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
+
+    @Autowired
+    private OidcUserService oidcUserService;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -64,11 +75,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**");
     }
 
+    @Bean
+    public AuthorizationRequestRepository<OAuth2AuthorizationRequest> customAuthorizationRequestRepository() {
+        return new HttpSessionOAuth2AuthorizationRequestRepository();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and()
                 .sessionManagement()
+                .and()
+                .exceptionHandling()
                 .and()
                 .authorizeRequests()
                     .antMatchers(getUnprotectedEndpoints())
@@ -76,7 +94,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                     .authenticated()
                 .and()
-                .oauth2Login();
+                .oauth2Login()
+                .userInfoEndpoint()
+                .oidcUserService(oidcUserService)
+                .and()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorize")
+                .authorizationRequestRepository(customAuthorizationRequestRepository())
+                .and()
+                .successHandler(customAuthenticationSuccessHandler);
 
         http.csrf().disable();
         http.headers().frameOptions().disable();

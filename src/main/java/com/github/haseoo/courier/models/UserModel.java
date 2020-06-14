@@ -16,9 +16,9 @@ public class UserModel {
     @GeneratedValue(strategy = IDENTITY)
     @Column(nullable = false, insertable = false)
     private Long id;
-    @Column(nullable = false)
+    @Column
     private String userName;
-    @Column(nullable = false)
+    @Column
     private char[] password;
     @Column(nullable = false)
     private Boolean active;
