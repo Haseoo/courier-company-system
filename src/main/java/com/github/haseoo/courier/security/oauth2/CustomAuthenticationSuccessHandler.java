@@ -39,7 +39,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         ClientIndividualModel clientIndividualModel = clientIndividualRepository.getByEmailAddress(email);
         String token = jwtTokenUtil.generateTokenToSocialLogin(clientIndividualModel);
         String redirectionUrl = UriComponentsBuilder.fromUriString(homeUrl)
-                .queryParam("auth_token", token)
+                .queryParam("jsessionid", token)
                 .build().toUriString();
         getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
     }

@@ -56,17 +56,6 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
         return ClientIndividualData.of(clientIndividualRepository.saveAndFlush(clientIndividualModel));
     }
 
-    @Override
-    public String signUp(ClientIndividualModel clientIndividualModel) {
-        ClientIndividualModel dbUser = clientIndividualRepository.getByEmailAddress(clientIndividualModel.getEmailAddress());
-        if (dbUser != null) {
-            throw new RuntimeException("User already exist.");
-        }
-        clientIndividualModel.setPassword(passwordEncoder.encode(String.valueOf(clientIndividualModel.getPassword())).toCharArray());
-        clientIndividualJPARepository.save(clientIndividualModel);
-        return jwtTokenProvider.generateTokenToSocialLogin(clientIndividualModel);
-    }
-
     private ClientIndividualModel prepareEditModel(ClientIndividualEditData editData) {
         ClientIndividualModel modelToEdit = modelMapper.map(editData, ClientIndividualModel.class);
         if (editData.getPassword() != null) {
