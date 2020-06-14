@@ -19,6 +19,7 @@ public class Constants {
                 "/api/client/company/register",
                 "/offer",
                 "/api/parcel/get/**",
-                "/api/parcel/**/moveDate"};
+                "/api/parcel/**/moveDate",
+                "/login"};
     }
 }
