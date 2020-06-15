@@ -22,6 +22,9 @@ public class EmailServiceMockImpl implements EmailService {
     @Autowired
     private EmailSenderServiceImpl emailService;
 
+    @Autowired
+    private EmailNotificationServiceImpl emailNotificationService;
+
     @Override
     public void sentNotificationToSender(ParcelData parcelData){
         log.info(String.format("Sent to sender %s id %s pin %s", parcelData.getSender().getEmailAddress(),
@@ -42,7 +45,7 @@ public class EmailServiceMockImpl implements EmailService {
             mail.setProps(model);
 
             emailService.sendEmail(mail);
-
+            emailNotificationService.sendNotificationToReceiver(parcelData, "Seller has registered your parcel.");
         }catch (MessagingException exception){
             log.error(exception.toString());
         }
@@ -68,7 +71,6 @@ public class EmailServiceMockImpl implements EmailService {
             mail.setProps(model);
 
             emailService.sendEmail(mail);
-
         }catch (MessagingException exception){
             log.error(exception.toString());
         }
@@ -87,7 +89,7 @@ public class EmailServiceMockImpl implements EmailService {
             mail.setSubject("JanuszeX Courier Company - parcel return tracking pin");
 
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("information", "Now a sender became a receiver! The customer returned the parcel.");
+            model.put("information", "The customer just picked up the parcel.");
             model.put("name", parcelData.getSender().getUserName());
             model.put("parcelId", parcelData.getId());
             model.put("pin", String.valueOf(parcelData.getPin()));
