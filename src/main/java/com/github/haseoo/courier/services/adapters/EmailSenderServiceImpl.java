@@ -25,7 +25,7 @@ public class EmailSenderServiceImpl {
     private SpringTemplateEngine templateEngine;
 
 
-    public void sendEmail(MailModel mailModel) throws MessagingException, IOException {
+    public void sendEmail(MailModel mailModel) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
