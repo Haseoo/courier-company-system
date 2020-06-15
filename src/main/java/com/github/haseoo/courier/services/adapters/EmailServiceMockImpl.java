@@ -2,20 +2,22 @@ package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.models.MailModel;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
-import com.github.haseoo.courier.services.ports.EmailSenderService;
 import com.github.haseoo.courier.services.ports.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Service
 public class EmailServiceMockImpl implements EmailService {
+
+    @Value("${spring.mail.username}")
+    private String mailFrom;
 
     @Autowired
     private EmailSenderServiceImpl emailService;
@@ -28,17 +30,18 @@ public class EmailServiceMockImpl implements EmailService {
 
         try {
             MailModel mail = new MailModel();
-            mail.setFrom("yourmailid@email.com");//replace with your desired email
-            mail.setMailTo("tomail@email.com");//replace with your desired email
-            mail.setSubject("Email with Spring boot and thymeleaf template!");
+            mail.setFrom(mailFrom);
+            mail.setMailTo(parcelData.getSender().getEmailAddress());
+            mail.setSubject("JanuszeX Courier Company - send confirmation");
 
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("name", "Developer!");
-            model.put("location", "United States");
-            model.put("sign", "Java Developer");
+            model.put("name", parcelData.getSender().getUserName());
+            model.put("parcelId", parcelData.getId());
+            model.put("pin", String.valueOf(parcelData.getPin()));
             mail.setProps(model);
 
             emailService.sendEmail(mail);
+
         }catch (MessagingException exception){
             log.error(exception.toString());
         }
@@ -49,6 +52,24 @@ public class EmailServiceMockImpl implements EmailService {
         log.info(String.format("Sent to receiver %s id %s pin %s", parcelData.getReceiverContactData().getEmailAddress(),
                 parcelData.getId(),
                 String.valueOf(parcelData.getPin())));
+
+        try {
+            MailModel mail = new MailModel();
+            mail.setFrom(mailFrom);
+            mail.setMailTo(parcelData.getReceiverContactData().getEmailAddress());
+            mail.setSubject("JanuszeX Courier Company - send confirmation");
+
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("name", parcelData.getReceiverContactData().getName());
+            model.put("parcelId", parcelData.getId());
+            model.put("pin", String.valueOf(parcelData.getPin()));
+            mail.setProps(model);
+
+            emailService.sendEmail(mail);
+
+        }catch (MessagingException exception){
+            log.error(exception.toString());
+        }
     }
 
     @Override
@@ -56,5 +77,23 @@ public class EmailServiceMockImpl implements EmailService {
         log.info(String.format("Sent return to sender %s id %s pin %s", parcelData.getSender().getEmailAddress(),
                 parcelData.getId(),
                 String.valueOf(parcelData.getPin())));
+
+        try {
+            MailModel mail = new MailModel();
+            mail.setFrom(mailFrom);
+            mail.setMailTo(parcelData.getSender().getEmailAddress());
+            mail.setSubject("JanuszeX Courier Company - parcel return tracking pin");
+
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("name", parcelData.getSender().getUserName());
+            model.put("parcelId", parcelData.getId());
+            model.put("pin", String.valueOf(parcelData.getPin()));
+            mail.setProps(model);
+
+            emailService.sendEmail(mail);
+
+        }catch (MessagingException exception){
+            log.error(exception.toString());
+        }
     }
 }

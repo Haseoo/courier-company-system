@@ -15,27 +15,23 @@
 </head>
 <body>
 <p th:text="${'Hello Dear ' + name}"></p>
-<p th:if="${name.length() > 5}">
-    Wow! You've got a long name (more than 5 chars)!
-</p>
 <p>
-    You have been successfully subscribed to the <b>Fake newsletter</b> on
+    Your parcel has been <b>successfuly</b> send on
     <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></span>
-</p>
-
-<p>
-    You can find <b>your inlined image</b> just below this text.
+    and it is on the way!
 </p>
 <p>
-
-    <a href="https://javabydeveloper.com">
-        <img src="https://javabydeveloper.com/wp-content/uploads/2019/12/javabydeveloper-email.png" alt="htts://javabydeveloper.com" height="110" width="500"/>
-    </a>
+    Your parcel number is <p th:text="${parcelId}"></p>
 </p>
 <p>
-    Regards, <br />
-    <em th:text="${sign}"></em>
-<p th:text="${location}"></p>
+    Here is your PIN to collect your parcel <p th:text="${pin}"></p>
+</p>
+<p>
+    <img src="https://javabydeveloper.com/wp-content/uploads/2019/12/javabydeveloper-email.png" alt="htts://javabydeveloper.com" height="110" width="500"/>
+</p>
+<p>
+    Thank you for choosing the best courier company, <br />
+    <b>JanuszeX Courier Company</b>
 </p>
 </body>
 </html>
