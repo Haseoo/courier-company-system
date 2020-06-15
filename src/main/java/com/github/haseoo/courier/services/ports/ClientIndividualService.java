@@ -13,4 +13,6 @@ public interface ClientIndividualService {
     ClientIndividualData add(ClientIndividualAddData addData);
 
     ClientIndividualData edit(Long id, ClientIndividualEditData editData);
+
+    String signUp(ClientIndividualModel clientIndividualModel);
 }
