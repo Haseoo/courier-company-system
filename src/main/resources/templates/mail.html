@@ -25,7 +25,7 @@
 </p>
 <p th:text="${'Your parcel number is ' + parcelId}"></p>
 <div th:switch="${showPin}">
-    <p th:case="'active'">Here is your PIN change the courier's arrival: <p th:text="${pin}"></p></p>
+    <p th:case="'active'">Here is your PIN to change the courier's arrival: <p th:text="${pin}"></p></p>
 </div>
 <a th:href="@{'http://localhost:4200/client/check/parcel/' + ${parcelId}}"><b>Click here to track your parcel!</b></a>
 <p>
