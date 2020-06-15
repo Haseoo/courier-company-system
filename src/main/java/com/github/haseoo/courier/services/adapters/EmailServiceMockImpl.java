@@ -42,6 +42,7 @@ public class EmailServiceMockImpl implements EmailService {
             model.put("name", parcelData.getSender().getUserName());
             model.put("parcelId", parcelData.getId());
             model.put("pin", String.valueOf(parcelData.getPin()));
+            model.put("showPin", "active");
             mail.setProps(model);
 
             emailService.sendEmail(mail);
@@ -68,6 +69,7 @@ public class EmailServiceMockImpl implements EmailService {
             model.put("name", parcelData.getReceiverContactData().getName());
             model.put("parcelId", parcelData.getId());
             model.put("pin", String.valueOf(parcelData.getPin()));
+            model.put("showPin", "active");
             mail.setProps(model);
 
             emailService.sendEmail(mail);
@@ -93,6 +95,7 @@ public class EmailServiceMockImpl implements EmailService {
             model.put("name", parcelData.getSender().getUserName());
             model.put("parcelId", parcelData.getId());
             model.put("pin", String.valueOf(parcelData.getPin()));
+            model.put("showPin", "active");
             mail.setProps(model);
 
             emailService.sendEmail(mail);

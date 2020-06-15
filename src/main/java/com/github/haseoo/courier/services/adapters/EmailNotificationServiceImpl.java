@@ -33,6 +33,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
             model.put("information", information);
             model.put("name", parcelData.getReceiverContactData().getName());
             model.put("parcelId", parcelData.getId());
+            model.put("showPin", "inactive");
             mail.setProps(model);
 
             emailService.sendEmail(mail);
