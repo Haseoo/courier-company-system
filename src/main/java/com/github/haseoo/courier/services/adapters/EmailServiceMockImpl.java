@@ -35,6 +35,7 @@ public class EmailServiceMockImpl implements EmailService {
             mail.setSubject("JanuszeX Courier Company - send confirmation");
 
             Map<String, Object> model = new HashMap<String, Object>();
+            model.put("information", "Our courier will pick up the parcel within 1 day.");
             model.put("name", parcelData.getSender().getUserName());
             model.put("parcelId", parcelData.getId());
             model.put("pin", String.valueOf(parcelData.getPin()));
@@ -60,6 +61,7 @@ public class EmailServiceMockImpl implements EmailService {
             mail.setSubject("JanuszeX Courier Company - send confirmation");
 
             Map<String, Object> model = new HashMap<String, Object>();
+            model.put("information", "A parcel is on the way to you!");
             model.put("name", parcelData.getReceiverContactData().getName());
             model.put("parcelId", parcelData.getId());
             model.put("pin", String.valueOf(parcelData.getPin()));
@@ -85,6 +87,7 @@ public class EmailServiceMockImpl implements EmailService {
             mail.setSubject("JanuszeX Courier Company - parcel return tracking pin");
 
             Map<String, Object> model = new HashMap<String, Object>();
+            model.put("information", "Now a sender became a receiver! The customer returned the parcel.");
             model.put("name", parcelData.getSender().getUserName());
             model.put("parcelId", parcelData.getId());
             model.put("pin", String.valueOf(parcelData.getPin()));

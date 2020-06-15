@@ -19,10 +19,9 @@
 </p>
 
 <p th:text="${'Hello Dear ' + name + '!'}"></p>
+<p>Something new with parcel assigned to your account happened at <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></span></p>
 <p>
-    Your parcel has been <b>successfuly</b> send on
-    <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></span>
-    and it is on the way!
+    <span style='font-weight: bold' th:text="${information}"></span>
 </p>
 <p th:text="${'Your parcel number is ' + parcelId}"></p>
 <p>
