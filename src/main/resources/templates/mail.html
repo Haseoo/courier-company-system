@@ -14,24 +14,35 @@
     </style>
 </head>
 <body>
-<p th:text="${'Hello Dear ' + name}"></p>
+<p>
+    <img src="https://i.imgur.com/YvRgPkv.png"  height="150" width="326"/>
+</p>
+
+<p th:text="${'Hello Dear ' + name + '!'}"></p>
 <p>
     Your parcel has been <b>successfuly</b> send on
     <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></span>
     and it is on the way!
 </p>
+<p th:text="${'Your parcel number is ' + parcelId}"></p>
 <p>
-    Your parcel number is <p th:text="${parcelId}"></p>
+    Here is your PIN to collect your parcel: <p th:text="${pin}"></p>
 </p>
-<p>
-    Here is your PIN to collect your parcel <p th:text="${pin}"></p>
-</p>
-<p>
-    <img src="https://i.imgur.com/YvRgPkv.png"  height="100" width="123"/>
-</p>
+<a th:href="@{'http://localhost:4200/client/check/parcel/' + ${parcelId}}"><b>Click here to track your parcel!</b></a>
 <p>
     Thank you for choosing the best courier company, <br />
     <b>JanuszeX Courier Company</b>
+</p>
+
+<p><span style="font-size: xx-small">
+    To exercise your rights relating to your Personal Data, or if you have questions regarding our privacy practices, please fill out this form or mail us at:
+
+    JanuszeX Courier Company
+    128 Onion St., 2rd Floor
+    San Francisco, CA 238432, USA
+
+    If you believe that we have not been able to assist with your complaint or concern, and you are located in the EEA, you have the right to lodge a complaint with the competent supervisory authority.
+</span>
 </p>
 </body>
 </html>

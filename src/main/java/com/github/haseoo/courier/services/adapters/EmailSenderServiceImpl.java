@@ -31,12 +31,10 @@ public class EmailSenderServiceImpl {
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
 
-        helper.addAttachment("template-cover.png", new ClassPathResource("javabydeveloper-email.PNG"));
-
         Context context = new Context();
         context.setVariables(mailModel.getProps());
 
-        String html = templateEngine.process("newsletter-template", context);
+        String html = templateEngine.process("mail", context);
 
         helper.setTo(mailModel.getMailTo());
         helper.setText(html, true);
