@@ -75,9 +75,9 @@ export class AuthenticationService {
   loginByGoogle(token: string) {
     if (token) {
       var decoded = jwt_decode(token);
-      console.log(decoded);
       const user: any = {
         id: decoded.sub,
+        userName: 'Google account',
         response: {
           accessToken: token,
           tokenType: 'Bearer'
