@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { User } from '../model/user';
+import * as jwt_decode from 'jwt-decode';
+
 
 
 
@@ -62,6 +64,7 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return this.http.post<any>((environment.API_URL + `/login`), { username, password })
       .pipe(map(user => {
+        console.log(user);
         if (user && user.response.accessToken) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
@@ -69,7 +72,24 @@ export class AuthenticationService {
         return user;
       }));
   }
-
+  loginByGoogle(token: string) {
+    if (token) {
+      var decoded = jwt_decode(token);
+      console.log(decoded);
+      const user: any = {
+        id: decoded.sub,
+        response: {
+          accessToken: token,
+          tokenType: 'Bearer'
+        },
+        userType: Role.INDIVIDUAL_CLIENT
+      };
+      console.log(user);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+      return user;
+    }
+  }
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
