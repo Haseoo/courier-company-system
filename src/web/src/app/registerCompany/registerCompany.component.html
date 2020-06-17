@@ -1,4 +1,7 @@
 <h2>Registration</h2>
+<div *ngIf = !submitted class="alert alert-danger" style="width: 30vw; margin: 10px auto 10px auto; text-align: center" role="alert">
+  Your account has to be activated by administrator!
+</div>
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="form-group ">
     <label for="userName">Username</label>

@@ -1,9 +1,12 @@
+import { CompanyDetails } from './../model/commandData/CompanyDetails';
+import { AlertService } from 'src/app/services/alertService';
 import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { User } from '../model';
+import { User, Role } from '../model';
 import { UserService } from '../services/user.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
+import { ClientService } from '../services/clientService';
 
 @Component({
   selector: 'app-user',
@@ -16,10 +19,14 @@ export class UserComponent implements OnInit {
   currentUserSubscription: Subscription;
   users: Observable<Array<User>>;
   userInfo: User;
+  displayDetails = false;
+  currentCompany: CompanyDetails;
 
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService,
+    private clientService: ClientService,
+    private alertService: AlertService,
     private router: Router
   ) {
 
@@ -44,6 +51,25 @@ export class UserComponent implements OnInit {
     this.userService.setAsActive(user).subscribe(data => {
       this.ngOnInit();
     });
+  }
+  displayUserDetails(user: User) {
+      if (user.userType === Role.COMPANY_CLIENT) {
+        this.displayDetails = !this.displayDetails;
+        if (this.displayDetails) {
+          this.clientService.getClientCompany(user.id).subscribe(company => {
+            this.currentCompany = company;
+            this.scrollToBottom();
+          },
+            error => {
+              this.alertService.error(error.error.message);
+            });
+        }
+      }
+  }
+  scrollToBottom() {
+    console.log("XDDDD");
+    const element = document.getElementById('details');
+    element.scrollIntoView(false);
   }
 
 }

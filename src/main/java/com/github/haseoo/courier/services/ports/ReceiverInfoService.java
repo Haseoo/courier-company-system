@@ -8,11 +8,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public interface ReceiverInfoService {
-    ReceiverInfoData get(ReceiverInfoOperationData receiverInfoOperationData);
-
     void consume(ReceiverInfoOperationData receiverInfoOperationData, Consumer<ReceiverInfoModel> consumer);
-
-    ReceiverInfoData edit(Long id, ReceiverInfoOperationData receiverInfoOperationData);
 
     ReceiverInfoData getById(Long id);
 
