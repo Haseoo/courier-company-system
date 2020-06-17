@@ -17,6 +17,9 @@
         <div class="col-sm">
           Parcel Price
         </div>
+        <div class="col-sm">
+          Payment
+        </div>
         <div class="col-sm"></div>
       </div>
       <div class="row record bg-light text-dark">
@@ -34,6 +37,14 @@
         </div>
         <div class="col-sm">
           {{ parcel.parcelFee }}
+        </div>
+        <div class="col-sm" *ngIf="parcel.paid === false">
+            <a (click)="paypalPayment()" role="button" style="text-transform:none">
+              <img width="73%" style="margin-bottom:3px; margin-right:5px" alt="PayPal" src="assets/paypal-paynow-button.png" />
+            </a>
+        </div>
+        <div class="col-sm" *ngIf="parcel.paid === true">
+          Paid
         </div>
         <div class="col-sm">
           <button (click)="showMoreInfo(parcel)" class="btn btn-secondary">

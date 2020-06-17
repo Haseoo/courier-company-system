@@ -33,4 +33,8 @@ export class ClientComponent implements OnInit {
     this.currentParcel = parcel;
   }
 
+  paypalPayment() {
+    location.href = 'http://localhost:2137/payments/paypal';
+  }
+
 }

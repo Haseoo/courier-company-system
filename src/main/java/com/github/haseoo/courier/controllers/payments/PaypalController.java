@@ -21,6 +21,7 @@ public class PaypalController {
         String approvalLink = null;
         try {
             approvalLink = paypalService.createPayment(parcelModel);
+            parcelModel.setPaid(true);
         } catch (PayPalRESTException e) {
             e.printStackTrace();
         }

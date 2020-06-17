@@ -71,6 +71,10 @@ export class ParcelComponent implements OnInit {
   addressToString(address: Address) {
     return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
   }
+
+  paypalPayment() {
+    location.href = 'http://localhost:2137/payments/paypal';
+  }
 }
 
 
