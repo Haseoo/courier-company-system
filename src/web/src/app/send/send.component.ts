@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class SendComponent implements OnInit {
   addParcelForm: FormGroup;
   submitted = false;
+  isLoading = false;
   typeOfParcels: ParcelType[];
   commandAddData: CommandAddData;
 
@@ -79,6 +80,7 @@ export class SendComponent implements OnInit {
     if (this.addParcelForm.invalid) {
       return;
     }
+    this.isLoading = true;
     this.commandAddData = this.addParcelForm.value;
 
     this.parcelService.save(this.commandAddData).subscribe(data => {
@@ -86,6 +88,7 @@ export class SendComponent implements OnInit {
     },
       error => {
         this.alertService.error(error.error.message);
+        this.isLoading = false;
       });
   }
 }
