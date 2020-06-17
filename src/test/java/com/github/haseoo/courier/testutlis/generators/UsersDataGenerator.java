@@ -91,4 +91,13 @@ public class UsersDataGenerator {
                 .surname(TEST_SURNAME)
                 .build();
     }
+
+    public static UserModel getUserModel() {
+        UserModel userModel = new UserModel();
+        userModel.setId(1L);
+        userModel.setActive(true);
+        userModel.setUserName("Test");
+        userModel.setPassword(new char[0]);
+        return userModel;
+    }
 }
