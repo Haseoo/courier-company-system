@@ -129,6 +129,10 @@ const routes: Routes = [
     path: 'check/parcel/:id',
     component: ParcelComponent,
   },
+  {
+    path: ':auth_token',
+    component: AppComponent,
+  }
 ];
 
 @NgModule({

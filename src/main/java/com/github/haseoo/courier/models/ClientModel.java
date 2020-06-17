@@ -16,8 +16,9 @@ import static javax.persistence.FetchType.LAZY;
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "userId")
 public class ClientModel extends UserModel {
-    private String emailAddress;
     @Column(nullable = false)
+    private String emailAddress;
+    @Column
     private String phoneNumber;
     @Column(nullable = false)
     private ClientType clientType;

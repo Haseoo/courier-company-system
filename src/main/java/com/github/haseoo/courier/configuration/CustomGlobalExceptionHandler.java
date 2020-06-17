@@ -6,6 +6,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
@@ -28,6 +29,13 @@ public class CustomGlobalExceptionHandler extends DefaultHandlerExceptionResolve
         ErrorResponse errors = new ErrorResponse(LocalDateTime.now(), ex.getMessage());
         log.error(ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponse> badCredentialsExceptionHandler(BadCredentialsException ex) {
+        ErrorResponse errors = new ErrorResponse(LocalDateTime.now(), ex.getMessage());
+        log.error(ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
     }
 
     @Value

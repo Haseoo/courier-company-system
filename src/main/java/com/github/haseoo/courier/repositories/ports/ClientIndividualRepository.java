@@ -10,4 +10,6 @@ public interface ClientIndividualRepository {
     Optional<ClientIndividualModel> getById(Long id);
 
     Optional<ClientIndividualModel> getByPesel(String pesel);
+
+    ClientIndividualModel getByEmailAddress(String email);
 }

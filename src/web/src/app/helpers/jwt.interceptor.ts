@@ -13,7 +13,6 @@ export class JwtInterceptor implements HttpInterceptor {
     const isLoggedIn = currentUser && currentUser.response.accessToken;
     if (isLoggedIn) {
       request = request.clone({
-
         setHeaders: {
           Authorization: `Bearer ${currentUser.response.accessToken}`
       }

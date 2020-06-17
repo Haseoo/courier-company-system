@@ -32,7 +32,7 @@ public class UserDetailsImpl implements UserDetails {
                 .id(userModel.getId())
                 .userType(UserUtils.getUserType(userModel))
                 .username(userModel.getUserName())
-                .password(new String(userModel.getPassword()))
+                .password((userModel.getPassword() != null)? new String(userModel.getPassword()) : null)
                 .enabled(userModel.getActive())
                 .userRole(UserUtils.getUserRole(userModel))
                 .build();
