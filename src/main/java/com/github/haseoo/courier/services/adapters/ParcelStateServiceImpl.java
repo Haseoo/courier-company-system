@@ -18,8 +18,6 @@ import com.github.haseoo.courier.services.ports.MagazineService;
 import com.github.haseoo.courier.services.ports.ParcelStateService;
 import com.github.haseoo.courier.utilities.PinGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +31,7 @@ import java.util.stream.Collectors;
 import static com.github.haseoo.courier.enums.EmployeeType.COURIER;
 import static com.github.haseoo.courier.enums.ParcelStateType.*;
 import static com.github.haseoo.courier.utilities.Utils.addWorkdays;
+import static com.github.haseoo.courier.utilities.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,8 +45,6 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     private final MagazineService magazineService;
     private final CourierService courierService;
     private final EstimatedDeliveryTimeRepository estimatedDeliveryTimeRepository;
-
-    String ids = "1";
 
     @Override
     @Transactional
@@ -114,7 +111,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
         record.setMagazine(magazineModel);
         record.setChangeDate(LocalDateTime.now());
         parcelModel.getParcelStates().add(record);
-        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), estimatedDeliveryTimeRepository.getById(Long.valueOf(ids)).getExpectedCourierArrivalAfterAddToMagazine()));
+        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), estimatedDeliveryTimeRepository.getById(Long.valueOf(IDS)).getExpectedCourierArrivalAfterAddToMagazine()));
         parcelRepository.saveAndFlush(parcelModel);
         sentNotificationToReceiver(parcelModel);
     }

@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.exceptions.serviceexceptions.MagazineDoesNotExist;
-import com.github.haseoo.courier.models.EstimatedDeliveryTimeModel;
 import com.github.haseoo.courier.models.MagazineModel;
 import com.github.haseoo.courier.repositories.ports.EstimatedDeliveryTimeRepository;
 import com.github.haseoo.courier.repositories.ports.MagazineRepository;
@@ -19,7 +18,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +30,7 @@ import static com.github.haseoo.courier.enums.ParcelStateType.AT_SENDER;
 import static com.github.haseoo.courier.enums.ParcelStateType.IN_MAGAZINE;
 import static com.github.haseoo.courier.utilities.Constants.POSTAL_CODE_SERVICE_WARN_LOG_FORMAT;
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
+import static com.github.haseoo.courier.utilities.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -43,9 +42,6 @@ public class MagazineServiceImpl implements MagazineService {
     private final ModelMapper modelMapper;
     private final PostalCodeHelper postalCodeHelper;
     private final EstimatedDeliveryTimeRepository estimatedDeliveryTimeRepository;
-
-    String ids = "1";
-
 
     @Override
     public List<MagazineData> getList() {
@@ -129,7 +125,7 @@ public class MagazineServiceImpl implements MagazineService {
                         .stream()
                         .filter(parcelStateData -> parcelStateData
                                 .getState()
-                                .equals(IN_MAGAZINE)).count() > estimatedDeliveryTimeRepository.getById(Long.valueOf(ids)).getTimesAtMagazineToReturn())
+                                .equals(IN_MAGAZINE)).count() > estimatedDeliveryTimeRepository.getById(Long.valueOf(IDS)).getTimesAtMagazineToReturn())
                 .collect(Collectors.toList());
     }
 
