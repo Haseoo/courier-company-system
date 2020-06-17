@@ -81,5 +81,4 @@ INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazine
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (59, '2019-12-27 17:15:38.211372', 2, 4 ,null, 8);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (60, '2019-12-27 17:16:38.211372', 4, 4 ,null, 8);
 INSERT INTO public.parcelstaterecord (id, changedate, state, courierid, magazineid, parcelid) VALUES (61, '2019-12-27 17:17:38.211372', 1, null ,1, 8);
-
-
+INSERT INTO public.estimateddeliverytime (id, expectedcourierarrivalafteradd, expectedcourierarrivalafteraddtomagazine, timesatmagazinetoreturn, maxmovedayafter) VALUES (1, 4, 3, 3, 5);

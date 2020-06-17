@@ -28,6 +28,7 @@ public class Constants {
     public static final String POSTAL_CODE_SERVICE_HTTP_METHOD_HEADER_FILED_NAME = "Accept";
     public static final String POSTAL_CODE_SERVICE_HTTP_METHOD_MEDIA_TYPE = "application/json";
     public static final String POSTAL_CODE_SERVICE_WARN_LOG_FORMAT = "Could not check if postal code is in city because of the exception %s:%s";
+    public static final String IDS = "1";
 
     public static String[] corsAllowedMethods() {
         return new String[]{"HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE"};
