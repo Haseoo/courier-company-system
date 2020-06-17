@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Optional;
 
 import static com.github.haseoo.courier.utilities.Constants.EXCEPTION_TRACK_DELIMITER;
 
