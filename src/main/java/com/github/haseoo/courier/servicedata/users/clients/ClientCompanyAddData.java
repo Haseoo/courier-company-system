@@ -41,7 +41,7 @@ public class ClientCompanyAddData {
                 .builder()
                 .userName(commandData.getUserName())
                 .password(commandData.getPassword())
-                .active(true)
+                .active(false)
                 .emailAddress(commandData.getEmailAddress())
                 .phoneNumber(commandData.getPhoneNumber())
                 .companyName(commandData.getCompanyName())
