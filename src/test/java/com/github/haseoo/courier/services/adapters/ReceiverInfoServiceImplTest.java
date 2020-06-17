@@ -6,7 +6,6 @@ import com.github.haseoo.courier.querydata.ReceiverInfoQueryData;
 import com.github.haseoo.courier.repositories.ports.ReceiverInfoRepository;
 import com.github.haseoo.courier.servicedata.parcels.ReceiverInfoData;
 import com.github.haseoo.courier.servicedata.parcels.ReceiverInfoOperationData;
-import com.github.haseoo.courier.services.ports.ReceiverInfoService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,6 @@ import java.util.function.Consumer;
 import static com.github.haseoo.courier.testutlis.ModelMapperConfig.ModelMapperConfig;
 import static com.github.haseoo.courier.testutlis.constants.Constants.UNIT_TEST;
 import static com.github.haseoo.courier.testutlis.generators.ReceiverInfoDataGenerator.getReceiverInfoModel;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,7 +43,8 @@ class ReceiverInfoServiceImplTest {
     @Test
     void should_consume_existing_record() {
         //given
-        Consumer<ReceiverInfoModel> consumer = e -> {};
+        Consumer<ReceiverInfoModel> consumer = e -> {
+        };
         ReceiverInfoOperationData receiverInfoOperationData = ReceiverInfoOperationData.of(getReceiverInfoModel());
         when(receiverInfoRepository.receiverInfoExists(ReceiverInfoQueryData.of(receiverInfoOperationData))).thenReturn(Optional.of(getReceiverInfoModel()));
         //when
@@ -57,7 +56,8 @@ class ReceiverInfoServiceImplTest {
     @Test
     void should_consume_new_record() {
         //given
-        Consumer<ReceiverInfoModel> consumer = e -> {};
+        Consumer<ReceiverInfoModel> consumer = e -> {
+        };
         ReceiverInfoOperationData receiverInfoOperationData = ReceiverInfoOperationData.builder()
                 .emailAddress("test@test.ts")
                 .name("test")
@@ -65,7 +65,7 @@ class ReceiverInfoServiceImplTest {
                 .surname("test")
                 .build();
         when(receiverInfoRepository.receiverInfoExists(any())).thenReturn(Optional.empty());
-        ArgumentCaptor<ReceiverInfoModel> argument =  ArgumentCaptor.forClass(ReceiverInfoModel.class);
+        ArgumentCaptor<ReceiverInfoModel> argument = ArgumentCaptor.forClass(ReceiverInfoModel.class);
         //when
         sut.consume(receiverInfoOperationData, consumer);
         //then

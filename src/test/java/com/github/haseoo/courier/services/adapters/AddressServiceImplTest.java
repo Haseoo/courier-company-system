@@ -41,7 +41,8 @@ class AddressServiceImplTest {
     @Test
     void should_consume_existing_address() {
         //given
-        Consumer<AddressModel> consumer = e -> {};
+        Consumer<AddressModel> consumer = e -> {
+        };
         AddressOperationData addressOperationData = AddressOperationData.of(getAddressModel());
         when(addressRepository.addressExist(AddressQueryData.of(addressOperationData))).thenReturn(Optional.of(getAddressModel()));
         //when
@@ -53,7 +54,8 @@ class AddressServiceImplTest {
     @Test
     void should_consume_new_address() {
         //given
-        Consumer<AddressModel> consumer = e -> {};
+        Consumer<AddressModel> consumer = e -> {
+        };
         AddressOperationData addressOperationData = AddressOperationData.builder()
                 .buildingNumber("1")
                 .city("city")

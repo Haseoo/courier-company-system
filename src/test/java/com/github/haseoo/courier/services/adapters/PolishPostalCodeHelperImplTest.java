@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.IOException;
 
 import static com.github.haseoo.courier.testutlis.constants.Constants.INTEGRATION_TEST;
+
 @SpringBootTest
 @Tag(INTEGRATION_TEST)
 class PolishPostalCodeHelperImplTest {

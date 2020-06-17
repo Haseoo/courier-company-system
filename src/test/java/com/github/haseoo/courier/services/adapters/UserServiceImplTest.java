@@ -109,7 +109,6 @@ class UserServiceImplTest {
     }
 
 
-
     @Test
     void should_throw_exception_when_user_not_found_setting_active() {
         //given
