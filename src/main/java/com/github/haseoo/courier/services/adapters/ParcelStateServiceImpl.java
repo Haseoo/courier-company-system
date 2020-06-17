@@ -7,14 +7,8 @@ import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotPaid;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
-import com.github.haseoo.courier.models.CourierModel;
-import com.github.haseoo.courier.models.MagazineModel;
-import com.github.haseoo.courier.models.ParcelModel;
-import com.github.haseoo.courier.models.ParcelStateRecord;
-import com.github.haseoo.courier.repositories.ports.CourierRepository;
-import com.github.haseoo.courier.repositories.ports.MagazineRepository;
-import com.github.haseoo.courier.repositories.ports.ParcelRepository;
-import com.github.haseoo.courier.repositories.ports.ParcelStateRepository;
+import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.repositories.ports.*;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.places.MagazineData;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
@@ -51,9 +45,9 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     private final EmailService emailService;
     private final MagazineService magazineService;
     private final CourierService courierService;
+    private final EstimatedDeliveryTimeRepository estimatedDeliveryTimeRepository;
 
-    @Value("${app.parcel.expectedCourierArrival.afterAddToMagazine}")
-    private Integer magazineDaysOffset;
+    String ids = "1";
 
     @Override
     @Transactional
@@ -120,7 +114,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
         record.setMagazine(magazineModel);
         record.setChangeDate(LocalDateTime.now());
         parcelModel.getParcelStates().add(record);
-        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), magazineDaysOffset));
+        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), estimatedDeliveryTimeRepository.getById(Long.valueOf(ids)).getExpectedCourierArrivalAfterAddToMagazine()));
         parcelRepository.saveAndFlush(parcelModel);
         sentNotificationToReceiver(parcelModel);
     }

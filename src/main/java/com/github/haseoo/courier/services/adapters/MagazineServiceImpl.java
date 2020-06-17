@@ -1,7 +1,9 @@
 package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.exceptions.serviceexceptions.MagazineDoesNotExist;
+import com.github.haseoo.courier.models.EstimatedDeliveryTimeModel;
 import com.github.haseoo.courier.models.MagazineModel;
+import com.github.haseoo.courier.repositories.ports.EstimatedDeliveryTimeRepository;
 import com.github.haseoo.courier.repositories.ports.MagazineRepository;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.places.AddressData;
@@ -40,9 +42,10 @@ public class MagazineServiceImpl implements MagazineService {
     private final AddressService addressService;
     private final ModelMapper modelMapper;
     private final PostalCodeHelper postalCodeHelper;
+    private final EstimatedDeliveryTimeRepository estimatedDeliveryTimeRepository;
 
-    @Value("${app.magazine.timesAtMagazineToReturn}")
-    private Integer timesAtMagazineToReturn;
+    String ids = "1";
+
 
     @Override
     public List<MagazineData> getList() {
@@ -126,7 +129,7 @@ public class MagazineServiceImpl implements MagazineService {
                         .stream()
                         .filter(parcelStateData -> parcelStateData
                                 .getState()
-                                .equals(IN_MAGAZINE)).count() > timesAtMagazineToReturn)
+                                .equals(IN_MAGAZINE)).count() > estimatedDeliveryTimeRepository.getById(Long.valueOf(ids)).getTimesAtMagazineToReturn())
                 .collect(Collectors.toList());
     }
 

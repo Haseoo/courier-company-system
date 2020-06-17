@@ -49,11 +49,9 @@ public class ParcelServiceImpl implements ParcelService {
     private final EmailService emailService;
     private final MagazineService magazineService;
     private final PostalCodeHelper postalCodeHelper;
+    private final EstimatedDeliveryTimeRepository estimatedDeliveryTimeRepository;
 
-    @Value("${app.parcel.expectedCourierArrival.afterAddToMagazine}")
-    private Integer daysAfterAddToMagazine;
-    @Value("${app.magazine.maxMoveDayAfter}")
-    private Integer maxMoveDayOffset;
+    String ids = "1";
 
     @Override
     @Transactional
@@ -140,7 +138,7 @@ public class ParcelServiceImpl implements ParcelService {
         if (newDate.isBefore(LocalDate.now()) || !newDate.isAfter(parcelModel.getExpectedCourierArrivalDate())) {
             throw new IllegalMoveDate();
         }
-        if (DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate()) > maxMoveDayOffset) {
+        if (DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate()) > estimatedDeliveryTimeRepository.getById(Long.valueOf(ids)).getMaxMoveDayAfter()) {
             throw new IllegalMoveDate();
         }
         if (newDate.getDayOfWeek() == DayOfWeek.SATURDAY || newDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
@@ -205,7 +203,7 @@ public class ParcelServiceImpl implements ParcelService {
         parcelModel.setParcelFee(parcelAddData.getParcelFee());
         parcelModel.setPaid(false);
         parcelModel.setDateMoved(false);
-        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), daysAfterAddToMagazine));
+        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), estimatedDeliveryTimeRepository.getById(Long.valueOf(ids)).getExpectedCourierArrivalAfterAddToMagazine()));
         return parcelModel;
     }
 
