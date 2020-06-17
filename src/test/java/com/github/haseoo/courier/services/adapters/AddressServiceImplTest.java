@@ -42,13 +42,7 @@ class AddressServiceImplTest {
     void should_consume_existing_address() {
         //given
         Consumer<AddressModel> consumer = e -> {};
-        AddressOperationData addressOperationData = AddressOperationData.builder()
-                .buildingNumber("1")
-                .city("city")
-                .flatNumber("1")
-                .postalCode("11-111")
-                .street("street")
-                .build();
+        AddressOperationData addressOperationData = AddressOperationData.of(getAddressModel());
         when(addressRepository.addressExist(AddressQueryData.of(addressOperationData))).thenReturn(Optional.of(getAddressModel()));
         //when
         sut.consume(addressOperationData, consumer);
