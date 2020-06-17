@@ -16,7 +16,6 @@ import com.github.haseoo.courier.servicedata.places.AddressOperationData;
 import com.github.haseoo.courier.services.ports.*;
 import com.github.haseoo.courier.utilities.PinGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +32,7 @@ import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENU
 import static com.github.haseoo.courier.utilities.Utils.addWorkdays;
 import static com.github.haseoo.courier.utilities.Utils.isParcelMoveable;
 import static java.time.temporal.ChronoUnit.DAYS;
+import static com.github.haseoo.courier.utilities.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -49,11 +49,7 @@ public class ParcelServiceImpl implements ParcelService {
     private final EmailService emailService;
     private final MagazineService magazineService;
     private final PostalCodeHelper postalCodeHelper;
-
-    @Value("${app.parcel.expectedCourierArrival.afterAddToMagazine}")
-    private Integer daysAfterAddToMagazine;
-    @Value("${app.magazine.maxMoveDayAfter}")
-    private Integer maxMoveDayOffset;
+    private final EstimatedDeliveryTimeRepository estimatedDeliveryTimeRepository;
 
     @Override
     @Transactional
@@ -140,7 +136,7 @@ public class ParcelServiceImpl implements ParcelService {
         if (newDate.isBefore(LocalDate.now()) || !newDate.isAfter(parcelModel.getExpectedCourierArrivalDate())) {
             throw new IllegalMoveDate();
         }
-        if (DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate()) > maxMoveDayOffset) {
+        if (DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate()) > estimatedDeliveryTimeRepository.getById(Long.valueOf(IDS)).getMaxMoveDayAfter()) {
             throw new IllegalMoveDate();
         }
         if (newDate.getDayOfWeek() == DayOfWeek.SATURDAY || newDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
@@ -205,7 +201,7 @@ public class ParcelServiceImpl implements ParcelService {
         parcelModel.setParcelFee(parcelAddData.getParcelFee());
         parcelModel.setPaid(false);
         parcelModel.setDateMoved(false);
-        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), daysAfterAddToMagazine));
+        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), estimatedDeliveryTimeRepository.getById(Long.valueOf(IDS)).getExpectedCourierArrivalAfterAddToMagazine()));
         return parcelModel;
     }
 

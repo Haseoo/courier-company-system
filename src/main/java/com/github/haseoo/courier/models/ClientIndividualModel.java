@@ -16,8 +16,10 @@ import javax.persistence.Table;
 public class ClientIndividualModel extends ClientModel {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String name;
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String surname;
-    @Column(nullable = false)
+    @Column
     private String pesel;
+    @Column
+    private String imageUrl;
 }

@@ -12,7 +12,7 @@ export class OfferComponent implements OnInit {
   offer: any;
 
   constructor(private parcelTypeService: ParcelService,
-    private alertService: AlertService) {
+              private alertService: AlertService) {
   }
 
   getOffer() {

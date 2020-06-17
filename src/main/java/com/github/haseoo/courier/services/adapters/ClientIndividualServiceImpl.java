@@ -3,7 +3,9 @@ package com.github.haseoo.courier.services.adapters;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.clients.ClientNotFound;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.clients.ClientWithPeselExists;
 import com.github.haseoo.courier.models.ClientIndividualModel;
+import com.github.haseoo.courier.repositories.jpa.ClientIndividualJPARepository;
 import com.github.haseoo.courier.repositories.ports.ClientIndividualRepository;
+import com.github.haseoo.courier.security.JwtTokenProvider;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualEditData;
@@ -24,9 +26,11 @@ import static com.github.haseoo.courier.utilities.Utils.validateEmailAddress;
 @RequiredArgsConstructor
 public class ClientIndividualServiceImpl implements ClientIndividualService {
     private final ClientIndividualRepository clientIndividualRepository;
+    private final ClientIndividualJPARepository clientIndividualJPARepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public ClientIndividualData getById(Long id) {
@@ -67,4 +71,16 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
         });
         validateEmailAddress(addData.getEmailAddress());
     }
+
+    @Override
+    public String signUp(ClientIndividualModel clientIndividualModel) {
+        ClientIndividualModel dbUser =  clientIndividualJPARepository.findByEmailAddress(clientIndividualModel.getEmailAddress());
+        if (dbUser != null) {
+            throw new RuntimeException("User already exist.");
+        }
+        clientIndividualModel.setPassword(passwordEncoder.encode(String.valueOf(clientIndividualModel.getPassword())).toCharArray());
+        clientIndividualJPARepository.save(clientIndividualModel);
+        return jwtTokenProvider.generateTokenToSocialLogin(clientIndividualModel);
+    }
+
 }

@@ -7,14 +7,8 @@ import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotPaid;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
-import com.github.haseoo.courier.models.CourierModel;
-import com.github.haseoo.courier.models.MagazineModel;
-import com.github.haseoo.courier.models.ParcelModel;
-import com.github.haseoo.courier.models.ParcelStateRecord;
-import com.github.haseoo.courier.repositories.ports.CourierRepository;
-import com.github.haseoo.courier.repositories.ports.MagazineRepository;
-import com.github.haseoo.courier.repositories.ports.ParcelRepository;
-import com.github.haseoo.courier.repositories.ports.ParcelStateRepository;
+import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.repositories.ports.*;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.places.MagazineData;
 import com.github.haseoo.courier.servicedata.users.employees.CourierData;
@@ -24,8 +18,6 @@ import com.github.haseoo.courier.services.ports.MagazineService;
 import com.github.haseoo.courier.services.ports.ParcelStateService;
 import com.github.haseoo.courier.utilities.PinGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +31,7 @@ import java.util.stream.Collectors;
 import static com.github.haseoo.courier.enums.EmployeeType.COURIER;
 import static com.github.haseoo.courier.enums.ParcelStateType.*;
 import static com.github.haseoo.courier.utilities.Utils.addWorkdays;
+import static com.github.haseoo.courier.utilities.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -51,9 +44,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
     private final EmailService emailService;
     private final MagazineService magazineService;
     private final CourierService courierService;
-
-    @Value("${app.parcel.expectedCourierArrival.afterAddToMagazine}")
-    private Integer magazineDaysOffset;
+    private final EstimatedDeliveryTimeRepository estimatedDeliveryTimeRepository;
 
     @Override
     @Transactional
@@ -120,7 +111,7 @@ public class ParcelStateServiceImpl implements ParcelStateService {
         record.setMagazine(magazineModel);
         record.setChangeDate(LocalDateTime.now());
         parcelModel.getParcelStates().add(record);
-        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), magazineDaysOffset));
+        parcelModel.setExpectedCourierArrivalDate(addWorkdays(LocalDate.now(), estimatedDeliveryTimeRepository.getById(Long.valueOf(IDS)).getExpectedCourierArrivalAfterAddToMagazine()));
         parcelRepository.saveAndFlush(parcelModel);
         sentNotificationToReceiver(parcelModel);
     }
