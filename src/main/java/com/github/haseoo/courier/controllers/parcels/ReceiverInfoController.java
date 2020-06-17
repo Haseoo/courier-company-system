@@ -27,19 +27,8 @@ public class ReceiverInfoController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping
-    public ReceiverInfoView getOrElseAdd(@RequestBody ReceiverInfoCommandData commandData) {
-        return ReceiverInfoView.of(receiverInfoService.get(ReceiverInfoOperationData.of(commandData)));
-    }
-
     @GetMapping("/{id}")
     public ReceiverInfoView getById(@PathVariable Long id) {
         return ReceiverInfoView.of(receiverInfoService.getById(id));
-    }
-
-    @PostMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ReceiverInfoView edit(@PathVariable Long id, @RequestBody ReceiverInfoCommandData commandData) {
-        return ReceiverInfoView.of(receiverInfoService.edit(id, ReceiverInfoOperationData.of(commandData)));
     }
 }
