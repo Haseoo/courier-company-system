@@ -26,18 +26,6 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
     private final ModelMapper modelMapper;
 
     @Override
-    public ReceiverInfoData get(ReceiverInfoOperationData receiverInfoOperationData) {
-        validateEmailAddress(receiverInfoOperationData.getEmailAddress());
-        return ReceiverInfoData.of(receiverInfoRepository
-                .receiverInfoExists(ReceiverInfoQueryData.of(receiverInfoOperationData))
-                .orElseGet(() -> receiverInfoRepository
-                        .saveAndFlush(modelMapper
-                                .map(receiverInfoOperationData, ReceiverInfoModel.class)
-                        )
-                ));
-    }
-
-    @Override
     public void consume(ReceiverInfoOperationData receiverInfoOperationData, Consumer<ReceiverInfoModel> consumer) {
         validateEmailAddress(receiverInfoOperationData.getEmailAddress());
         consumer.accept(receiverInfoRepository
@@ -48,14 +36,6 @@ public class ReceiverInfoServiceImpl implements ReceiverInfoService {
                         )
                 )
         );
-    }
-
-    /*METHOD TO REMOVE!!!!!!!*/
-    @Override
-    public ReceiverInfoData edit(Long id, ReceiverInfoOperationData receiverInfoOperationData) {
-        ReceiverInfoModel receiverInfoModel = receiverInfoRepository.getById(id).orElseThrow(() -> new ReceiverInfoNotFound(id));
-        copyNonNullProperties(modelMapper.map(receiverInfoOperationData, ReceiverInfoModel.class), receiverInfoModel);
-        return ReceiverInfoData.of(receiverInfoRepository.saveAndFlush(receiverInfoModel));
     }
 
     @Override
