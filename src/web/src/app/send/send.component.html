@@ -1,3 +1,7 @@
+<div *ngIf = isLoading class="text-center">
+  <div class="spinner-border" style="width: 5rem; height: 5rem;">
+  </div>
+</div>
 <form [formGroup]="addParcelForm" (ngSubmit)="onSubmit()">
   <div class="form-row">
     <div class="form-group col-3">
@@ -329,11 +333,29 @@
         <select
           formControlName="parcelTypeId"
           class="form-control"
+          [ngClass]="{
+            'is-invalid':
+              submitted && formControlError('parcelTypeId')
+          }"
         >
           <ng-container *ngFor="let opt of typeOfParcels">
             <option value="{{ opt.id }}">{{ opt.name }}</option>
           </ng-container>
         </select>
+        <div
+            *ngIf="
+              submitted && formControlError('parcelTypeId')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="
+                formControlError('parcelTypeId').required
+              "
+            >
+              Parcel Type is required
+            </div>
+          </div>
       </div>
       <div class="form-group">
         <label for="parcelFee">Parcel Fee</label>
@@ -341,7 +363,22 @@
           type="text"
           formControlName="parcelFee"
           class="form-control w-50"
+          [ngClass]="{'is-invalid': submitted && formControlError('parcelFee')}"
         />
+        <div
+            *ngIf="
+              submitted && formControlError('parcelFee')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="
+                formControlError('parcelFee').required
+              "
+            >
+              ParcelFee is required
+            </div>
+        </div>
       </div>
       <div class="form-group d-flex justify-content-start">
         <label for="priority">Priority</label>
