@@ -80,7 +80,7 @@ public class UsersDataGenerator {
         return Arrays.asList(getCourierModel(), getCourierModel());
     }
 
-    public static EmployeeAddOperationData getCourierOperationData() {
+    public static EmployeeAddOperationData getEmployeeOperationData() {
         return EmployeeAddOperationData.builder()
                 .active(true)
                 .name(TEST_NAME)
