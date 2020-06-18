@@ -37,7 +37,7 @@
           }}
         </div>
         <div class="col-sm">
-          {{ parcel.parcelFee }}
+          {{ parcel.parcelFee + parcel.parcelPrice }}
         </div>
         <div class="col-sm" *ngIf="parcel.paid === false">
             <a (click)="paypalPayment(parcel.id)" role="button" style="text-transform:none">
