@@ -6,9 +6,10 @@ import lombok.Builder;
 import lombok.Value;
 
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
 
 @Value
-@Builder(access = PRIVATE)
+@Builder(access = PUBLIC)
 @AllArgsConstructor(access = PRIVATE)
 public class MagazineEditOperationData {
     private AddressOperationData address;

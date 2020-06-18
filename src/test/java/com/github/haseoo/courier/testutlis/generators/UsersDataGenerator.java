@@ -80,7 +80,7 @@ public class UsersDataGenerator {
         return Arrays.asList(getCourierModel(), getCourierModel());
     }
 
-    public static EmployeeAddOperationData getCourierOperationData() {
+    public static EmployeeAddOperationData getEmployeeOperationData() {
         return EmployeeAddOperationData.builder()
                 .active(true)
                 .name(TEST_NAME)
@@ -90,5 +90,14 @@ public class UsersDataGenerator {
                 .phoneNumber(TEST_PHONE_NUMBER)
                 .surname(TEST_SURNAME)
                 .build();
+    }
+
+    public static UserModel getUserModel() {
+        UserModel userModel = new UserModel();
+        userModel.setId(1L);
+        userModel.setActive(true);
+        userModel.setUserName("Test");
+        userModel.setPassword(new char[0]);
+        return userModel;
     }
 }

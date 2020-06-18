@@ -8,9 +8,10 @@ import lombok.Value;
 import java.math.BigDecimal;
 
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
 
 @Value
-@Builder(access = PRIVATE)
+@Builder(access = PUBLIC)
 public class ParcelEditData {
     private AddressOperationData deliveryAddress;
     private AddressOperationData senderAddress;
