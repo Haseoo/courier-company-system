@@ -7,9 +7,10 @@ import lombok.NonNull;
 import lombok.Value;
 
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
 
 @Value
-@Builder(access = PRIVATE)
+@Builder(access = PUBLIC)
 public class ClientCompanyAddData {
     @NonNull
     private String userName;
