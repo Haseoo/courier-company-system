@@ -75,7 +75,7 @@ public abstract class ParcelView {
     @Value
     @SuperBuilder
     @AllArgsConstructor(access = PRIVATE)
-    private static class ParcelAnonymousView extends ParcelClientView {
+    public static class ParcelAnonymousView extends ParcelClientView {
         private String sender;
         private AddressView senderAddress;
 

@@ -81,13 +81,14 @@ public class ParcelDataGenerator {
         return parcelModel;
     }
 
-    public static ParcelModel getInMagazine() {
+    public static ParcelModel getParcelInMagazine() {
         ParcelModel parcelModel = getParcelAtSender();
         MagazineModel magazineModel = getMagazineModel();
         magazineModel.setId(1L);
         ParcelStateRecord parcelStateRecord = getTestMagazineRecordModelIn(parcelModel, magazineModel);
         parcelStateRecord.setChangeDate(LocalDateTime.now().plusDays(1));
         magazineModel.getParcelStates().add(parcelStateRecord);
+        parcelModel.getParcelStates().add(parcelStateRecord);
         return parcelModel;
     }
 }
