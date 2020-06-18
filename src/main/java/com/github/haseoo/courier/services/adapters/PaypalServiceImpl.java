@@ -1,8 +1,10 @@
 package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.configuration.PaypalConfig;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IllegalParcelState;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IncorrectParcelException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotPaid;
 import com.github.haseoo.courier.models.ClientModel;
 import com.github.haseoo.courier.models.ParcelModel;
 import com.github.haseoo.courier.models.ReceiverInfoModel;
@@ -32,6 +34,9 @@ public class PaypalServiceImpl implements PaypalService {
     public String createPayment(Long id) throws PayPalRESTException {
 
         ParcelModel parcelModel = parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id));
+
+        if(parcelModel.getPaid())
+            throw new IllegalParcelState();
 
         Payer payer = getPayerInformation(parcelModel.getReceiverContactData());
         RedirectUrls redirectUrls = getRedirectURLs();
@@ -77,7 +82,7 @@ public class PaypalServiceImpl implements PaypalService {
         List<Item> items = new ArrayList<>();
         Item item = new Item()
                 .setCurrency("PLN")
-                .setName("Parcel")
+                .setName("Parcel " + parcelModel.getId())
                 .setPrice(parcelModel.getParcelFee().toString())
                 .setTax("0")
                 .setQuantity("1")
