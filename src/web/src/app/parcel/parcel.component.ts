@@ -1,3 +1,4 @@
+import { PayPalService } from './../services/paypalService';
 import { ParcelDateMoveCommandData } from '../model/commandData/ParcelDateMoveCommandData';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from './../services/alertService';
@@ -17,12 +18,14 @@ export class ParcelComponent implements OnInit {
   submitted = false;
   infoAboutParcel = false;
   changeDate = false;
+  loading = false;
   parcelDate = new ParcelDateMoveCommandData();
   id: string;
 
   constructor(private formBuilder: FormBuilder,
               private parcelService: ParcelService,
               private route: ActivatedRoute,
+              private paypalService: PayPalService,
               private alertService: AlertService) { }
 
   ngOnInit() {
@@ -71,9 +74,15 @@ export class ParcelComponent implements OnInit {
   addressToString(address: Address) {
     return address.buildingNumber + '/' + address.flatNumber + ' ' + address.street + ' ' + address.postalCode + ' ' + address.city;
   }
-
-  paypalPayment() {
-    location.href = 'http://localhost:2137/payments/paypal';
+  paypalPayment(parcelId: number) {
+    this.loading = true;
+    this.paypalService.makePayment(parcelId).subscribe(
+      response => {
+    },error => {
+      location.href = error.error.text;
+      this.loading = false;
+      }
+    );
   }
 }
 

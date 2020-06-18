@@ -1,3 +1,5 @@
+import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { ReturnComponent } from './return/return.component';
 import { AssignComponent } from './assign/assign.component';
 import { SendComponent } from './send/send.component';
@@ -132,6 +134,16 @@ const routes: Routes = [
   {
     path: ':auth_token',
     component: AppComponent,
+  },
+  {
+    path: 'payment/success',
+    component: PaymentSuccessComponent,
+    canActivate: [ClientGuard]
+  },
+  {
+    path: 'payment/failure',
+    component: PaymentFailedComponent,
+    canActivate: [ClientGuard]
   }
 ];
 
