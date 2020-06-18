@@ -50,4 +50,13 @@ public class ParcelDataGenerator {
         parcelStateRecord.setChangeDate(LocalDateTime.now());
         return parcelStateRecord;
     }
+
+    public static ParcelStateRecord getTestMagazineRecordModelIn(ParcelModel parcel, MagazineModel magazine) {
+        ParcelStateRecord parcelStateRecord = new ParcelStateRecord();
+        parcelStateRecord.setParcel(parcel);
+        parcelStateRecord.setState(ParcelStateType.IN_MAGAZINE);
+        parcelStateRecord.setMagazine(magazine);
+        parcelStateRecord.setChangeDate(LocalDateTime.now());
+        return parcelStateRecord;
+    }
 }
