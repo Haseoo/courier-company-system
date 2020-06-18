@@ -40,8 +40,9 @@
       {{addressToString(parcel.deliveryAddress)}}
     </div>
     <div class="col-sm" *ngIf="parcel.paid === false">
-      <a (click)="paypalPayment()" role="button" style="text-transform:none">
+      <a (click)="paypalPayment(parcel.id)" role="button" style="text-transform:none">
         <img width="73%" style="margin-bottom:3px; margin-right:5px" alt="PayPal" src="assets/paypal-paynow-button.png" />
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
       </a>
     </div>
     <div class="col-sm" *ngIf="parcel.paid === true">

@@ -27,6 +27,8 @@ import { CheckComponent } from './check/check.component';
 import { SendComponent } from './send/send.component';
 import { AssignComponent } from './assign/assign.component';
 import { ReturnComponent } from './return/return.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { ReturnComponent } from './return/return.component';
     CheckComponent,
     SendComponent,
     AssignComponent,
-    ReturnComponent
+    ReturnComponent,
+    PaymentSuccessComponent,
+    PaymentFailedComponent
   ],
   imports: [
     BrowserModule,

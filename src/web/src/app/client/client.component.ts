@@ -1,3 +1,4 @@
+import { PayPalService } from './../services/paypalService';
 import { ParcelClientView } from './../model/views/parcelClientView';
 import { AlertService } from './../services/alertService';
 import { AuthenticationService } from './../services/authentication.service';
@@ -15,8 +16,10 @@ export class ClientComponent implements OnInit {
   currentClient: Client;
   infoAboutParcel = false;
   currentParcel: ParcelClientView;
+  loading = false;
   constructor(private clientService: ClientService,
               private alertService: AlertService,
+              private paypalService: PayPalService,
               private authenticationService: AuthenticationService) { }
 
 
@@ -33,8 +36,15 @@ export class ClientComponent implements OnInit {
     this.currentParcel = parcel;
   }
 
-  paypalPayment() {
-    location.href = 'http://localhost:2137/payments/paypal';
+  paypalPayment(parcelId: number) {
+    this.loading = true;
+    this.paypalService.makePayment(parcelId).subscribe(
+      response => {
+    },error => {
+      location.href = error.error.text;
+      this.loading = false;
+      }
+    );
   }
 
 }
