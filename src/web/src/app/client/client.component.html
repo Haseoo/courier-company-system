@@ -2,24 +2,28 @@
     <h2>List of parcels: </h2>
 </div>
 <div class = "container" *ngIf="currentClient">
+  <div class="row text-light bg-dark">
+    <div class="col-sm-1">
+      ID
+    </div>
+    <div class="col-sm-3">
+      Expected Courier Arrival Date
+    </div>
+    <div class="col-sm">
+      Actual Status
+    </div>
+    <div class="col-sm">
+      Parcel Price
+    </div>
+    <div class="col-sm">
+      Payment
+    </div>
+    <div class="col-sm"></div>
+  </div>
   <div *ngFor="let parcel of currentClient.sendParcels">
-    <div class="container">
-      <div class="row text-light bg-dark">
-        <div class="col-sm-1">
-          ID
-        </div>
-        <div class="col-sm-3">
-          Expected Courier Arrival Date
-        </div>
-        <div class="col-sm">
-          Actual Status
-        </div>
-        <div class="col-sm">
-          Parcel Price
-        </div>
-        <div class="col-sm"></div>
-      </div>
-      <div class="row record bg-light text-dark">
+    <div class="container " style="padding-right: 0; padding-left: 0;">
+      
+      <div class="row record bg-light text-dark" >
         <div class="col-sm-1">
           {{ parcel.id }}
         </div>
@@ -33,7 +37,16 @@
           }}
         </div>
         <div class="col-sm">
-          {{ parcel.parcelFee }}
+          {{ parcel.parcelFee + parcel.parcelPrice }}
+        </div>
+        <div class="col-sm" *ngIf="parcel.paid === false">
+            <a (click)="paypalPayment(parcel.id)" role="button" style="text-transform:none">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              <img width="73%" style="margin-bottom:3px; margin-right:5px" alt="PayPal" src="assets/paypal-paynow-button.png" />
+            </a>
+        </div>
+        <div class="col-sm" *ngIf="parcel.paid === true">
+          Paid
         </div>
         <div class="col-sm">
           <button (click)="showMoreInfo(parcel)" class="btn btn-secondary">

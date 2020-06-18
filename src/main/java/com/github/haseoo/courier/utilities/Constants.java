@@ -29,6 +29,10 @@ public class Constants {
     public static final String POSTAL_CODE_SERVICE_HTTP_METHOD_MEDIA_TYPE = "application/json";
     public static final String POSTAL_CODE_SERVICE_WARN_LOG_FORMAT = "Could not check if postal code is in city because of the exception %s:%s";
     public static final String IDS = "1";
+    public static final String SUCCESS_URL = "http://localhost:2137/api/payments/paypal/success";
+    public static final String CANCEL_URL = "http://localhost:2137/api/payments/paypal/cancel";
+    public static final String FAILURE_REDIRECT = "http://localhost:4200/payment/failure";
+    public static final String SUCCESS_REDIRECT = "http://localhost:4200/payment/success";
 
     public static String[] corsAllowedMethods() {
         return new String[]{"HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE"};

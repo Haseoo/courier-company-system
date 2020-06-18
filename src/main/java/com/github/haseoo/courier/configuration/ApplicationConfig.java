@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -24,6 +25,11 @@ public class ApplicationConfig {
         Reflections reflections = new Reflections(REFLECTION_PREFIX);
         loadConverters(modelMapper, reflections);
         return modelMapper;
+    }
+
+    @Bean
+    public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
+        return new ThreadPoolTaskExecutor();
     }
 
     @SuppressWarnings("unchecked")

@@ -21,6 +21,8 @@ public class Constants {
                 "/offer",
                 "/api/parcel/get/**",
                 "/api/parcel/**/moveDate",
-                "/login"};
+                "/login",
+                "/api/payments/paypal",
+                "/api/payments/paypal/**"};
     }
 }

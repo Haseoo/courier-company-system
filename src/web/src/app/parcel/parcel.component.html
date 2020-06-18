@@ -15,7 +15,9 @@
     <div class="col-md-2">
       Delivery address
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-sm">
+      Payment
+    </div>
     <div class="col-md-2"></div>
   </div>
   <div class="row record bg-light text-dark">
@@ -32,10 +34,19 @@
       }}
     </div>
     <div class="col-md-1">
-      {{ parcel.parcelPrice }}
+      {{ parcel.parcelPrice + parcel.parcelFee }}
     </div>
     <div class="col-md-2">
       {{addressToString(parcel.deliveryAddress)}}
+    </div>
+    <div class="col-sm" *ngIf="parcel.paid === false">
+      <a (click)="paypalPayment(parcel.id)" role="button" style="text-transform:none">
+        <img width="73%" style="margin-bottom:3px; margin-right:5px" alt="PayPal" src="assets/paypal-paynow-button.png" />
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      </a>
+    </div>
+    <div class="col-sm" *ngIf="parcel.paid === true">
+      Paid
     </div>
     <div class="col-md-2">
       <button
@@ -45,8 +56,7 @@
       >
         Change date
       </button>
-    </div>
-    <div class="col-md-2">
+      <br><br>
       <button (click)="showMoreInfo()" class="btn btn-secondary">
         Show more info
       </button>
