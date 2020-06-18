@@ -1,8 +1,12 @@
 package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.configuration.PaypalConfig;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IncorrectParcelException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
 import com.github.haseoo.courier.models.ClientModel;
 import com.github.haseoo.courier.models.ParcelModel;
+import com.github.haseoo.courier.models.ReceiverInfoModel;
+import com.github.haseoo.courier.repositories.ports.ParcelRepository;
 import com.github.haseoo.courier.services.ports.PaypalService;
 import com.github.haseoo.courier.utilities.Constants;
 import com.paypal.api.payments.*;
@@ -11,6 +15,7 @@ import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +25,15 @@ public class PaypalServiceImpl implements PaypalService {
 
 
     private final PaypalConfig paypalConfig;
+    private final ParcelRepository parcelRepository;
 
 
     @Override
-    public String createPayment(ParcelModel parcelModel) throws PayPalRESTException {
+    public String createPayment(Long id) throws PayPalRESTException {
 
-        Payer payer = getPayerInformation(parcelModel.getSender());
+        ParcelModel parcelModel = parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id));
+
+        Payer payer = getPayerInformation(parcelModel.getReceiverContactData());
         RedirectUrls redirectUrls = getRedirectURLs();
         List<Transaction> listTransaction = getTransactionInformation(parcelModel);
 
@@ -42,15 +50,23 @@ public class PaypalServiceImpl implements PaypalService {
         return getApprovalLink(approvedPayment);
     }
 
+    private String countTotalPrice(String shipping, String subtotal){
+        BigDecimal shippingBigDecimal = new BigDecimal(shipping);
+        BigDecimal subtotalBigDecimal = new BigDecimal(subtotal);
+
+        String totalPrice = shippingBigDecimal.add(subtotalBigDecimal).toString();
+
+        return totalPrice;
+    }
+
     private List<Transaction> getTransactionInformation(ParcelModel parcelModel) {
         Details details = new Details();
-        details.setShipping("DHL");
-        details.getSubtotal();
-        details.setTax("0");
-
+        details.setShipping(parcelModel.getParcelType().getPrice().toString());
+        details.setSubtotal(parcelModel.getParcelFee().toString());
+        details.setTax("0.00");
         Amount amount = new Amount();
         amount.setCurrency("PLN");
-        amount.setTotal(parcelModel.getParcelType().getPrice().toString());
+        amount.setTotal(countTotalPrice(details.getShipping(), details.getSubtotal()));
         amount.setDetails(details);
 
         Transaction transaction = new Transaction();
@@ -59,13 +75,13 @@ public class PaypalServiceImpl implements PaypalService {
 
         ItemList itemList = new ItemList();
         List<Item> items = new ArrayList<>();
-
         Item item = new Item()
                 .setCurrency("PLN")
                 .setName("Parcel")
-                .setPrice(parcelModel.getParcelType().getPrice().toString())
+                .setPrice(parcelModel.getParcelFee().toString())
                 .setTax("0")
-                .setQuantity("1");
+                .setQuantity("1")
+                .setCategory("PHYSICAL");
 
         items.add(item);
         itemList.setItems(items);
@@ -87,12 +103,12 @@ public class PaypalServiceImpl implements PaypalService {
         return payment.execute(paypalConfig.getApiContext(), paymentExecution);
     }
 
-    private Payer getPayerInformation(ClientModel clientModel) {
+    private Payer getPayerInformation(ReceiverInfoModel receiverInfoModel) {
         Payer payer = new Payer();
         payer.setPaymentMethod("paypal");
 
         PayerInfo payerInfo = new PayerInfo();
-        payerInfo.setEmail(clientModel.getEmailAddress());
+        payerInfo.setEmail(receiverInfoModel.getEmailAddress());
 
         payer.setPayerInfo(payerInfo);
 

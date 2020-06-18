@@ -22,7 +22,7 @@ public class Constants {
                 "/api/parcel/get/**",
                 "/api/parcel/**/moveDate",
                 "/login",
-                "/payments/paypal",
-                "/payments/paypal/*"};
+                "/api/payments/paypal",
+                "/api/payments/paypal/**"};
     }
 }

@@ -1,13 +1,12 @@
 package com.github.haseoo.courier.controllers.payments;
 
-import com.github.haseoo.courier.models.ParcelModel;
 import com.github.haseoo.courier.services.ports.PaypalService;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/payments")
+@RequestMapping("/api/payments")
 @RequiredArgsConstructor
 public class PaypalController {
 
@@ -15,28 +14,15 @@ public class PaypalController {
 
 
     @PostMapping("/paypal")
-    public String payment(
-            @RequestBody ParcelModel parcelModel
-    ) {
-        String approvalLink = null;
-        try {
-            approvalLink = paypalService.createPayment(parcelModel);
-            parcelModel.setPaid(true);
-        } catch (PayPalRESTException e) {
-            e.printStackTrace();
-        }
-
+    public String payment(@RequestParam("id") Long id) throws PayPalRESTException {
+        String approvalLink = paypalService.createPayment(id);
         return approvalLink;
     }
 
 
     @GetMapping("/paypal/success")
-    public String handlePaypalSuccess(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId){
-        try {
-            paypalService.executePayment(paymentId,payerId);
-        } catch (PayPalRESTException e) {
-            e.printStackTrace();
-        }
+    public String handlePaypalSuccess(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) throws PayPalRESTException {
+        paypalService.executePayment(paymentId,payerId);
         return "Success";
     }
 
