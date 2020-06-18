@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
 
 @Value
-@Builder(access = PRIVATE)
+@Builder(access = PUBLIC)
 @AllArgsConstructor(access = PRIVATE)
 public class ParcelTypeData {
     private Long id;

@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static com.github.haseoo.courier.testutlis.constants.ParcelConstants.TEST_PIN;
+import static com.github.haseoo.courier.testutlis.generators.MagazineDataGenerator.getMagazineModel;
+import static com.github.haseoo.courier.testutlis.generators.ParcelTypeDataGenerator.getActiveParcelTypeModel;
+import static com.github.haseoo.courier.testutlis.generators.ReceiverInfoDataGenerator.getReceiverInfoModel;
+import static com.github.haseoo.courier.testutlis.generators.UsersDataGenerator.getCompanyClientModel;
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
@@ -58,5 +62,32 @@ public class ParcelDataGenerator {
         parcelStateRecord.setMagazine(magazine);
         parcelStateRecord.setChangeDate(LocalDateTime.now());
         return parcelStateRecord;
+    }
+
+    public static ParcelModel getParcelAtSender() {
+        ParcelModel parcelModel = getParcelModel(getActiveParcelTypeModel(),
+                getCompanyClientModel(),
+                AddressDataGenerator.getAddressModel(),
+                getReceiverInfoModel());
+        parcelModel.setId(1L);
+        parcelModel.setSenderAddress(AddressDataGenerator.getAddressModel());
+        parcelModel.setObservingClients(new ArrayList<>());
+        parcelModel.setParcelStates(new ArrayList<>());
+        MagazineModel magazineModel = getMagazineModel();
+        magazineModel.setId(1L);
+        ParcelStateRecord parcelStateRecord = getTestMagazineRecordModel(parcelModel, magazineModel);
+        magazineModel.getParcelStates().add(parcelStateRecord);
+        parcelModel.getParcelStates().add(parcelStateRecord);
+        return parcelModel;
+    }
+
+    public static ParcelModel getInMagazine() {
+        ParcelModel parcelModel = getParcelAtSender();
+        MagazineModel magazineModel = getMagazineModel();
+        magazineModel.setId(1L);
+        ParcelStateRecord parcelStateRecord = getTestMagazineRecordModelIn(parcelModel, magazineModel);
+        parcelStateRecord.setChangeDate(LocalDateTime.now().plusDays(1));
+        magazineModel.getParcelStates().add(parcelStateRecord);
+        return parcelModel;
     }
 }

@@ -31,6 +31,7 @@ import static com.github.haseoo.courier.enums.ParcelStateType.*;
 import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
 import static com.github.haseoo.courier.utilities.Utils.addWorkdays;
 import static com.github.haseoo.courier.utilities.Utils.isParcelMoveable;
+import static java.lang.Math.abs;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static com.github.haseoo.courier.utilities.Constants.*;
 
@@ -136,7 +137,7 @@ public class ParcelServiceImpl implements ParcelService {
         if (newDate.isBefore(LocalDate.now()) || !newDate.isAfter(parcelModel.getExpectedCourierArrivalDate())) {
             throw new IllegalMoveDate();
         }
-        if (DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate()) > estimatedDeliveryTimeRepository.getById(Long.valueOf(IDS)).getMaxMoveDayAfter()) {
+        if (abs(DAYS.between(newDate, parcelModel.getExpectedCourierArrivalDate())) > estimatedDeliveryTimeRepository.getById(Long.valueOf(IDS)).getMaxMoveDayAfter()) {
             throw new IllegalMoveDate();
         }
         if (newDate.getDayOfWeek() == DayOfWeek.SATURDAY || newDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
