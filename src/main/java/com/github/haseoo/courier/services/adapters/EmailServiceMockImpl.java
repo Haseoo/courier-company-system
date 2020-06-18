@@ -6,6 +6,7 @@ import com.github.haseoo.courier.services.ports.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -25,13 +26,16 @@ public class EmailServiceMockImpl implements EmailService {
     @Autowired
     private EmailNotificationServiceImpl emailNotificationService;
 
+    @Autowired
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
     @Override
     public void sentNotificationToSender(ParcelData parcelData){
         log.info(String.format("Sent to sender %s id %s pin %s", parcelData.getSender().getEmailAddress(),
                 parcelData.getId(),
                 String.valueOf(parcelData.getPin())));
 
-        try {
+//        try {
             MailModel mail = new MailModel();
             mail.setFrom(mailFrom);
             mail.setMailTo(parcelData.getSender().getEmailAddress());
@@ -45,11 +49,19 @@ public class EmailServiceMockImpl implements EmailService {
             model.put("showPin", "active");
             mail.setProps(model);
 
-            emailService.sendEmail(mail);
-            emailNotificationService.sendNotificationToReceiver(parcelData, "Seller has registered your parcel.");
-        }catch (MessagingException exception){
-            log.error(exception.toString());
-        }
+            threadPoolTaskExecutor.execute(() -> {
+                try {
+                    emailService.sendEmail(mail);
+                    emailNotificationService.sendNotificationToReceiver(parcelData, "Seller has registered your parcel.");
+                } catch (MessagingException exception) {
+                    log.error(exception.toString());
+                }
+            });
+//            //emailService.sendEmail(mail);
+//            emailNotificationService.sendNotificationToReceiver(parcelData, "Seller has registered your parcel.");
+//        }catch (MessagingException exception){
+//            log.error(exception.toString());
+//        }
     }
 
     @Override

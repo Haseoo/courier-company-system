@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,14 @@ public class PaypalServiceImpl implements PaypalService {
 
     private List<Transaction> getTransactionInformation(ParcelModel parcelModel) {
         Details details = new Details();
-        details.setShipping(parcelModel.getParcelType().getPrice().toString());
+        if(parcelModel.getPriority())
+            details.setShipping(parcelModel.getParcelType().getPrice()
+                    .multiply(BigDecimal.valueOf(1.1))
+                    .setScale(2, RoundingMode.CEILING)
+                    .toString());
+        else
+            details.setShipping(parcelModel.getParcelType().getPrice().toString());
+
         details.setSubtotal(parcelModel.getParcelFee().toString());
         details.setTax("0.00");
         Amount amount = new Amount();
