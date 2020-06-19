@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.security;
 
+import com.github.haseoo.courier.enums.UserType;
 import com.github.haseoo.courier.exceptions.ResourceException;
 import com.github.haseoo.courier.repositories.ports.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +45,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return null;
         }
         return (UserDetailsImpl) authentication.getPrincipal();
+    }
+
+    public boolean isCurrentUserAdmin() {
+        return currentUser().getUserType().equals(UserType.ADMIN);
     }
 }

@@ -35,7 +35,7 @@ public class MagazineController {
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @GetMapping
     public List<MagazineView> getList() {
-        if (userDetailsService.currentUser().getUserType().equals(UserType.ADMIN))
+        if (userDetailsService.isCurrentUserAdmin())
             return magazineService.getList().stream().map(MagazineView::of).collect(Collectors.toList());
         else
             return magazineService.getActiveList().stream().map(MagazineView::of).collect(Collectors.toList());
