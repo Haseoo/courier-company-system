@@ -225,6 +225,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     private void setReceiverAsSender(ParcelModel parcelModel) {
         parcelModel.setToReturn(true);
+        parcelModel.setDateMoved(false);
         ClientModel client = clientRepository
                 .getById(parcelModel.getSender().getId())
                 .orElseThrow(() -> new ClientNotFound(parcelModel.getSender().getId()));

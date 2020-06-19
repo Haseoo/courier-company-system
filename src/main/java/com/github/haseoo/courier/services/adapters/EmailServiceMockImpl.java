@@ -35,7 +35,6 @@ public class EmailServiceMockImpl implements EmailService {
                 parcelData.getId(),
                 String.valueOf(parcelData.getPin())));
 
-//        try {
             MailModel mail = new MailModel();
             mail.setFrom(mailFrom);
             mail.setMailTo(parcelData.getSender().getEmailAddress());
@@ -57,11 +56,6 @@ public class EmailServiceMockImpl implements EmailService {
                     log.error(exception.toString());
                 }
             });
-//            //emailService.sendEmail(mail);
-//            emailNotificationService.sendNotificationToReceiver(parcelData, "Seller has registered your parcel.");
-//        }catch (MessagingException exception){
-//            log.error(exception.toString());
-//        }
     }
 
     @Override
@@ -70,7 +64,6 @@ public class EmailServiceMockImpl implements EmailService {
                 parcelData.getId(),
                 String.valueOf(parcelData.getPin())));
 
-        try {
             MailModel mail = new MailModel();
             mail.setFrom(mailFrom);
             mail.setMailTo(parcelData.getReceiverContactData().getEmailAddress());
@@ -84,10 +77,13 @@ public class EmailServiceMockImpl implements EmailService {
             model.put("showPin", "active");
             mail.setProps(model);
 
-            emailService.sendEmail(mail);
-        }catch (MessagingException exception){
-            log.error(exception.toString());
-        }
+            threadPoolTaskExecutor.execute(() -> {
+                try {
+                    emailService.sendEmail(mail);
+                } catch (MessagingException exception) {
+                    log.error(exception.toString());
+                }
+            });
     }
 
     @Override
@@ -96,7 +92,6 @@ public class EmailServiceMockImpl implements EmailService {
                 parcelData.getId(),
                 String.valueOf(parcelData.getPin())));
 
-        try {
             MailModel mail = new MailModel();
             mail.setFrom(mailFrom);
             mail.setMailTo(parcelData.getSender().getEmailAddress());
@@ -110,10 +105,12 @@ public class EmailServiceMockImpl implements EmailService {
             model.put("showPin", "active");
             mail.setProps(model);
 
-            emailService.sendEmail(mail);
-
-        }catch (MessagingException exception){
-            log.error(exception.toString());
-        }
+            threadPoolTaskExecutor.execute(() -> {
+                try {
+                    emailService.sendEmail(mail);
+                } catch (MessagingException exception) {
+                    log.error(exception.toString());
+                }
+            });
     }
 }

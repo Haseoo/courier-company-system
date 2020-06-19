@@ -6,10 +6,10 @@ INSERT INTO public.address (id, buildingnumber, city, flatnumber, postalcode, st
 INSERT INTO public.address (id, buildingnumber, city, flatnumber, postalcode, street) VALUES (9, '22', 'Kielce', '1', '21-321', 'Ulica');
 INSERT INTO public.address (id, buildingnumber, city, flatnumber, postalcode, street) VALUES (7, '11', 'Kielce', '-', '21-123', 'Paczkowska');
 INSERT INTO public.companyuser (id, active, password, username) VALUES (1, true, '$2a$12$QOpC9AXqeKDBcNMWHFr/oOEjcJqxD1IkbZsvshHsTRvsIsLpVbji6', 'admin');
-INSERT INTO public.companyuser (id, active, password, username) VALUES (2, true, '$2a$10$jex8obVL0RhCkyTgRbZA0udBFpKZyvmonGBJ2824Du8XY/qRWFpZS', 'company');
-INSERT INTO public.companyuser (id, active, password, username) VALUES (3, true, '$2a$10$yDhRCamQD3AfRT3.vgs7KuBpl6d8RhDbcIm2oTBR7YptNb40eOAnm', 'indivudal');
-INSERT INTO public.companyuser (id, active, password, username) VALUES (4, true, '$2a$10$iseeIJtvmkFMEn.fQ8Wj4.fC64ykI8.b1qMC4eMlLULnKdtDtQwgi', 'courier');
-INSERT INTO public.companyuser (id, active, password, username) VALUES (5, true, '$2a$10$CH8D06hd1sXDYZziywtuxOu5HkVEZj/Z0ue5qI6QrSDgW/McxadsC', 'logistician');
+INSERT INTO public.companyuser (id, active, password, username) VALUES (2, true, '$2a$12$QOpC9AXqeKDBcNMWHFr/oOEjcJqxD1IkbZsvshHsTRvsIsLpVbji6', 'company');
+INSERT INTO public.companyuser (id, active, password, username) VALUES (3, true, '$2a$12$QOpC9AXqeKDBcNMWHFr/oOEjcJqxD1IkbZsvshHsTRvsIsLpVbji6', 'indivudal');
+INSERT INTO public.companyuser (id, active, password, username) VALUES (4, true, '$2a$12$QOpC9AXqeKDBcNMWHFr/oOEjcJqxD1IkbZsvshHsTRvsIsLpVbji6', 'courier');
+INSERT INTO public.companyuser (id, active, password, username) VALUES (5, true, '$2a$12$QOpC9AXqeKDBcNMWHFr/oOEjcJqxD1IkbZsvshHsTRvsIsLpVbji6', 'logistician');
 INSERT INTO public.client (clienttype, emailaddress, phonenumber, userid) VALUES (1, 'company@company.com', '123456789', 2);
 INSERT INTO public.client (clienttype, emailaddress, phonenumber, userid) VALUES (0, 'indi@wp.pl', '123423', 3);
 INSERT INTO public.clientcompany (companyname, nip, representativeemailaddress, representativename, representativephonenumber, representativesurname, clientid) VALUES ('Company', '123456789111', 'a.mocko@company.com', 'Anna', '69696969', 'Moćki', 2);
