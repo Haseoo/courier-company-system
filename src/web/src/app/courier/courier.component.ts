@@ -110,7 +110,6 @@ export class CourierComponent implements OnInit {
 
   onChangeIsPaid(id: number, event: any) {
     this.isPaidMap.set(id, !this.isPaidMap.get(id));
-    console.log('Paid map'+ id + '' + this.isPaidMap.get(id));
   }
   existParcelsWithAssignedSate() {
     // tslint:disable-next-line: prefer-for-of

@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe(params => {
       const token = params.get('auth_token');
       if (token != null) {
-        console.log(token);
         this.authenticationService.loginByGoogle(token);
         this.currentUser = this.authenticationService.currentUserValue;
         this.router.navigate(['/client']);

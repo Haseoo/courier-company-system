@@ -28,9 +28,9 @@ export class PaymentSuccessComponent implements OnInit {
       if (this.count > 0) {
         this.count--;
       } else {
+        clearInterval(this.interval);
         this.router.navigate(['/client']);
       }
     }, 1000);
   }
-
 }

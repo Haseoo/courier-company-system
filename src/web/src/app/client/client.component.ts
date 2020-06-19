@@ -40,9 +40,8 @@ export class ClientComponent implements OnInit {
     this.loading = true;
     this.paypalService.makePayment(parcelId).subscribe(
       response => {
-    },error => {
+    }, error => {
       location.href = error.error.text;
-      this.loading = false;
       }
     );
   }
