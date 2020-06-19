@@ -138,12 +138,10 @@ const routes: Routes = [
   {
     path: 'payment/success',
     component: PaymentSuccessComponent,
-    canActivate: [ClientGuard]
   },
   {
     path: 'payment/failure',
     component: PaymentFailedComponent,
-    canActivate: [ClientGuard]
   }
 ];
 
