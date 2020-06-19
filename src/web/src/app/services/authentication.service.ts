@@ -64,7 +64,6 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return this.http.post<any>((environment.API_URL + `/login`), { username, password })
       .pipe(map(user => {
-        console.log(user);
         if (user && user.response.accessToken) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
@@ -84,7 +83,6 @@ export class AuthenticationService {
         },
         userType: Role.INDIVIDUAL_CLIENT
       };
-      console.log(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.currentUserSubject.next(user);
       return user;

@@ -67,7 +67,6 @@ export class UserComponent implements OnInit {
       }
   }
   scrollToBottom() {
-    console.log("XDDDD");
     const element = document.getElementById('details');
     element.scrollIntoView(false);
   }
