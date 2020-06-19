@@ -1,1 +1,1 @@
-INSERT INTO public.companyuser (id, active, password, username) VALUES (100, true, '$2a$12$QOpC9AXqeKDBcNMWHFr/oOEjcJqxD1IkbZsvshHsTRvsIsLpVbji6', 'admin');
+INSERT INTO public.test (testRow) VALUES (1);
