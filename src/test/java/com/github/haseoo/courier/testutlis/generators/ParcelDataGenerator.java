@@ -2,8 +2,10 @@ package com.github.haseoo.courier.testutlis.generators;
 
 import com.github.haseoo.courier.enums.ParcelStateType;
 import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.servicedata.parcels.ParcelTypeData;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -90,5 +92,16 @@ public class ParcelDataGenerator {
         magazineModel.getParcelStates().add(parcelStateRecord);
         parcelModel.getParcelStates().add(parcelStateRecord);
         return parcelModel;
+    }
+
+    public static ParcelTypeData getParcelTypeData() {
+        return ParcelTypeData.builder()
+                .id(1L)
+                .name("test")
+                .description("test description")
+                .price(BigDecimal.TEN)
+                .active(true)
+                .parcelsWithType(new ArrayList<>())
+                .build();
     }
 }
