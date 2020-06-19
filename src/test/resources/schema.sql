@@ -1,4 +1,4 @@
-create table address
+CREATE TABLE IF NOT EXISTS address
 (
     id             bigserial not null,
     buildingnumber text      not null,
@@ -10,7 +10,7 @@ create table address
         primary key (id)
 );
 
-create table companyuser
+CREATE TABLE IF NOT EXISTS companyuser
 (
     id       bigserial not null,
     active   boolean   not null,
@@ -20,7 +20,7 @@ create table companyuser
         primary key (id)
 );
 
-create table client
+CREATE TABLE IF NOT EXISTS client
 (
     clienttype   integer      not null,
     emailaddress varchar(255) not null,
@@ -32,7 +32,7 @@ create table client
         foreign key (userid) references companyuser
 );
 
-create table clientcompany
+CREATE TABLE IF NOT EXISTS clientcompany
 (
     companyname                text         not null,
     nip                        varchar(255) not null,
@@ -47,7 +47,7 @@ create table clientcompany
         foreign key (clientid) references client
 );
 
-create table clientindividual
+CREATE TABLE IF NOT EXISTS clientindividual
 (
     imageurl varchar(255),
     name     text   not null,
@@ -60,7 +60,7 @@ create table clientindividual
         foreign key (clientid) references client
 );
 
-create table employee
+CREATE TABLE IF NOT EXISTS employee
 (
     name        text         not null,
     pesel       varchar(255) not null,
@@ -73,7 +73,7 @@ create table employee
         foreign key (userid) references companyuser
 );
 
-create table courier
+CREATE TABLE IF NOT EXISTS courier
 (
     employeeid bigint not null,
     constraint courier_pkey
@@ -82,7 +82,7 @@ create table courier
         foreign key (employeeid) references employee
 );
 
-create table magazine
+CREATE TABLE IF NOT EXISTS magazine
 (
     id         bigserial not null,
     active     boolean   not null,
@@ -93,7 +93,7 @@ create table magazine
         foreign key (address_id) references address
 );
 
-create table logistician
+CREATE TABLE IF NOT EXISTS logistician
 (
     employeeid bigint not null,
     magazineid bigint,
@@ -105,7 +105,7 @@ create table logistician
         foreign key (employeeid) references employee
 );
 
-create table parceltype
+CREATE TABLE IF NOT EXISTS parceltype
 (
     id          bigserial      not null,
     isactive    boolean        not null,
@@ -116,7 +116,7 @@ create table parceltype
         primary key (id)
 );
 
-create table receiverinfo
+CREATE TABLE IF NOT EXISTS receiverinfo
 (
     id           bigserial    not null,
     emailaddress varchar(255),
@@ -127,7 +127,7 @@ create table receiverinfo
         primary key (id)
 );
 
-create table parcel
+CREATE TABLE IF NOT EXISTS parcel
 (
     id                         bigserial      not null,
     isdatemoved                boolean        not null,
@@ -156,7 +156,7 @@ create table parcel
         foreign key (senderaddressid) references address
 );
 
-create table client_parcel
+CREATE TABLE IF NOT EXISTS client_parcel
 (
     clientid bigint not null,
     parcelid bigint not null,
@@ -166,7 +166,7 @@ create table client_parcel
         foreign key (clientid) references client
 );
 
-create table parcelstaterecord
+CREATE TABLE IF NOT EXISTS parcelstaterecord
 (
     id         bigserial not null,
     changedate timestamp not null,
@@ -182,6 +182,10 @@ create table parcelstaterecord
         foreign key (magazineid) references magazine,
     constraint fk26ntyol5kttkj0kwwug2sgwv3
         foreign key (parcelid) references parcel
+);
+
+CREATE TABLE IF NOT EXISTS test (
+    testRow bigint
 );
 
  
