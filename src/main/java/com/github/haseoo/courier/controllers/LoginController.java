@@ -24,23 +24,12 @@ import static com.github.haseoo.courier.security.Constants.homeUrl;
 public class LoginController {
     private final UserService userService;
     private final ClientIndividualServiceImpl clientIndividualService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider tokenProvider;
 
 
     @PostMapping
     public Object login(@RequestBody LoginCommandData loginCommandData) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginCommandData.getUserName(),
-                        String.valueOf(loginCommandData.getPassword())
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.generateToken(authentication);
-
         return UserLoginView.of(userService.getByUsername(loginCommandData.getUserName()),
-                new JwtAuthenticationResponse(jwt));
+               userService.getJwt(loginCommandData));
     }
 
     @PostMapping("/oauth2")
