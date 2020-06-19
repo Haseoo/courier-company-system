@@ -3,6 +3,7 @@ package com.github.haseoo.courier.controllers.users;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientCompanyAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientCompanyEditCommandData;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.clients.ClientNotFound;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyEditData;
@@ -24,8 +25,7 @@ import static com.github.haseoo.courier.testutlis.generators.UserControllerTestD
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -108,6 +108,28 @@ class ClientCompanyControllerTest {
         Assertions.assertThat(argument.getValue().getRepresentativeSurname()).isEqualTo(in.getRepresentativeSurname());
         Assertions.assertThat(argument.getValue().getRepresentativeEmailAddress()).isEqualTo(in.getRepresentativeEmailAddress());
         Assertions.assertThat(argument.getValue().getRepresentativePhoneNumber()).isEqualTo(in.getRepresentativePhoneNumber());
+    }
+
+    @Test
+    void should_return_200_and_client_with_id() throws Exception {
+        //given
+        final long id = 1L;
+        when(clientCompanyService.getById(anyLong())).thenReturn(getClientCompanyData());
+        //
+        mockMvc.perform(get("/api/client/company/" + id))
+                .andExpect(status().isOk());
+        verify(clientCompanyService).getById(id);
+    }
+
+    @Test
+    void should_return_400_when_with_id_not_exist() throws Exception {
+        //given
+        final long id = 1L;
+        when(clientCompanyService.getById(anyLong())).thenThrow(new ClientNotFound(id));
+        //
+        mockMvc.perform(get("/api/client/company/" + id))
+                .andExpect(status().isBadRequest());
+        verify(clientCompanyService).getById(id);
     }
 
 }

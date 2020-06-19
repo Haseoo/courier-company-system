@@ -3,6 +3,7 @@ package com.github.haseoo.courier.controllers.users;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientIndividualAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.clients.ClientIndividualEditCommandData;
+import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.clients.ClientNotFound;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualEditData;
@@ -24,8 +25,7 @@ import static com.github.haseoo.courier.testutlis.generators.UserControllerTestD
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -97,6 +97,28 @@ class ClientCompanyIndividualTest {
         Assertions.assertThat(argument.getValue().getEmailAddress()).isEqualTo(in.getEmailAddress());
         Assertions.assertThat(argument.getValue().getName()).isEqualTo(in.getName());
         Assertions.assertThat(argument.getValue().getSurname()).isEqualTo(in.getSurname());
+    }
+
+    @Test
+    void should_return_200_and_client_with_id() throws Exception {
+        //given
+        final long id = 1L;
+        when(clientIndividualService.getById(anyLong())).thenReturn(getClientIndividualData());
+        //
+        mockMvc.perform(get("/api/client/individual/" + id))
+                .andExpect(status().isOk());
+        verify(clientIndividualService).getById(id);
+    }
+
+    @Test
+    void should_return_400_when_with_id_not_exist() throws Exception {
+        //given
+        final long id = 1L;
+        when(clientIndividualService.getById(anyLong())).thenThrow(new ClientNotFound(id));
+        //
+        mockMvc.perform(get("/api/client/individual/" + id))
+                .andExpect(status().isBadRequest());
+        verify(clientIndividualService).getById(id);
     }
 
 }
