@@ -60,6 +60,6 @@ class ClientControllerTest {
         when(clientService.getById(id)).thenThrow(new ClientNotFound(id));
         //when & then
         mockMvc.perform(get("/api/client/" + Long.toString(id)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 }

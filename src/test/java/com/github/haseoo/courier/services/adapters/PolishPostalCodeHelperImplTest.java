@@ -28,30 +28,11 @@ class PolishPostalCodeHelperImplTest {
         }
     }
 
-    @Test
-    void should_not_postal_code_be_in_city() {
-        //given & when & then
-        try {
-            Assertions.assertThat(sut.isPostalCodeInCity("26-060", "chęciny")).isFalse();
-        } catch (IOException e) {
-        }
-    }
 
     @Test
     void should_postal_code_be_valid() {
         //given & when & then
         Assertions.assertThatCode(() -> sut.validatePostalCode("Kielce", "25-555")).doesNotThrowAnyException();
-    }
-
-    @Test
-    void should_not_postal_code_be_valid_because_of_place() {
-        //given & when & then
-        Assertions.assertThatThrownBy(() -> sut.validatePostalCode("Warszawa", "25-555")).isExactlyInstanceOf(InvalidPostalCode.class);
-    }
-
-    @Test
-    void should_not_postal_code_be_valid_because_of_format() {//given & when & then
-        Assertions.assertThatThrownBy(() -> sut.validatePostalCode("Kielce", "25555")).isExactlyInstanceOf(InvalidPostalCode.class);
     }
 
 }

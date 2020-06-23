@@ -117,7 +117,7 @@ class ClientCompanyIndividualTest {
         when(clientIndividualService.getById(anyLong())).thenThrow(new ClientNotFound(id));
         //
         mockMvc.perform(get("/api/client/individual/" + id))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
         verify(clientIndividualService).getById(id);
     }
 

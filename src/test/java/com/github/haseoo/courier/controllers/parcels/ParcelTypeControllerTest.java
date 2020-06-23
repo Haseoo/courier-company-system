@@ -82,7 +82,7 @@ class ParcelTypeControllerTest {
         when(parcelTypeService.getById(anyLong())).thenThrow(new ParcelTypeNotFound(id));
         //when & then
         mockMvc.perform(get("/api/parcelType/" + id))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
         verify(parcelTypeService).getById(id);
     }
 

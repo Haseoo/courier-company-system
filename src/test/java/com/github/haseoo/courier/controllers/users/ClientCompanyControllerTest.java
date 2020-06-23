@@ -128,7 +128,7 @@ class ClientCompanyControllerTest {
         when(clientCompanyService.getById(anyLong())).thenThrow(new ClientNotFound(id));
         //
         mockMvc.perform(get("/api/client/company/" + id))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
         verify(clientCompanyService).getById(id);
     }
 

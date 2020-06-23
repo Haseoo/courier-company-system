@@ -23,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -125,8 +126,14 @@ class ParcelServiceImplTest {
         //given
         final long id = 1L;
         ParcelModel parcelModel = getParcelAtSender();
-        parcelModel.setExpectedCourierArrivalDate(LocalDate.of(2020, 6, 18));
-        LocalDate newDate = LocalDate.of(2020, 6, 19);
+        parcelModel.setExpectedCourierArrivalDate(LocalDate.now());
+        LocalDate newDate;
+        if (LocalDate.now().plusDays(1).getDayOfWeek().equals(DayOfWeek.SATURDAY) ||
+                LocalDate.now().plusDays(1).getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            newDate = LocalDate.now().plusDays(2);
+        } else {
+            newDate = LocalDate.now().plusDays(1);
+        }
         char[] pin = {1, 2, 3, 4};
         parcelModel.setPin(pin);
         when(parcelRepository.getById(anyLong())).thenReturn(java.util.Optional.of(parcelModel));
@@ -175,7 +182,6 @@ class ParcelServiceImplTest {
         ArgumentCaptor<ParcelModel> argument = ArgumentCaptor.forClass(ParcelModel.class);
         EstimatedDeliveryTimeModel estimatedDeliveryTimeModel = new EstimatedDeliveryTimeModel();
         estimatedDeliveryTimeModel.setMaxMoveDayAfter(4);
-        when(estimatedDeliveryTimeRepository.getById(anyLong())).thenReturn(estimatedDeliveryTimeModel);
         //when & then
         Assertions.assertThatThrownBy(() -> sut.moveDate(id, pin, newDate)).isExactlyInstanceOf(IllegalMoveDate.class);
     }
