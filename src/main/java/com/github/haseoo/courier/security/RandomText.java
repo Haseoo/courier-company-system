@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class RandomText {
 
-    public static String uniqueUsernamePostfix(){
+    public static String uniqueUsernamePostfix() {
         int leftLimit = 48;
         int rightLimit = 122;
         int targetStringLength = 18;

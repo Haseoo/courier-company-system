@@ -11,7 +11,6 @@ import com.github.haseoo.courier.servicedata.users.employees.EmployeeEditOperati
 import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.EmployeeService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
-import com.github.haseoo.courier.views.users.employees.EmployeeView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

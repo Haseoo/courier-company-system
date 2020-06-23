@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class ParcelStateRepositoryImpl implements ParcelStateRepository {
     private final ParcelStateJPARepository parcelStateRepository;
+
     @Override
     public void deleteById(Long id) {
         parcelStateRepository.deleteAndFlushById(id);

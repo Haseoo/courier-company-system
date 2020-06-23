@@ -22,7 +22,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
     @Autowired
     private EmailSenderServiceImpl emailService;
 
-    public void sendNotificationToReceiver(ParcelData parcelData, String information){
+    public void sendNotificationToReceiver(ParcelData parcelData, String information) {
         try {
             MailModel mail = new MailModel();
             mail.setFrom(mailFrom);
@@ -37,7 +37,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
             mail.setProps(model);
 
             emailService.sendEmail(mail);
-        }catch(MessagingException exception){
+        } catch (MessagingException exception) {
             log.error(exception.toString());
         }
     }

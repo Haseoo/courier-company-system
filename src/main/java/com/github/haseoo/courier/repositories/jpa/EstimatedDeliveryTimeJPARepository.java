@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface EstimatedDeliveryTimeJPARepository extends JpaRepository<EstimatedDeliveryTimeModel, Long> {
     Optional<EstimatedDeliveryTimeModel> findById(Long id);
+
     EstimatedDeliveryTimeModel getEstimatedDeliveryTimeModelById(Long id);
 }

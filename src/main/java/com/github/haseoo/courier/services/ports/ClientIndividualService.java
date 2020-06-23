@@ -1,6 +1,5 @@
 package com.github.haseoo.courier.services.ports;
 
-import ch.qos.logback.core.net.server.Client;
 import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualAddData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualData;

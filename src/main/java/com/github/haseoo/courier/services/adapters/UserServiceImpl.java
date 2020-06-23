@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
-        return  new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponse(jwt);
     }
 
     @Override

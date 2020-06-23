@@ -5,7 +5,10 @@ import com.github.haseoo.courier.commandsdata.parcels.ReceiverInfoCommandData;
 import com.github.haseoo.courier.models.ClientCompanyModel;
 import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.models.ReceiverInfoModel;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotEmpty;

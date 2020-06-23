@@ -7,7 +7,10 @@ import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotPaid;
 import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.employees.EmployeeNotFoundException;
-import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.models.CourierModel;
+import com.github.haseoo.courier.models.MagazineModel;
+import com.github.haseoo.courier.models.ParcelModel;
+import com.github.haseoo.courier.models.ParcelStateRecord;
 import com.github.haseoo.courier.repositories.ports.*;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.places.MagazineData;
@@ -30,8 +33,8 @@ import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.EmployeeType.COURIER;
 import static com.github.haseoo.courier.enums.ParcelStateType.*;
+import static com.github.haseoo.courier.utilities.Constants.IDS;
 import static com.github.haseoo.courier.utilities.Utils.addWorkdays;
-import static com.github.haseoo.courier.utilities.Constants.*;
 
 @Service
 @RequiredArgsConstructor

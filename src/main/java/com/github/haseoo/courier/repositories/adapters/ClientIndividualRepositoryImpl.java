@@ -29,7 +29,7 @@ public class ClientIndividualRepositoryImpl implements ClientIndividualRepositor
     }
 
     @Override
-    public ClientIndividualModel getByEmailAddress(String email){
+    public ClientIndividualModel getByEmailAddress(String email) {
         return clientIndividualJPARepository.findByEmailAddress(email);
     }
 }

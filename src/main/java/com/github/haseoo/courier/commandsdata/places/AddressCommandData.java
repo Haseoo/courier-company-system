@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 
-import static com.github.haseoo.courier.utilities.Utils.validateStringField;
-
 @Value
 @Validated
 public class AddressCommandData {

@@ -32,7 +32,7 @@ public class CustomOidcUserService extends OidcUserService {
         ClientIndividualDataDto clientIndividualDataDto = new ClientIndividualDataDto();
         clientIndividualDataDto.setEmailAddress((String) attributes.get("email"));
         clientIndividualDataDto.setIdDto((String) attributes.get("sub"));
-        clientIndividualDataDto.setImageUrl((String)attributes.get("picture"));
+        clientIndividualDataDto.setImageUrl((String) attributes.get("picture"));
         clientIndividualDataDto.setName((String) attributes.get("given_name"));
         clientIndividualDataDto.setSurname((String) attributes.get("family_name"));
         updateUser(clientIndividualDataDto);
@@ -42,12 +42,12 @@ public class CustomOidcUserService extends OidcUserService {
 
     private void updateUser(ClientIndividualDataDto clientIndividualDataDto) {
         ClientIndividualModel clientIndividualModel = clientIndividualRepository.getByEmailAddress(clientIndividualDataDto.getEmailAddress());
-        if(clientIndividualModel == null) {
+        if (clientIndividualModel == null) {
             clientIndividualModel = new ClientIndividualModel();
         }
 
         clientIndividualModel.setEmailAddress(clientIndividualDataDto.getEmailAddress());
-        clientIndividualModel.setUserName(clientIndividualDataDto.getEmailAddress()+ RandomText.uniqueUsernamePostfix());
+        clientIndividualModel.setUserName(clientIndividualDataDto.getEmailAddress() + RandomText.uniqueUsernamePostfix());
         clientIndividualModel.setName(clientIndividualDataDto.getName());
         clientIndividualModel.setSurname(clientIndividualDataDto.getSurname());
         clientIndividualModel.setClientType(ClientType.INDIVIDUAL);

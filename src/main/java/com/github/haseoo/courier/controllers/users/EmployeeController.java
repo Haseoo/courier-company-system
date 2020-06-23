@@ -2,11 +2,7 @@ package com.github.haseoo.courier.controllers.users;
 
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeAddCommandData;
 import com.github.haseoo.courier.commandsdata.users.employees.EmployeeEditCommandData;
-import com.github.haseoo.courier.enums.EmployeeType;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
-import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
-import com.github.haseoo.courier.servicedata.users.employees.EmployeeData;
-import com.github.haseoo.courier.servicedata.users.employees.EmployeeEditOperationData;
 import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.EmployeeService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
@@ -17,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -47,7 +41,7 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public EmployeeView add(@RequestBody EmployeeAddCommandData addCommandData) {
-       return EmployeeView.of(employeeService.addEmployee(addCommandData));
+        return EmployeeView.of(employeeService.addEmployee(addCommandData));
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")

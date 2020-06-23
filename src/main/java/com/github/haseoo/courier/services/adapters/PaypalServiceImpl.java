@@ -2,10 +2,7 @@ package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.configuration.PaypalConfig;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IllegalParcelState;
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IncorrectParcelException;
 import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotPaid;
-import com.github.haseoo.courier.models.ClientModel;
 import com.github.haseoo.courier.models.ParcelModel;
 import com.github.haseoo.courier.models.ReceiverInfoModel;
 import com.github.haseoo.courier.repositories.ports.ParcelRepository;
@@ -36,7 +33,7 @@ public class PaypalServiceImpl implements PaypalService {
 
         ParcelModel parcelModel = parcelRepository.getById(id).orElseThrow(() -> new ParcelNotFound(id));
 
-        if(parcelModel.getPaid())
+        if (parcelModel.getPaid())
             throw new IllegalParcelState();
 
         Payer payer = getPayerInformation(parcelModel.getReceiverContactData());
@@ -56,7 +53,7 @@ public class PaypalServiceImpl implements PaypalService {
         return getApprovalLink(approvedPayment);
     }
 
-    private String countTotalPrice(String shipping, String subtotal){
+    private String countTotalPrice(String shipping, String subtotal) {
         BigDecimal shippingBigDecimal = new BigDecimal(shipping);
         BigDecimal subtotalBigDecimal = new BigDecimal(subtotal);
 
@@ -67,7 +64,7 @@ public class PaypalServiceImpl implements PaypalService {
 
     private List<Transaction> getTransactionInformation(ParcelModel parcelModel) {
         Details details = new Details();
-        if(parcelModel.getPriority())
+        if (parcelModel.getPriority())
             details.setShipping(parcelModel.getParcelType().getPrice()
                     .multiply(BigDecimal.valueOf(1.1))
                     .setScale(2, RoundingMode.CEILING)
@@ -127,6 +124,7 @@ public class PaypalServiceImpl implements PaypalService {
 
         return payer;
     }
+
     private RedirectUrls getRedirectURLs() {
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl(Constants.CANCEL_URL);
@@ -134,6 +132,7 @@ public class PaypalServiceImpl implements PaypalService {
 
         return redirectUrls;
     }
+
     private String getApprovalLink(Payment approvedPayment) {
         List<Links> links = approvedPayment.getLinks();
         String approvalLink = null;

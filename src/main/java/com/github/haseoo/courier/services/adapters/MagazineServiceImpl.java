@@ -28,9 +28,9 @@ import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.ParcelStateType.AT_SENDER;
 import static com.github.haseoo.courier.enums.ParcelStateType.IN_MAGAZINE;
+import static com.github.haseoo.courier.utilities.Constants.IDS;
 import static com.github.haseoo.courier.utilities.Constants.POSTAL_CODE_SERVICE_WARN_LOG_FORMAT;
 import static com.github.haseoo.courier.utilities.Utils.copyNonNullProperties;
-import static com.github.haseoo.courier.utilities.Constants.*;
 
 @Service
 @RequiredArgsConstructor

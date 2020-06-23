@@ -53,10 +53,9 @@ public class PolishPostalCodeHelperImpl implements PostalCodeHelper {
             if (!readApiResponse(con, stringStream -> stringStream.anyMatch(city::equalsIgnoreCase))) {
                 throw new InvalidPostalCode(postalCode);
             }
-        }catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {
             //if service is not working it is not possible to validate postal code
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             //if there were an server exception it means postal code is not valid
             throw new InvalidPostalCode(postalCode);
         }

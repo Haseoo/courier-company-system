@@ -28,14 +28,14 @@ public class PaypalController {
 
 
     @GetMapping("/paypal/success")
-    public RedirectView  handlePaypalSuccess(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId, RedirectAttributes attributes) throws PayPalRESTException {
-        changeParcelStateService.changeParcelState(paypalService.executePayment(paymentId,payerId));
+    public RedirectView handlePaypalSuccess(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId, RedirectAttributes attributes) throws PayPalRESTException {
+        changeParcelStateService.changeParcelState(paypalService.executePayment(paymentId, payerId));
         attributes.addFlashAttribute("flashAttribute", "redirectWithRedirectView");
         return new RedirectView(SUCCESS_REDIRECT);
     }
 
     @GetMapping("/paypal/cancel")
-    public RedirectView handlePaypalCancel(@RequestParam String token, RedirectAttributes attributes){
+    public RedirectView handlePaypalCancel(@RequestParam String token, RedirectAttributes attributes) {
         attributes.addFlashAttribute("flashAttribute", "redirectWithRedirectView");
         return new RedirectView(FAILURE_REDIRECT);
     }

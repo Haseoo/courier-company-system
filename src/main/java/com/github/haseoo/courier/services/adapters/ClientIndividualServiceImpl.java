@@ -74,7 +74,7 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
 
     @Override
     public String signUp(ClientIndividualModel clientIndividualModel) {
-        ClientIndividualModel dbUser =  clientIndividualJPARepository.findByEmailAddress(clientIndividualModel.getEmailAddress());
+        ClientIndividualModel dbUser = clientIndividualJPARepository.findByEmailAddress(clientIndividualModel.getEmailAddress());
         if (dbUser != null) {
             throw new RuntimeException("User already exist.");
         }

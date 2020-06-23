@@ -3,6 +3,7 @@ package com.github.haseoo.courier.models;
 import lombok.Data;
 
 import javax.persistence.*;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data

@@ -5,7 +5,6 @@ import com.github.haseoo.courier.commandsdata.places.MagazineAddCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineAddLogisiticiansCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineEditCommandData;
 import com.github.haseoo.courier.commandsdata.places.MagazineParcelFilerCommandData;
-import com.github.haseoo.courier.enums.UserType;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.places.MagazineAddOperationData;
 import com.github.haseoo.courier.servicedata.places.MagazineEditOperationData;

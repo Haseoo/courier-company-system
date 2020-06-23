@@ -25,11 +25,11 @@ public class ChangeParcelStateServiceImpl implements ChangeParcelStateService {
                 .getName();
 
         System.out.println(payment.getState());
-       if(payment.getState().equals("approved"))
-           System.out.println(parcelId.substring(parcelId.indexOf(' ')+1));
-            parcelModel = parcelRepository.getById(Long.valueOf(parcelId.substring(parcelId.indexOf(' ')+1)))
-                   .orElseThrow(() -> new ParcelNotFound(Long.valueOf(parcelId.substring(parcelId.indexOf(' ')+1))));
-            parcelModel.setPaid(true);
-            parcelRepository.saveAndFlush(parcelModel);
+        if (payment.getState().equals("approved"))
+            System.out.println(parcelId.substring(parcelId.indexOf(' ') + 1));
+        parcelModel = parcelRepository.getById(Long.valueOf(parcelId.substring(parcelId.indexOf(' ') + 1)))
+                .orElseThrow(() -> new ParcelNotFound(Long.valueOf(parcelId.substring(parcelId.indexOf(' ') + 1))));
+        parcelModel.setPaid(true);
+        parcelRepository.saveAndFlush(parcelModel);
     }
 }

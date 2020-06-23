@@ -29,11 +29,11 @@ import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.enums.ParcelStateType.*;
 import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
+import static com.github.haseoo.courier.utilities.Constants.IDS;
 import static com.github.haseoo.courier.utilities.Utils.addWorkdays;
 import static com.github.haseoo.courier.utilities.Utils.isParcelMoveable;
 import static java.lang.Math.abs;
 import static java.time.temporal.ChronoUnit.DAYS;
-import static com.github.haseoo.courier.utilities.Constants.*;
 
 @Service
 @RequiredArgsConstructor
