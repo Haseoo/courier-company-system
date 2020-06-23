@@ -74,6 +74,9 @@ public class PolishPostalCodeHelperImpl implements PostalCodeHelper {
             if (check.test(Arrays.stream(data).map(PolishPostalCodeApiData::getLocality))) {
                 return true;
             }
+        } catch (Exception e) {
+            //404 means postal code not exists, other errors passes this test
+            return con.getResponseCode() != 404;
         }
         return false;
     }
