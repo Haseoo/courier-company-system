@@ -20,7 +20,12 @@ import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static com.github.haseoo.courier.security.Constants.getUnprotectedEndpoints;
 
@@ -94,12 +99,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
                 .oauth2Login()
                 .userInfoEndpoint()
                 .oidcUserService(oidcUserService)
                 .and()
                 .authorizationEndpoint()
-                .baseUri("/oauth2/authorize")
                 .authorizationRequestRepository(customAuthorizationRequestRepository())
                 .and()
                 .successHandler(customAuthenticationSuccessHandler);

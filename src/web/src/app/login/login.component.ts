@@ -66,6 +66,6 @@ export class LoginComponent implements OnInit {
       );
   }
   loginByGoogle(){
-    location.href = 'http://localhost:2137/api/login/oauth2';
+    location.href = 'http://localhost:2137/oauth2/authorization/google';
   }
 }
