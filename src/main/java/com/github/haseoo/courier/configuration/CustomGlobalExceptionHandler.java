@@ -2,6 +2,7 @@ package com.github.haseoo.courier.configuration;
 
 import com.github.haseoo.courier.exceptions.AuthException;
 import com.github.haseoo.courier.exceptions.BusinessLogicException;
+import com.github.haseoo.courier.exceptions.ResourceNotFoundException;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,13 @@ public class CustomGlobalExceptionHandler extends DefaultHandlerExceptionResolve
         ErrorResponse errors = new ErrorResponse(LocalDateTime.now(), ex.getMessage());
         log.error(ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex) {
+        ErrorResponse errors = new ErrorResponse(LocalDateTime.now(), ex.getMessage());
+        log.error(ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AuthException.class)
