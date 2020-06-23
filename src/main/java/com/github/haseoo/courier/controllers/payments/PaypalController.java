@@ -22,8 +22,7 @@ public class PaypalController {
 
     @PostMapping("/paypal")
     public String payment(@RequestParam("id") Long id) throws PayPalRESTException {
-        String approvalLink = paypalService.createPayment(id);
-        return approvalLink;
+        return paypalService.createPayment(id);
     }
 
 

@@ -9,7 +9,6 @@ import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualDataD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +24,9 @@ public class CustomOidcUserService extends OidcUserService {
     private ClientIndividualJPARepository clientIndividualJPARepository;
 
     @Override
-    public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
+    public OidcUser loadUser(OidcUserRequest userRequest) {
         OidcUser oidcUser = super.loadUser(userRequest);
-        Map attributes = oidcUser.getAttributes();
-        attributes.forEach((key, value) -> System.out.println(key + ":" + value));
+        Map<String, Object> attributes = oidcUser.getAttributes();
         ClientIndividualDataDto clientIndividualDataDto = new ClientIndividualDataDto();
         clientIndividualDataDto.setEmailAddress((String) attributes.get("email"));
         clientIndividualDataDto.setIdDto((String) attributes.get("sub"));

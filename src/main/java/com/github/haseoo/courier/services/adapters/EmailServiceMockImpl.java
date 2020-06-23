@@ -13,6 +13,9 @@ import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.github.haseoo.courier.utilities.Constants.INFORMATION_PROP;
+import static com.github.haseoo.courier.utilities.Constants.PARCEL_ID_PROP;
+
 @Slf4j
 @Service
 public class EmailServiceMockImpl implements EmailService {
@@ -40,10 +43,10 @@ public class EmailServiceMockImpl implements EmailService {
         mail.setMailTo(parcelData.getSender().getEmailAddress());
         mail.setSubject("JanuszeX Courier Company - send confirmation");
 
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("information", "Our courier will pick up the parcel within 1 day.");
+        Map<String, Object> model = new HashMap<>();
+        model.put(INFORMATION_PROP, "Our courier will pick up the parcel within 1 day.");
         model.put("name", parcelData.getSender().getUserName());
-        model.put("parcelId", parcelData.getId());
+        model.put(PARCEL_ID_PROP, parcelData.getId());
         model.put("pin", String.valueOf(parcelData.getPin()));
         model.put("showPin", "active");
         mail.setProps(model);
@@ -69,10 +72,14 @@ public class EmailServiceMockImpl implements EmailService {
         mail.setMailTo(parcelData.getReceiverContactData().getEmailAddress());
         mail.setSubject("JanuszeX Courier Company - send confirmation");
 
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("information", "A parcel is on the way to you!");
+        Map<String, Object> model = new HashMap<>();
+        model.put(INFORMATION_PROP, "A parcel is on the way to you!");
         model.put("name", parcelData.getReceiverContactData().getName());
-        model.put("parcelId", parcelData.getId());
+        model.put(PARCEL_ID_PROP, parcelData.getId());
+        prepareEmailTemplate(parcelData, mail, model);
+    }
+
+    private void prepareEmailTemplate(ParcelData parcelData, MailModel mail, Map<String, Object> model) {
         model.put("pin", String.valueOf(parcelData.getPin()));
         model.put("showPin", "active");
         mail.setProps(model);
@@ -97,20 +104,10 @@ public class EmailServiceMockImpl implements EmailService {
         mail.setMailTo(parcelData.getSender().getEmailAddress());
         mail.setSubject("JanuszeX Courier Company - parcel return tracking pin");
 
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("information", "The customer just picked up the parcel.");
+        Map<String, Object> model = new HashMap<>();
+        model.put(INFORMATION_PROP, "The customer just picked up the parcel.");
         model.put("name", parcelData.getSender().getUserName());
-        model.put("parcelId", parcelData.getId());
-        model.put("pin", String.valueOf(parcelData.getPin()));
-        model.put("showPin", "active");
-        mail.setProps(model);
-
-        threadPoolTaskExecutor.execute(() -> {
-            try {
-                emailService.sendEmail(mail);
-            } catch (MessagingException exception) {
-                log.error(exception.toString());
-            }
-        });
+        model.put(PARCEL_ID_PROP, parcelData.getId());
+        prepareEmailTemplate(parcelData, mail, model);
     }
 }

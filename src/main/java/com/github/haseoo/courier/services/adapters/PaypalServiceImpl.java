@@ -57,9 +57,7 @@ public class PaypalServiceImpl implements PaypalService {
         BigDecimal shippingBigDecimal = new BigDecimal(shipping);
         BigDecimal subtotalBigDecimal = new BigDecimal(subtotal);
 
-        String totalPrice = shippingBigDecimal.add(subtotalBigDecimal).toString();
-
-        return totalPrice;
+        return shippingBigDecimal.add(subtotalBigDecimal).toString();
     }
 
     private List<Transaction> getTransactionInformation(ParcelModel parcelModel) {

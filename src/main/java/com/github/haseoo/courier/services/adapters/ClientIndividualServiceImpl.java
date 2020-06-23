@@ -72,15 +72,4 @@ public class ClientIndividualServiceImpl implements ClientIndividualService {
         validateEmailAddress(addData.getEmailAddress());
     }
 
-    @Override
-    public String signUp(ClientIndividualModel clientIndividualModel) {
-        ClientIndividualModel dbUser = clientIndividualJPARepository.findByEmailAddress(clientIndividualModel.getEmailAddress());
-        if (dbUser != null) {
-            throw new RuntimeException("User already exist.");
-        }
-        clientIndividualModel.setPassword(passwordEncoder.encode(String.valueOf(clientIndividualModel.getPassword())).toCharArray());
-        clientIndividualJPARepository.save(clientIndividualModel);
-        return jwtTokenProvider.generateTokenToSocialLogin(clientIndividualModel);
-    }
-
 }

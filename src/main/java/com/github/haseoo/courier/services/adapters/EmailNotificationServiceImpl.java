@@ -29,7 +29,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
             mail.setMailTo(parcelData.getReceiverContactData().getEmailAddress());
             mail.setSubject("JanuszeX Courier Company - send confirmation");
 
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             model.put("information", information);
             model.put("name", parcelData.getReceiverContactData().getName());
             model.put("parcelId", parcelData.getId());

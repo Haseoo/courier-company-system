@@ -1,5 +1,6 @@
 package com.github.haseoo.courier.servicedata.places;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
@@ -24,6 +25,7 @@ public class PolishPostalCodeApiData {
         }
     }
 
+    @JsonCreator
     public PolishPostalCodeApiData(@JsonProperty(value = "kod") String postalCode,
                                    @JsonProperty(value = "nazwa") String name,
                                    @JsonProperty(value = "miejscowosc") String locality,

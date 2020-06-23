@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-import static com.github.haseoo.courier.security.Constants.homeUrl;
+import static com.github.haseoo.courier.security.Constants.HOME_URL;
 
 
 @Component
@@ -38,7 +38,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String email = (String) attributes.get("email");
         ClientIndividualModel clientIndividualModel = clientIndividualRepository.getByEmailAddress(email);
         String token = jwtTokenUtil.generateTokenToSocialLogin(clientIndividualModel);
-        String redirectionUrl = UriComponentsBuilder.fromUriString(homeUrl)
+        String redirectionUrl = UriComponentsBuilder.fromUriString(HOME_URL)
                 .queryParam("auth_token", token)
                 .build().toUriString();
         getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
