@@ -6,7 +6,7 @@ import com.github.haseoo.courier.repositories.jpa.ClientIndividualJPARepository;
 import com.github.haseoo.courier.repositories.ports.ClientIndividualRepository;
 import com.github.haseoo.courier.security.RandomText;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualDataDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -15,13 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class CustomOidcUserService extends OidcUserService {
 
-    @Autowired
-    private ClientIndividualRepository clientIndividualRepository;
+    private final ClientIndividualRepository clientIndividualRepository;
 
-    @Autowired
-    private ClientIndividualJPARepository clientIndividualJPARepository;
+    private final ClientIndividualJPARepository clientIndividualJPARepository;
 
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) {

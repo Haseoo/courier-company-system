@@ -3,9 +3,10 @@ package com.github.haseoo.courier.services.adapters;
 import com.github.haseoo.courier.models.MailModel;
 import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.services.ports.EmailNotificationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -14,13 +15,14 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@Profile("prod")
+@RequiredArgsConstructor
 public class EmailNotificationServiceImpl implements EmailNotificationService {
 
     @Value("${spring.mail.username}")
     private String mailFrom;
 
-    @Autowired
-    private EmailSenderServiceImpl emailService;
+    private final EmailSenderServiceImpl emailService;
 
     public void sendNotificationToReceiver(ParcelData parcelData, String information) {
         try {

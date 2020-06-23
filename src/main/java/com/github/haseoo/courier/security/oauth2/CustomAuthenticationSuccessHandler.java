@@ -3,7 +3,7 @@ package com.github.haseoo.courier.security.oauth2;
 import com.github.haseoo.courier.models.ClientIndividualModel;
 import com.github.haseoo.courier.repositories.ports.ClientIndividualRepository;
 import com.github.haseoo.courier.security.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -20,13 +20,12 @@ import static com.github.haseoo.courier.security.Constants.HOME_URL;
 
 
 @Component
+@RequiredArgsConstructor
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Autowired
-    private ClientIndividualRepository clientIndividualRepository;
+    private final ClientIndividualRepository clientIndividualRepository;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenUtil;
+    private final JwtTokenProvider jwtTokenUtil;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

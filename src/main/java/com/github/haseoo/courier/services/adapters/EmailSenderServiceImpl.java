@@ -1,7 +1,8 @@
 package com.github.haseoo.courier.services.adapters;
 
 import com.github.haseoo.courier.models.MailModel;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,13 @@ import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 
 @Service
+@Profile("prod")
+@RequiredArgsConstructor
 public class EmailSenderServiceImpl {
 
-    @Autowired
-    private JavaMailSender emailSender;
+    private final JavaMailSender emailSender;
 
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+    private final SpringTemplateEngine templateEngine;
 
 
     public void sendEmail(MailModel mailModel) throws MessagingException {
