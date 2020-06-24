@@ -58,10 +58,10 @@ class ClientCompanyIndividualTest {
         when(clientIndividualService.add(any())).thenReturn(getClientIndividualData());
         ArgumentCaptor<ClientIndividualAddData> argument = ArgumentCaptor.forClass(ClientIndividualAddData.class);
         //when & then
-        mockMvc.perform(put("/api/client/individual/register").contentType(
+        mockMvc.perform(post("/api/client/individual/register").contentType(
                 MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(in)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
         verify(clientIndividualService).add(argument.capture());
         Assertions.assertThat(argument.getValue().getUserName()).isEqualTo(in.getUserName());
         Assertions.assertThat(argument.getValue().getEmailAddress()).isEqualTo(in.getEmailAddress());
@@ -87,7 +87,7 @@ class ClientCompanyIndividualTest {
         when(clientIndividualService.edit(anyLong(), any())).thenReturn(getClientIndividualData());
         ArgumentCaptor<ClientIndividualEditData> argument = ArgumentCaptor.forClass(ClientIndividualEditData.class);
         //when & then
-        mockMvc.perform(post("/api/client/individual/" + Long.toString(id)).contentType(
+        mockMvc.perform(put("/api/client/individual/" + Long.toString(id)).contentType(
                 MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(in)))
                 .andExpect(status().isOk());
