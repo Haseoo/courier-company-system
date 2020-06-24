@@ -24,9 +24,6 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
-    private final CourierService courierService;
-    private final LogisticianService logisticianService;
-    private final UserDetailsServiceImpl userDetalisService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping

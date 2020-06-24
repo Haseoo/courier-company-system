@@ -1,8 +1,12 @@
 package com.github.haseoo.courier.testutlis.generators;
 
 import com.github.haseoo.courier.enums.ClientType;
+import com.github.haseoo.courier.enums.EmployeeType;
+import com.github.haseoo.courier.enums.UserType;
 import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.servicedata.users.employees.CourierData;
 import com.github.haseoo.courier.servicedata.users.employees.EmployeeAddOperationData;
+import com.github.haseoo.courier.servicedata.users.employees.LogisticianData;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -10,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.github.haseoo.courier.testutlis.constants.UsersConstants.*;
+import static com.github.haseoo.courier.testutlis.generators.MagazineDataGenerator.getMagazineData;
+import static com.github.haseoo.courier.testutlis.generators.ParcelDataGenerator.getParcelInMagazineData;
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
@@ -101,4 +107,36 @@ public class UsersDataGenerator {
         return userModel;
     }
 
+    public static CourierData getCourierData() {
+        return CourierData.builder()
+                .id(1L)
+                .userName("Tesst")
+                .password("".toCharArray())
+                .active(true)
+                .name("Tets")
+                .surname("Testovsky")
+                .phoneNumber("123456789")
+                .pesel("60112614128")
+                .employeeType(EmployeeType.COURIER)
+                .userType(UserType.COURIER)
+                .assignedParcels(Arrays.asList(getParcelInMagazineData()))
+                .build();
+    }
+
+    public static LogisticianData getLogisiticianData() {
+        return LogisticianData
+                .builder()
+                .id(1L)
+                .userName("Tesst")
+                .password("".toCharArray())
+                .active(true)
+                .name("Tets")
+                .surname("Testovsky")
+                .phoneNumber("123456789")
+                .pesel("60112614128")
+                .employeeType(EmployeeType.LOGISTICIAN)
+                .userType(UserType.LOGISTICIAN)
+                .magazine(getMagazineData())
+                .build();
+    }
 }
