@@ -2,9 +2,9 @@ package com.github.haseoo.courier.security;
 
 import com.github.haseoo.courier.security.oauth2.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -35,17 +35,10 @@ import static com.github.haseoo.courier.security.Constants.getUnprotectedEndpoin
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final OidcUserService oidcUserService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private OidcUserService oidcUserService;
-
-    @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter();
-    }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -66,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /*Swagger cong only for development*/
+    @Profile("dev")
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/v2/api-docs",
@@ -108,6 +102,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.headers().frameOptions().disable();
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

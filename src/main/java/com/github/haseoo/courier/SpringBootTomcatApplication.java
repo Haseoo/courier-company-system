@@ -5,6 +5,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
-@Profile("prod")
+@Profile("tomcat")
 public class SpringBootTomcatApplication extends SpringBootServletInitializer {
 }

@@ -27,7 +27,7 @@
 <div th:switch="${showPin}">
     <p th:case="'active'">Here is your PIN to change the courier's arrival: <p th:text="${pin}"></p></p>
 </div>
-<a th:href="@{'http://localhost:4200/client/check/parcel/' + ${parcelId}}"><b>Click here to track your parcel!</b></a>
+<a th:href="@{'http://localhost:4200/check/parcel/' + ${parcelId}}"><b>Click here to track your parcel!</b></a>
 <p>
     Thank you for choosing the best courier company, <br />
     <b>JanuszeX Courier Company</b>
