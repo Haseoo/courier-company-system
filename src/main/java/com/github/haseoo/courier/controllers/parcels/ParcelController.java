@@ -2,6 +2,7 @@ package com.github.haseoo.courier.controllers.parcels;
 
 import com.github.haseoo.courier.commandsdata.parcels.ParcelChangeStateForCourierCommandData;
 import com.github.haseoo.courier.commandsdata.parcels.ParcelCommandAddData;
+import com.github.haseoo.courier.commandsdata.parcels.ParcelCommandEditData;
 import com.github.haseoo.courier.commandsdata.places.ParcelDateMoveCommandData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelAddData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelEditData;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,24 +43,24 @@ public class ParcelController {
 
     @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
-    public ParcelView add(@RequestBody ParcelCommandAddData commandAddData) {
+    public ParcelView add(@RequestBody @Valid ParcelCommandAddData commandAddData) {
         return parcelViewCreator.createParcelView(parcelService.add(ParcelAddData.of(commandAddData)));
     }
 
     @PostMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
-    public ParcelView edit(@PathVariable Long id, @RequestBody ParcelEditData parcelEditData) {
-        return parcelViewCreator.createParcelView(parcelService.edit(id, parcelEditData));
+    public ParcelView edit(@PathVariable Long id, @RequestBody @Valid ParcelCommandEditData parcelEditData) {
+        return parcelViewCreator.createParcelView(parcelService.edit(id, ParcelEditData.of(parcelEditData)));
     }
 
     @PostMapping("/{id}/changeReceiver")
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
-    public ParcelView markAsReturn(@PathVariable Long id) {
+    public ParcelView markAsReturn(@PathVariable @Valid Long id) {
         return parcelViewCreator.createParcelView(parcelService.setParcelToReturn(id));
     }
 
     @PostMapping("/{id}/moveDate")
-    public ParcelView moveDate(@PathVariable Long id, @RequestBody ParcelDateMoveCommandData commandData) {
+    public ParcelView moveDate(@PathVariable Long id, @RequestBody @Valid ParcelDateMoveCommandData commandData) {
         return parcelViewCreator.createParcelView(parcelService.moveDate(id, commandData.getPin(), commandData.getNewDate()));
     }
 
@@ -72,7 +74,7 @@ public class ParcelController {
 
     @PostMapping("/{id}/changeState")
     @PreAuthorize("hasAnyRole({'ADMIN', 'COURIER'})")
-    public ParcelView changeStateForCourier(@PathVariable Long id, @RequestBody ParcelChangeStateForCourierCommandData commandData) {
+    public ParcelView changeStateForCourier(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateForCourierCommandData commandData) {
         switch (commandData.getNewState()) {
             case DELIVERED:
                 return parcelViewCreator.createParcelView(parcelStateService.setParcelAsDelivered(commandData.getCourierId(), id, commandData.getWasPaid()));

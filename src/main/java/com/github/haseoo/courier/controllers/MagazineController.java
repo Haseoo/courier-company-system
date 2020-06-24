@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,31 +49,31 @@ public class MagazineController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    public MagazineView add(@RequestBody MagazineAddCommandData commandData) {
+    public MagazineView add(@RequestBody @Valid MagazineAddCommandData commandData) {
         return MagazineView.of(magazineService.add(MagazineAddOperationData.of(commandData)));
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @PostMapping("/{id}")
-    public MagazineView edit(@PathVariable Long id, @RequestBody MagazineEditCommandData commandData) {
+    public MagazineView edit(@PathVariable Long id, @RequestBody @Valid MagazineEditCommandData commandData) {
         return MagazineView.of(magazineService.edit(id, MagazineEditOperationData.of(commandData)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}/logisticians")
-    public MagazineView addLogisiticians(@PathVariable Long id, @RequestBody MagazineAddLogisiticiansCommandData logisiticiansCommandData) {
+    public MagazineView addLogisiticians(@PathVariable Long id, @RequestBody @Valid MagazineAddLogisiticiansCommandData logisiticiansCommandData) {
         return MagazineView.of(magazineService.addLogisitcians(id, logisiticiansCommandData.getLogisiticiansIds()));
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @PostMapping("/{id}/parcels/add")
-    public MagazineView addParcels(@PathVariable Long id, @RequestBody ParcelChangeStateMultipleCommandData commandData) {
+    public MagazineView addParcels(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateMultipleCommandData commandData) {
         return MagazineView.of(parcelStateService.addParcelsToMagazine(id, commandData.getParcelsIds()));
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
     @PostMapping("/{id}/parcels")
-    public List<ParcelView> getParcels(@PathVariable Long id, @RequestBody MagazineParcelFilerCommandData commandData) {
+    public List<ParcelView> getParcels(@PathVariable Long id, @RequestBody @Valid MagazineParcelFilerCommandData commandData) {
         switch (commandData.getType()) {
             case TO_RETURN:
                 return magazineService.getParcelsToReturn(id)

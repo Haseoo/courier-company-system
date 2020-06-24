@@ -7,13 +7,18 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
+
 @EqualsAndHashCode(callSuper = true)
 @Validated
 @Value
 public class ClientIndividualEditCommandData extends UserEditCommandData {
     private String emailAddress;
+    @NotBlank(message = "Phone number cannot be empty")
     private String phoneNumber;
+    @NotBlank(message = "Name cannot be empty")
     private String name;
+    @NotBlank(message = "Surname cannot be empty")
     private String surname;
 
     @JsonCreator

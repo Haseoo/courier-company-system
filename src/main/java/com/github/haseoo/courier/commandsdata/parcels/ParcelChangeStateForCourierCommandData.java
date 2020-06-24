@@ -5,10 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.haseoo.courier.enums.ParcelStateType;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
+
 @Value
 public class ParcelChangeStateForCourierCommandData {
+    @NotNull(message = "New state must be set")
     private ParcelStateType newState;
+    @NotNull(message = "Courier id must be given")
     private Long courierId;
+    @NotNull(message = "Paid status must be given")
     private Boolean wasPaid;
 
     @JsonCreator

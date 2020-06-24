@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/client/individual")
 @RequiredArgsConstructor
@@ -24,13 +26,13 @@ public class ClientIndividualController {
     }
 
     @PutMapping("/register")
-    public ClientIndividualView add(@RequestBody ClientIndividualAddCommandData commandData) {
+    public ClientIndividualView add(@RequestBody @Valid ClientIndividualAddCommandData commandData) {
         return ClientIndividualView.of(clientIndividualService.add(ClientIndividualAddData.of(commandData)));
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
     @PostMapping("{id}")
-    public ClientIndividualView edit(@PathVariable Long id, @RequestBody ClientIndividualEditCommandData commandData) {
+    public ClientIndividualView edit(@PathVariable Long id, @RequestBody @Valid ClientIndividualEditCommandData commandData) {
         userDetalisService.verifyEditResource(id);
         return ClientIndividualView.of(clientIndividualService.edit(id, ClientIndividualEditData.of(commandData)));
     }

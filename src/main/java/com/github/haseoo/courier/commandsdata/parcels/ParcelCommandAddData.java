@@ -5,16 +5,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.haseoo.courier.commandsdata.places.AddressCommandData;
 import lombok.Value;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 @Value
 public class ParcelCommandAddData {
+    @NotNull(message = "Parcel must have type")
     private Long parcelTypeId;
+    @Valid
+    @NotNull(message = "Address cannot be null")
     private AddressCommandData deliveryAddress;
+    @Valid
+    @NotNull(message = "Address cannot be null")
     private AddressCommandData senderAddress;
+    @PositiveOrZero(message = "Parcel fee cannot be negative or not set")
     private BigDecimal parcelFee;
+    @NotNull(message = "Parcel must have sender")
     private Long senderId;
+    @Valid
+    @NotNull(message = "Receiver info cannot be null")
     private ReceiverInfoCommandData receiverContactData;
+    @NotNull(message = "Parcel priority must be specified")
     private Boolean priority;
 
     @JsonCreator

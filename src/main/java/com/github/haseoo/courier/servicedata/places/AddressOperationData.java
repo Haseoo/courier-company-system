@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotEmpty;
 
-import static com.github.haseoo.courier.utilities.Utils.validateStringField;
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
@@ -30,10 +29,6 @@ public class AddressOperationData {
     private String flatNumber;
 
     public static AddressOperationData of(AddressCommandData commandData) {
-        validateStringField(commandData.getCity(), "city");
-        validateStringField(commandData.getStreet(), "street");
-        validateStringField(commandData.getPostalCode(), "postal code");
-        validateStringField(commandData.getBuildingNumber(), "building number");
         return AddressOperationData
                 .builder()
                 .city(commandData.getCity())

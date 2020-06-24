@@ -5,9 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @Value
 @Validated
 public class MagazineAddCommandData {
+    @NotNull(message = "Address cannot be null")
+    @Valid
     private AddressCommandData address;
 
     @JsonCreator

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,13 +37,13 @@ public class CourierController {
 
     @PostMapping("/{id}/parcelAssign")
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
-    public CourierView assignParcels(@PathVariable Long id, @RequestBody ParcelChangeStateMultipleCommandData commandData) {
+    public CourierView assignParcels(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateMultipleCommandData commandData) {
         return CourierView.of(parcelStateService.assignParcelsToCourier(id, commandData.getParcelsIds()));
     }
 
     @PostMapping("/{id}/parcelPickup")
     @PreAuthorize("hasAnyRole({'ADMIN', 'COURIER'})")
-    public CourierView pickupParcels(@PathVariable Long id, @RequestBody ParcelPickupCommandData commandData) {
+    public CourierView pickupParcels(@PathVariable Long id, @RequestBody @Valid ParcelPickupCommandData commandData) {
         return CourierView.of(parcelStateService.setAsPickedByCourier(id, commandData.getParcelsId(), commandData.isWasPaid()));
     }
 

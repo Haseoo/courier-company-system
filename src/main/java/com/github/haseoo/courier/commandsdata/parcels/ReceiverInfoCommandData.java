@@ -5,13 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
+
 @Value
 @Validated
 public class ReceiverInfoCommandData {
 
+    @NotBlank(message = "Receiver name cannot be empty")
     private String name;
+    @NotBlank(message = "Surname surname cannot be empty")
     private String surname;
     private String emailAddress;
+    @NotBlank(message = "Receiver phone number cannot be empty")
     private String phoneNumber;
 
     @JsonCreator

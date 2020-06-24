@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/login")
@@ -20,7 +22,7 @@ public class LoginController {
 
 
     @PostMapping
-    public Object login(@RequestBody LoginCommandData loginCommandData) {
+    public Object login(@RequestBody @Valid LoginCommandData loginCommandData) {
         return UserLoginView.of(userService.getByUsername(loginCommandData.getUserName()),
                 userService.getJwt(loginCommandData));
     }
