@@ -5,9 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
+
 @Validated
 @Getter
 public class UserAddCommandData {
+    @NotBlank(message = "Login cannot be empty")
     private String userName;
     private char[] password;
 

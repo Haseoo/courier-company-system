@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.haseoo.courier.enums.MagazineParcelFilterType;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
+
 @Value
 public class MagazineParcelFilerCommandData {
     @JsonCreator
@@ -12,5 +14,6 @@ public class MagazineParcelFilerCommandData {
         this.type = type;
     }
 
+    @NotNull(message = "Filter type cannot be null")
     private MagazineParcelFilterType type;
 }

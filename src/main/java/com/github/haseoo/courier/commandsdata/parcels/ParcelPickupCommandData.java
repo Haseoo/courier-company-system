@@ -4,9 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
+
 @Value
 public class ParcelPickupCommandData {
+    @NotNull(message = "Parcel id must be specified")
     private Long parcelsId;
+    @NotNull
     private boolean wasPaid;
 
     @JsonCreator

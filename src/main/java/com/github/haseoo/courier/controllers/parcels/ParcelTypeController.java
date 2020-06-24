@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,13 +46,13 @@ public class ParcelTypeController {
 
     @PutMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ParcelTypeView add(@RequestBody ParcelTypeCommandAddData commandData) {
+    public ParcelTypeView add(@RequestBody @Valid ParcelTypeCommandAddData commandData) {
         return ParcelTypeView.of(parcelTypeService.add(ParcelTypeAddOperationData.of(commandData)));
     }
 
     @PostMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ParcelTypeView edit(@PathVariable Long id, @RequestBody ParcelTypeCommandEditData commandData) {
+    public ParcelTypeView edit(@PathVariable Long id, @RequestBody @Valid ParcelTypeCommandEditData commandData) {
         return ParcelTypeView.of(parcelTypeService.edit(id, ParcelTypeEditOperationData.of(commandData)));
     }
 

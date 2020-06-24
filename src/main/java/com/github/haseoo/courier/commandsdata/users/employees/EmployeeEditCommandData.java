@@ -8,13 +8,20 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @EqualsAndHashCode(callSuper = true)
 @Value
 @Validated
 public class EmployeeEditCommandData extends UserEditCommandData {
-    private EmployeeType employeeType;
+    @NotNull(message = "Employee must have type")
+    EmployeeType employeeType;
+    @NotBlank(message = "Employee name cannot be empty")
     private String name;
+    @NotBlank(message = "Employee surname cannot be empty")
     private String surname;
+    @NotBlank(message = "Employee phone number cannot be empty")
     private String phoneNumber;
     private String pesel;
 

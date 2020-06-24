@@ -5,14 +5,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 @Value
 @Validated
 public class ParcelTypeCommandEditData {
+    @NotBlank(message = "Parcel type name cannot be empty")
     private String name;
     private String description;
+    @PositiveOrZero(message = "Parcel type price cannot be negative or not set")
     private BigDecimal price;
+    @NotNull(message = "Parcel type must be active or not")
     private Boolean active;
 
     @JsonCreator

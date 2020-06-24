@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Value
 public class ParcelChangeStateMultipleCommandData {
+    @NotEmpty(message = "At least one parcel id must be given")
     private List<Long> parcelsIds;
 
     @JsonCreator

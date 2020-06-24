@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,13 +41,13 @@ public class EmployeeController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    public EmployeeView add(@RequestBody EmployeeAddCommandData addCommandData) {
+    public EmployeeView add(@RequestBody @Valid EmployeeAddCommandData addCommandData) {
         return EmployeeView.of(employeeService.addEmployee(addCommandData));
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @PostMapping("{id}")
-    public EmployeeView add(@PathVariable Long id, @RequestBody EmployeeEditCommandData editOperationData) {
+    public EmployeeView add(@PathVariable Long id, @RequestBody @Valid EmployeeEditCommandData editOperationData) {
         return EmployeeView.of(employeeService.editEmployee(id, editOperationData));
     }
 }
