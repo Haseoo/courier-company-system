@@ -1,10 +1,7 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IllegalMoveDate;
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IncorrectParcelException;
-import com.github.haseoo.courier.models.EstimatedDeliveryTimeModel;
-import com.github.haseoo.courier.models.ParcelModel;
-import com.github.haseoo.courier.models.ReceiverInfoModel;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.*;
+import com.github.haseoo.courier.models.*;
 import com.github.haseoo.courier.repositories.ports.*;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.parcels.ParcelAddData;
@@ -26,13 +23,16 @@ import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static com.github.haseoo.courier.testutlis.constants.Constants.UNIT_TEST;
 import static com.github.haseoo.courier.testutlis.generators.AddressDataGenerator.getAddressModel;
 import static com.github.haseoo.courier.testutlis.generators.ParcelDataGenerator.getParcelAtSender;
+import static com.github.haseoo.courier.testutlis.generators.ParcelDataGenerator.getParcelInMagazine;
 import static com.github.haseoo.courier.testutlis.generators.ParcelTypeDataGenerator.getActiveParcelTypeModel;
 import static com.github.haseoo.courier.testutlis.generators.ReceiverInfoDataGenerator.getReceiverInfoModel;
 import static com.github.haseoo.courier.testutlis.generators.UsersDataGenerator.getCompanyClientModel;
+import static com.github.haseoo.courier.testutlis.generators.UsersDataGenerator.getIndividualClientModel;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -238,6 +238,136 @@ class ParcelServiceImplTest {
         sut.getList();
         //then
         verify(parcelRepository).getList();
+    }
+
+    @Test
+    void should_delete_parcel_at_sender() {
+        //given
+        final long id = 1L;
+        ParcelModel parcelModel = getParcelAtSender();
+        when(parcelRepository.getById(anyLong())).thenReturn(java.util.Optional.of(parcelModel));
+        //when
+        sut.delete(id);
+        //then
+        verify(parcelRepository).delete(id);
+    }
+
+    @Test
+    void should_throw_exception_when_deleting_non_existent_parcel() {
+        //given
+        when(parcelRepository.getById(anyLong())).thenReturn(Optional.empty());
+        //when & then
+        Assertions.assertThatThrownBy(() -> sut.delete(1L)).isExactlyInstanceOf(ParcelNotFound.class);
+    }
+
+    @Test
+    void should_not_mark_parcel_at_sender_to_return() {
+        //given
+        final long id = 1L;
+        ParcelModel parcelModel = getParcelAtSender();
+        parcelModel.setId(id);
+        when(parcelRepository.getById(anyLong())).thenReturn(java.util.Optional.of(parcelModel));
+        //when & then
+        Assertions.assertThatThrownBy(() -> sut.setParcelToReturn(id)).isExactlyInstanceOf(IllegalParcelState.class);
+        verify(parcelRepository).getById(id);
+    }
+
+    @Test
+    void should_mark_parcel_in_magazine_to_return_client_company() {
+        //given
+        final long id = 1L;
+        final char[] newPin = new char[] {1,2,3,4};
+        ParcelModel parcelModel = getParcelInMagazine();
+        parcelModel.setId(id);
+        ClientCompanyModel clientCompanyModel = (ClientCompanyModel) parcelModel.getSender();
+        when(clientRepository.getById(any())).thenReturn(Optional.of(parcelModel.getSender()));
+        when(clientCompanyRepository.getById(any())).thenReturn(Optional.of(clientCompanyModel));
+        when(pinGenerator.getParcelPin()).thenReturn(newPin);
+        when(parcelRepository.saveAndFlush(any())).thenReturn(parcelModel);
+        when(parcelRepository.getById(anyLong())).thenReturn(Optional.of(parcelModel));
+        ArgumentCaptor<ReceiverInfoOperationData> newReceiver = ArgumentCaptor.forClass(ReceiverInfoOperationData.class);
+        ArgumentCaptor<AddressOperationData> newAddress = ArgumentCaptor.forClass(AddressOperationData.class);
+        ArgumentCaptor<ParcelModel> updatedParcel = ArgumentCaptor.forClass(ParcelModel.class);
+        //when
+        sut.setParcelToReturn(id);
+        verify(receiverInfoService).consume(newReceiver.capture(), any());
+        verify(addressService).consume(newAddress.capture(), any());
+        verify(parcelRepository).saveAndFlush(updatedParcel.capture());
+        //then
+        verify(parcelRepository).getById(id);
+        verify(emailService).sentReturnNotification(any());
+        Assertions.assertThat(newAddress.getValue().getCity())
+                .isEqualTo(parcelModel.getSenderAddress().getCity());
+        Assertions.assertThat(newAddress.getValue().getPostalCode())
+                .isEqualTo(parcelModel.getSenderAddress().getPostalCode());
+        Assertions.assertThat(newAddress.getValue().getStreet())
+                .isEqualTo(parcelModel.getSenderAddress().getStreet());
+        Assertions.assertThat(newAddress.getValue().getBuildingNumber())
+                .isEqualTo(parcelModel.getSenderAddress().getBuildingNumber());
+        Assertions.assertThat(newAddress.getValue().getFlatNumber())
+                .isEqualTo(parcelModel.getSenderAddress().getFlatNumber());
+
+        Assertions.assertThat(newReceiver.getValue().getEmailAddress()).
+                isEqualTo(clientCompanyModel.getEmailAddress());
+        Assertions.assertThat(newReceiver.getValue().getName()).
+                isEqualTo(clientCompanyModel.getCompanyName());
+        Assertions.assertThat(newReceiver.getValue().getPhoneNumber()).
+                isEqualTo(clientCompanyModel.getPhoneNumber());
+        Assertions.assertThat(newReceiver.getValue().getSurname()).
+                isEqualTo("-");
+
+        Assertions.assertThat(updatedParcel.getValue().getToReturn()).isTrue();
+        Assertions.assertThat(updatedParcel.getValue().getPin()).isEqualTo(newPin);
+    }
+
+    @Test
+    void should_mark_parcel_in_magazine_to_return_client_individual() {
+        //given
+        final long id = 1L;
+        final char[] newPin = new char[] {1,2,3,4};
+        ParcelModel parcelModel = getParcelInMagazine();
+        parcelModel.setId(id);
+        ClientIndividualModel clientIndividualModel = getIndividualClientModel();
+        clientIndividualModel.setId(1L);
+        parcelModel.setSender(clientIndividualModel);
+        when(clientRepository.getById(any())).thenReturn(Optional.of(parcelModel.getSender()));
+        when(clientIndividualRepository.getById(any())).thenReturn(Optional.of(clientIndividualModel));
+        when(pinGenerator.getParcelPin()).thenReturn(newPin);
+        when(parcelRepository.saveAndFlush(any())).thenReturn(parcelModel);
+        when(parcelRepository.getById(anyLong())).thenReturn(Optional.of(parcelModel));
+        ArgumentCaptor<ReceiverInfoOperationData> newReceiver = ArgumentCaptor.forClass(ReceiverInfoOperationData.class);
+        ArgumentCaptor<AddressOperationData> newAddress = ArgumentCaptor.forClass(AddressOperationData.class);
+        ArgumentCaptor<ParcelModel> updatedParcel = ArgumentCaptor.forClass(ParcelModel.class);
+        //when
+        sut.setParcelToReturn(id);
+        verify(receiverInfoService).consume(newReceiver.capture(), any());
+        verify(addressService).consume(newAddress.capture(), any());
+        verify(parcelRepository).saveAndFlush(updatedParcel.capture());
+        //then
+        verify(parcelRepository).getById(id);
+        verify(emailService).sentReturnNotification(any());
+        Assertions.assertThat(newAddress.getValue().getCity())
+                .isEqualTo(parcelModel.getSenderAddress().getCity());
+        Assertions.assertThat(newAddress.getValue().getPostalCode())
+                .isEqualTo(parcelModel.getSenderAddress().getPostalCode());
+        Assertions.assertThat(newAddress.getValue().getStreet())
+                .isEqualTo(parcelModel.getSenderAddress().getStreet());
+        Assertions.assertThat(newAddress.getValue().getBuildingNumber())
+                .isEqualTo(parcelModel.getSenderAddress().getBuildingNumber());
+        Assertions.assertThat(newAddress.getValue().getFlatNumber())
+                .isEqualTo(parcelModel.getSenderAddress().getFlatNumber());
+
+        Assertions.assertThat(newReceiver.getValue().getEmailAddress()).
+                isEqualTo(clientIndividualModel.getEmailAddress());
+        Assertions.assertThat(newReceiver.getValue().getName()).
+                isEqualTo(clientIndividualModel.getName());
+        Assertions.assertThat(newReceiver.getValue().getPhoneNumber()).
+                isEqualTo(clientIndividualModel.getPhoneNumber());
+        Assertions.assertThat(newReceiver.getValue().getSurname()).
+                isEqualTo(clientIndividualModel.getSurname());
+
+        Assertions.assertThat(updatedParcel.getValue().getToReturn()).isTrue();
+        Assertions.assertThat(updatedParcel.getValue().getPin()).isEqualTo(newPin);
     }
 
 }
