@@ -2,6 +2,7 @@ package com.github.haseoo.courier.testutlis.generators;
 
 import com.github.haseoo.courier.enums.ParcelStateType;
 import com.github.haseoo.courier.models.*;
+import com.github.haseoo.courier.servicedata.parcels.ParcelData;
 import com.github.haseoo.courier.servicedata.parcels.ParcelTypeData;
 import lombok.NoArgsConstructor;
 
@@ -73,6 +74,7 @@ public class ParcelDataGenerator {
                 getReceiverInfoModel());
         parcelModel.setId(1L);
         parcelModel.setSenderAddress(AddressDataGenerator.getAddressModel());
+        parcelModel.getSender().setId(1L);
         parcelModel.setObservingClients(new ArrayList<>());
         parcelModel.setParcelStates(new ArrayList<>());
         MagazineModel magazineModel = getMagazineModel();
@@ -103,5 +105,9 @@ public class ParcelDataGenerator {
                 .active(true)
                 .parcelsWithType(new ArrayList<>())
                 .build();
+    }
+
+    public static ParcelData getParcelInMagazineData() {
+        return ParcelData.of(getParcelInMagazine());
     }
 }

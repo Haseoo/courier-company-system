@@ -1,14 +1,16 @@
 package com.github.haseoo.courier.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.haseoo.courier.commandsdata.places.AddressCommandData;
-import com.github.haseoo.courier.commandsdata.places.MagazineAddCommandData;
-import com.github.haseoo.courier.commandsdata.places.MagazineEditCommandData;
+import com.github.haseoo.courier.commandsdata.parcels.ParcelChangeStateMultipleCommandData;
+import com.github.haseoo.courier.commandsdata.places.*;
+import com.github.haseoo.courier.enums.MagazineParcelFilterType;
 import com.github.haseoo.courier.exceptions.serviceexceptions.MagazineDoesNotExist;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
 import com.github.haseoo.courier.servicedata.places.MagazineAddOperationData;
 import com.github.haseoo.courier.servicedata.places.MagazineEditOperationData;
+import com.github.haseoo.courier.services.ports.ClientCompanyService;
 import com.github.haseoo.courier.services.ports.MagazineService;
+import com.github.haseoo.courier.services.ports.ParcelStateService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -21,10 +23,13 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static com.github.haseoo.courier.testutlis.constants.Constants.INTEGRATION_TEST;
 import static com.github.haseoo.courier.testutlis.generators.MagazineDataGenerator.getMagazineData;
+import static com.github.haseoo.courier.testutlis.generators.ParcelDataGenerator.getParcelInMagazineData;
+import static com.github.haseoo.courier.testutlis.generators.UserControllerTestDataGenerator.getClientCompanyData;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,6 +44,12 @@ public class MagazineControllerTest {
 
     @MockBean
     private UserDetailsServiceImpl userDetailsService;
+
+    @MockBean
+    private ParcelStateService parcelStateService;
+
+    @MockBean
+    private ClientCompanyService clientCompanyService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -148,6 +159,72 @@ public class MagazineControllerTest {
         Assertions.assertThat(argument.getValue().getAddress().getBuildingNumber()).isEqualTo(ain.getBuildingNumber());
         Assertions.assertThat(argument.getValue().getAddress().getFlatNumber()).isEqualTo(ain.getFlatNumber());
         Assertions.assertThat(argument.getValue().getActive()).isFalse();
+    }
+
+    @Test
+    void should_add_logistician_and_return_200() throws Exception {
+        //given
+        final long id = 1L;
+        final MagazineAddLogisiticiansCommandData in = new MagazineAddLogisiticiansCommandData(Arrays.asList(1L, 2L, 3L));
+        when(magazineService.addLogisitcians(anyLong(), anyList())).thenReturn(getMagazineData());
+        //when
+        mockMvc.perform(put("/api/magazine/" + id + "/logisticians").contentType(
+                MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(in)))
+                .andExpect(status().isOk());
+        //then
+        verify(magazineService).addLogisitcians(eq(id), eq(in.getLogisiticiansIds()));
+    }
+
+    @Test
+    void should_add_parcels_and_return_200() throws Exception {
+        //given
+        final long id = 1L;
+        final ParcelChangeStateMultipleCommandData in = new ParcelChangeStateMultipleCommandData(Arrays.asList(1L, 2L, 3L));
+        when(parcelStateService.addParcelsToMagazine(anyLong(), anyList())).thenReturn(getMagazineData());
+        //when
+        mockMvc.perform(post("/api/magazine/" + id + "/parcels/add").contentType(
+                MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(in)))
+                .andExpect(status().isOk());
+        //then
+        verify(parcelStateService).addParcelsToMagazine(eq(id), eq(in.getParcelsIds()));
+    }
+
+    @Test
+    void should_return_200_and_ask_for_parcels_in_magazine() throws Exception {
+        //given
+        final long id = 1L;
+        when(parcelStateService.addParcelsToMagazine(anyLong(), anyList())).thenReturn(getMagazineData());
+        when(magazineService.getAssignedAtSenderParcels(anyLong())).thenReturn(Arrays.asList(getParcelInMagazineData(),
+                getParcelInMagazineData()));
+        MagazineParcelFilerCommandData in = new MagazineParcelFilerCommandData(MagazineParcelFilterType.ASSIGNED_TO_MAGAZINE);
+        when(clientCompanyService.getById(anyLong())).thenReturn(getClientCompanyData());
+        //when
+        mockMvc.perform(post("/api/magazine/" + id + "/parcels").contentType(
+                MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(in)))
+                .andExpect(status().isOk());
+        //then
+        verify(magazineService).getAssignedAtSenderParcels(id);
+    }
+
+    @Test
+    void should_return_200_and_ask_for_parcels_to_return() throws Exception {
+        //given
+        final long id = 1L;
+        when(parcelStateService.addParcelsToMagazine(anyLong(), anyList())).thenReturn(getMagazineData());
+        when(magazineService.getAssignedAtSenderParcels(anyLong())).thenReturn(Arrays.asList(getParcelInMagazineData(),
+                getParcelInMagazineData()));
+        MagazineParcelFilerCommandData in = new MagazineParcelFilerCommandData(MagazineParcelFilterType.TO_RETURN);
+        when(clientCompanyService.getById(anyLong())).thenReturn(getClientCompanyData());
+        //when
+        mockMvc.perform(post("/api/magazine/" + id + "/parcels").contentType(
+                MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(in)))
+                .andExpect(status().isOk());
+        //then
+        verify(magazineService).getParcelsToReturn(id);
     }
 
 }
