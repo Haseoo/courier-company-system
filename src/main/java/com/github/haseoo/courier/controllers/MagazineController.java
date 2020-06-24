@@ -14,6 +14,7 @@ import com.github.haseoo.courier.utilities.ParcelViewCreator;
 import com.github.haseoo.courier.views.parcels.ParcelView;
 import com.github.haseoo.courier.views.places.MagazineView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/magazine")
@@ -34,57 +37,59 @@ public class MagazineController {
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @GetMapping
-    public List<MagazineView> getList() {
+    public ResponseEntity<List<MagazineView>> getList() {
         if (userDetailsService.isCurrentUserAdmin())
-            return magazineService.getList().stream().map(MagazineView::of).collect(Collectors.toList());
+            return new ResponseEntity<>(magazineService.getList().stream().map(MagazineView::of).collect(Collectors.toList()), OK);
         else
-            return magazineService.getActiveList().stream().map(MagazineView::of).collect(Collectors.toList());
+            return new ResponseEntity<>(magazineService.getActiveList().stream().map(MagazineView::of).collect(Collectors.toList()), OK);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @GetMapping("/{id}")
-    public MagazineView getById(@PathVariable Long id) {
-        return MagazineView.of(magazineService.getById(id));
+    public ResponseEntity<MagazineView> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(MagazineView.of(magazineService.getById(id)), OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping
-    public MagazineView add(@RequestBody @Valid MagazineAddCommandData commandData) {
-        return MagazineView.of(magazineService.add(MagazineAddOperationData.of(commandData)));
+    @PostMapping
+    public ResponseEntity<MagazineView> add(@RequestBody @Valid MagazineAddCommandData commandData) {
+        return new ResponseEntity<>(MagazineView.of(magazineService.add(MagazineAddOperationData.of(commandData))), CREATED);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
-    @PostMapping("/{id}")
-    public MagazineView edit(@PathVariable Long id, @RequestBody @Valid MagazineEditCommandData commandData) {
-        return MagazineView.of(magazineService.edit(id, MagazineEditOperationData.of(commandData)));
+    @PutMapping("/{id}")
+    public ResponseEntity<MagazineView> edit(@PathVariable Long id, @RequestBody @Valid MagazineEditCommandData commandData) {
+        return new ResponseEntity<>(MagazineView.of(magazineService.edit(id, MagazineEditOperationData.of(commandData))), OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/{id}/logisticians")
-    public MagazineView addLogisiticians(@PathVariable Long id, @RequestBody @Valid MagazineAddLogisiticiansCommandData logisiticiansCommandData) {
-        return MagazineView.of(magazineService.addLogisitcians(id, logisiticiansCommandData.getLogisiticiansIds()));
+    @PutMapping("/{id}/logisticians")
+    public ResponseEntity<MagazineView> addLogisiticians(@PathVariable Long id, @RequestBody @Valid MagazineAddLogisiticiansCommandData logisiticiansCommandData) {
+        return new ResponseEntity<>(MagazineView.of(magazineService.addLogisitcians(id, logisiticiansCommandData.getLogisiticiansIds())), OK);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
     @PostMapping("/{id}/parcels/add")
-    public MagazineView addParcels(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateMultipleCommandData commandData) {
-        return MagazineView.of(parcelStateService.addParcelsToMagazine(id, commandData.getParcelsIds()));
+    public ResponseEntity<MagazineView> addParcels(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateMultipleCommandData commandData) {
+        return new ResponseEntity<>(MagazineView.of(parcelStateService.addParcelsToMagazine(id, commandData.getParcelsIds())), OK);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
     @PostMapping("/{id}/parcels")
-    public List<ParcelView> getParcels(@PathVariable Long id, @RequestBody @Valid MagazineParcelFilerCommandData commandData) {
+    public ResponseEntity<List<ParcelView>> getParcels(@PathVariable Long id, @RequestBody @Valid MagazineParcelFilerCommandData commandData) {
         switch (commandData.getType()) {
             case TO_RETURN:
-                return magazineService.getParcelsToReturn(id)
+                return new ResponseEntity<>(magazineService.getParcelsToReturn(id)
                         .stream()
                         .map(parcelViewCreator::createParcelView)
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toList()),
+                        OK);
             case ASSIGNED_TO_MAGAZINE:
-                return magazineService.getAssignedAtSenderParcels(id)
+                return new ResponseEntity<>(magazineService.getAssignedAtSenderParcels(id)
                         .stream()
                         .map(parcelViewCreator::createParcelView)
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toList()),
+                        OK);
             default:
                 throw new IllegalArgumentException(INVALID_ENUM_TYPE);
         }

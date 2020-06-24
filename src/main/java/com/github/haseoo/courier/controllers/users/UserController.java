@@ -1,13 +1,17 @@
 package com.github.haseoo.courier.controllers.users;
 
+import com.github.haseoo.courier.commandsdata.users.UserPatchCommandData;
 import com.github.haseoo.courier.services.ports.UserService;
 import com.github.haseoo.courier.views.users.UserView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,14 +26,11 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("{id}")
-    public UserView setAsActive(@PathVariable Long id) {
-        return UserView.of(userService.setAsActive(id));
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("{id}")
-    public UserView setAsInactive(@PathVariable Long id) {
-        return UserView.of(userService.setAsInactive(id));
+    @PatchMapping("{id}")
+    public ResponseEntity<UserView> patchActivation(@PathVariable Long id, @RequestBody UserPatchCommandData active) {
+        if (active.isActive()) {
+            return new ResponseEntity<>(UserView.of(userService.setAsActive(id)), OK);
+        }
+        return new ResponseEntity<>(UserView.of(userService.setAsInactive(id)), OK);
     }
 }

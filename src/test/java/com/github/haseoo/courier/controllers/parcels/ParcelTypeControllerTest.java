@@ -93,10 +93,10 @@ class ParcelTypeControllerTest {
         when(parcelTypeService.add(any())).thenReturn(getParcelTypeData());
         ArgumentCaptor<ParcelTypeAddOperationData> argument = ArgumentCaptor.forClass(ParcelTypeAddOperationData.class);
         //when & then
-        mockMvc.perform(put("/api/parcelType").contentType(
+        mockMvc.perform(post("/api/parcelType").contentType(
                 MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(in)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
         verify(parcelTypeService).add(argument.capture());
         Assertions.assertThat(argument.getValue().getName()).isEqualTo(in.getName());
         Assertions.assertThat(argument.getValue().getDescription()).isEqualTo(in.getDescription());
@@ -112,7 +112,7 @@ class ParcelTypeControllerTest {
         when(parcelTypeService.edit(anyLong(), any())).thenReturn(getParcelTypeData());
         ArgumentCaptor<ParcelTypeEditOperationData> argument = ArgumentCaptor.forClass(ParcelTypeEditOperationData.class);
         //when & then
-        mockMvc.perform(post("/api/parcelType/" + id).contentType(
+        mockMvc.perform(put("/api/parcelType/" + id).contentType(
                 MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(in)))
                 .andExpect(status().isOk());

@@ -21,10 +21,10 @@ export class MagazineService {
     const header = new Headers().append('Accept', 'application/json');
     const id = magazine.id;
     delete magazine.id;
-    return this.http.post(environment.API_URL + '/magazine/' + id, magazine);
+    return this.http.put(environment.API_URL + '/magazine/' + id, magazine);
   }
   save(magazine: Magazine) {
-    return this.http.put(environment.API_URL + '/magazine/', magazine);
+    return this.http.post(environment.API_URL + '/magazine/', magazine);
   }
   getById(id: number) {
     return this.http.get<MagazineView>(environment.API_URL + '/magazine/' + id);

@@ -21,4 +21,5 @@ export interface ParcelClientView {
     moveable: boolean;
     sender: string;
     senderAddress: Address;
+    isPayable: boolean;
 }

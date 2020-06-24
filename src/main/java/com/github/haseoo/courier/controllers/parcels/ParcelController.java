@@ -11,6 +11,7 @@ import com.github.haseoo.courier.services.ports.ParcelStateService;
 import com.github.haseoo.courier.utilities.ParcelViewCreator;
 import com.github.haseoo.courier.views.parcels.ParcelView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.haseoo.courier.exceptions.ExceptionMessages.INVALID_ENUM_TYPE;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/parcel")
@@ -29,57 +31,58 @@ public class ParcelController {
     private final ParcelViewCreator parcelViewCreator;
 
     @GetMapping()
-    public List<ParcelView> getList() {
-        return parcelService.getList()
+    public ResponseEntity<List<ParcelView>> getList() {
+        return new ResponseEntity<>(parcelService.getList()
                 .stream()
                 .map(parcelViewCreator::createParcelView)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()), OK);
     }
 
     @GetMapping("/get/{id}")
-    public ParcelView getById(@PathVariable Long id) {
-        return parcelViewCreator.createParcelView(parcelService.getById(id));
+    public ResponseEntity<ParcelView> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(parcelViewCreator.createParcelView(parcelService.getById(id)), OK);
     }
 
-    @PutMapping
+    @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
-    public ParcelView add(@RequestBody @Valid ParcelCommandAddData commandAddData) {
-        return parcelViewCreator.createParcelView(parcelService.add(ParcelAddData.of(commandAddData)));
+    public ResponseEntity<ParcelView> add(@RequestBody @Valid ParcelCommandAddData commandAddData) {
+        return new ResponseEntity<>(parcelViewCreator.createParcelView(parcelService.add(ParcelAddData.of(commandAddData))), CREATED);
     }
 
-    @PostMapping("{id}")
+    @PutMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
-    public ParcelView edit(@PathVariable Long id, @RequestBody @Valid ParcelCommandEditData parcelEditData) {
-        return parcelViewCreator.createParcelView(parcelService.edit(id, ParcelEditData.of(parcelEditData)));
+    public ResponseEntity<ParcelView> edit(@PathVariable Long id, @RequestBody @Valid ParcelCommandEditData parcelEditData) {
+        return new ResponseEntity<>(parcelViewCreator.createParcelView(parcelService.edit(id, ParcelEditData.of(parcelEditData))), OK);
     }
 
     @PostMapping("/{id}/changeReceiver")
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
-    public ParcelView markAsReturn(@PathVariable @Valid Long id) {
-        return parcelViewCreator.createParcelView(parcelService.setParcelToReturn(id));
+    public ResponseEntity<ParcelView> markAsReturn(@PathVariable @Valid Long id) {
+        return new ResponseEntity<>(parcelViewCreator.createParcelView(parcelService.setParcelToReturn(id)), OK);
     }
 
     @PostMapping("/{id}/moveDate")
-    public ParcelView moveDate(@PathVariable Long id, @RequestBody @Valid ParcelDateMoveCommandData commandData) {
-        return parcelViewCreator.createParcelView(parcelService.moveDate(id, commandData.getPin(), commandData.getNewDate()));
+    public ResponseEntity<ParcelView> moveDate(@PathVariable Long id, @RequestBody @Valid ParcelDateMoveCommandData commandData) {
+        return new ResponseEntity<>(parcelViewCreator.createParcelView(parcelService.moveDate(id, commandData.getPin(), commandData.getNewDate())), OK);
     }
 
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         parcelService.delete(id);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 
 
     @PostMapping("/{id}/changeState")
     @PreAuthorize("hasAnyRole({'ADMIN', 'COURIER'})")
-    public ParcelView changeStateForCourier(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateForCourierCommandData commandData) {
+    public ResponseEntity<ParcelView> changeStateForCourier(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateForCourierCommandData commandData) {
         switch (commandData.getNewState()) {
             case DELIVERED:
-                return parcelViewCreator.createParcelView(parcelStateService.setParcelAsDelivered(commandData.getCourierId(), id, commandData.getWasPaid()));
+                return new ResponseEntity<>(parcelViewCreator.createParcelView(parcelStateService.setParcelAsDelivered(commandData.getCourierId(), id, commandData.getWasPaid())), OK);
             case RETURNED:
-                return parcelViewCreator.createParcelView(parcelStateService.setParcelReturned(commandData.getCourierId(), id, commandData.getWasPaid()));
+                return new ResponseEntity<>(parcelViewCreator.createParcelView(parcelStateService.setParcelReturned(commandData.getCourierId(), id, commandData.getWasPaid())), OK);
             default:
                 throw new IllegalArgumentException(INVALID_ENUM_TYPE);
         }
@@ -87,7 +90,8 @@ public class ParcelController {
 
     @DeleteMapping("sate/{id}")
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
-    public void removeLastState(@PathVariable Long id) {
+    public ResponseEntity<Void> removeLastStRate(@PathVariable Long id) {
         parcelStateService.removeCurrentState(id);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 }

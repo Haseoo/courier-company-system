@@ -8,10 +8,14 @@ import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualEditD
 import com.github.haseoo.courier.services.ports.ClientIndividualService;
 import com.github.haseoo.courier.views.users.clients.ClientIndividualView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/client/individual")
@@ -21,19 +25,19 @@ public class ClientIndividualController {
     private final UserDetailsServiceImpl userDetalisService;
 
     @GetMapping("{id}")
-    public ClientIndividualView getById(@PathVariable Long id) {
-        return ClientIndividualView.of(clientIndividualService.getById(id));
+    public ResponseEntity<ClientIndividualView> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(ClientIndividualView.of(clientIndividualService.getById(id)), OK);
     }
 
-    @PutMapping("/register")
-    public ClientIndividualView add(@RequestBody @Valid ClientIndividualAddCommandData commandData) {
-        return ClientIndividualView.of(clientIndividualService.add(ClientIndividualAddData.of(commandData)));
+    @PostMapping("/register")
+    public ResponseEntity<ClientIndividualView> add(@RequestBody @Valid ClientIndividualAddCommandData commandData) {
+        return new ResponseEntity<>(ClientIndividualView.of(clientIndividualService.add(ClientIndividualAddData.of(commandData))), CREATED);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
-    @PostMapping("{id}")
-    public ClientIndividualView edit(@PathVariable Long id, @RequestBody @Valid ClientIndividualEditCommandData commandData) {
+    @PutMapping("{id}")
+    public ResponseEntity<ClientIndividualView> edit(@PathVariable Long id, @RequestBody @Valid ClientIndividualEditCommandData commandData) {
         userDetalisService.verifyEditResource(id);
-        return ClientIndividualView.of(clientIndividualService.edit(id, ClientIndividualEditData.of(commandData)));
+        return new ResponseEntity<>(ClientIndividualView.of(clientIndividualService.edit(id, ClientIndividualEditData.of(commandData))), OK);
     }
 }

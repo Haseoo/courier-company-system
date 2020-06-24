@@ -12,6 +12,6 @@ export class EmployeeService {
         return this.http.get<Array<Employee>>(environment.API_URL + '/employee');
     }
     save(employee: Employee) {
-        return this.http.put(environment.API_URL + '/employee', employee);
+        return this.http.post(environment.API_URL + '/employee', employee);
     }
 }

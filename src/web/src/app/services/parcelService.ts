@@ -28,7 +28,7 @@ export class ParcelService {
     return this.http.get<ParcelType[]>(environment.API_URL + '/parcelType');
   }
   save(commandAddData: CommandAddData) {
-    return this.http.put<ParcelClientView>(environment.API_URL + '/parcel', commandAddData);
+    return this.http.post<ParcelClientView>(environment.API_URL + '/parcel', commandAddData);
   }
   markAsReturn(id: number) {
     return this.http.post(environment.API_URL + '/parcel/' + id + '/changeReceiver', null);

@@ -26,21 +26,23 @@ export class ParcelComponent implements OnInit {
               private parcelService: ParcelService,
               private route: ActivatedRoute,
               private paypalService: PayPalService,
-              private alertService: AlertService) { }
+              private alertService: AlertService) {
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.parcelService.getParcelByClient(Number(this.id)).subscribe((date) => {
         this.parcel = date;
+        this.parcel.isPayable = this.parcel.paid === false &&
+            this.parcel.parcelStatesView[this.parcel.parcelStatesView.length - 1].stateType !== 'DELIVERED' &&
+            this.parcel.parcelStatesView[this.parcel.parcelStatesView.length - 1].stateType !== 'RETURNED';
         this.alertService.clear();
       },
         error => {
           this.alertService.error('Parcel not found');
         }
       );
-    }
-    if (this.id === null) {
     }
   }
 
