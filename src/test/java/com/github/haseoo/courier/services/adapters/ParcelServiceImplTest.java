@@ -1,6 +1,9 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.*;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IllegalMoveDate;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IllegalParcelState;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.IncorrectParcelException;
+import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.ParcelNotFound;
 import com.github.haseoo.courier.models.*;
 import com.github.haseoo.courier.repositories.ports.*;
 import com.github.haseoo.courier.security.UserDetailsServiceImpl;
@@ -276,7 +279,7 @@ class ParcelServiceImplTest {
     void should_mark_parcel_in_magazine_to_return_client_company() {
         //given
         final long id = 1L;
-        final char[] newPin = new char[] {1,2,3,4};
+        final char[] newPin = new char[]{1, 2, 3, 4};
         ParcelModel parcelModel = getParcelInMagazine();
         parcelModel.setId(id);
         ClientCompanyModel clientCompanyModel = (ClientCompanyModel) parcelModel.getSender();
@@ -324,7 +327,7 @@ class ParcelServiceImplTest {
     void should_mark_parcel_in_magazine_to_return_client_individual() {
         //given
         final long id = 1L;
-        final char[] newPin = new char[] {1,2,3,4};
+        final char[] newPin = new char[]{1, 2, 3, 4};
         ParcelModel parcelModel = getParcelInMagazine();
         parcelModel.setId(id);
         ClientIndividualModel clientIndividualModel = getIndividualClientModel();

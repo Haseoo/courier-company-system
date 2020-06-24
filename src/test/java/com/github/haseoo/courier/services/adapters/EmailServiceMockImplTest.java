@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.github.haseoo.courier.testutlis.constants.Constants.UNIT_TEST;
 import static com.github.haseoo.courier.testutlis.generators.ParcelDataGenerator.getParcelInMagazineData;
+
 @ExtendWith(MockitoExtension.class)
 @Tag(UNIT_TEST)
 class EmailServiceMockImplTest {

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class ChangeParcelStateServiceImpl implements ChangeParcelStateService {
 
     private final ParcelRepository parcelRepository;
-    private ParcelModel parcelModel;
 
     @Override
     public void changeParcelState(Payment payment) {
@@ -24,7 +23,7 @@ public class ChangeParcelStateServiceImpl implements ChangeParcelStateService {
                 .get(0)
                 .getName();
 
-        parcelModel = parcelRepository.getById(Long.valueOf(parcelId.substring(parcelId.indexOf(' ') + 1)))
+        ParcelModel parcelModel = parcelRepository.getById(Long.valueOf(parcelId.substring(parcelId.indexOf(' ') + 1)))
                 .orElseThrow(() -> new ParcelNotFound(Long.valueOf(parcelId.substring(parcelId.indexOf(' ') + 1))));
         parcelModel.setPaid(true);
         parcelRepository.saveAndFlush(parcelModel);

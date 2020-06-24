@@ -47,6 +47,9 @@
                 </dependency>
             </dependencies>
         </profile>
+        <profile>
+            <id>prod</id>
+        </profile>
     </profiles>
 
     <dependencies>
