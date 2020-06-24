@@ -6,12 +6,15 @@ import com.github.haseoo.courier.services.ports.CourierService;
 import com.github.haseoo.courier.services.ports.ParcelStateService;
 import com.github.haseoo.courier.views.users.employees.CourierView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/employee/courier")
@@ -22,29 +25,29 @@ public class CourierController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
-    public List<CourierView> getList() {
-        return courierService.getList()
+    public ResponseEntity<List<CourierView>> getList() {
+        return new ResponseEntity<>(courierService.getList()
                 .stream()
                 .map(CourierView::of)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()), OK);
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
-    public CourierView getById(@PathVariable Long id) {
-        return CourierView.of(courierService.getById(id));
+    public ResponseEntity<CourierView> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(CourierView.of(courierService.getById(id)), OK);
     }
 
     @PostMapping("/{id}/parcelAssign")
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN'})")
-    public CourierView assignParcels(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateMultipleCommandData commandData) {
-        return CourierView.of(parcelStateService.assignParcelsToCourier(id, commandData.getParcelsIds()));
+    public ResponseEntity<CourierView> assignParcels(@PathVariable Long id, @RequestBody @Valid ParcelChangeStateMultipleCommandData commandData) {
+        return new ResponseEntity<>(CourierView.of(parcelStateService.assignParcelsToCourier(id, commandData.getParcelsIds())), OK);
     }
 
     @PostMapping("/{id}/parcelPickup")
     @PreAuthorize("hasAnyRole({'ADMIN', 'COURIER'})")
-    public CourierView pickupParcels(@PathVariable Long id, @RequestBody @Valid ParcelPickupCommandData commandData) {
-        return CourierView.of(parcelStateService.setAsPickedByCourier(id, commandData.getParcelsId(), commandData.isWasPaid()));
+    public ResponseEntity<CourierView> pickupParcels(@PathVariable Long id, @RequestBody @Valid ParcelPickupCommandData commandData) {
+        return new ResponseEntity<>(CourierView.of(parcelStateService.setAsPickedByCourier(id, commandData.getParcelsId(), commandData.isWasPaid())), OK);
     }
 
 }

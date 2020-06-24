@@ -8,12 +8,16 @@ import com.github.haseoo.courier.services.ports.EmployeeService;
 import com.github.haseoo.courier.services.ports.LogisticianService;
 import com.github.haseoo.courier.views.users.employees.EmployeeView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -35,19 +39,19 @@ public class EmployeeController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{id}")
-    public EmployeeView getById(@PathVariable Long id) {
-        return EmployeeView.of(employeeService.getById(id));
+    public ResponseEntity<EmployeeView> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(EmployeeView.of(employeeService.getById(id)), OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping
-    public EmployeeView add(@RequestBody @Valid EmployeeAddCommandData addCommandData) {
-        return EmployeeView.of(employeeService.addEmployee(addCommandData));
+    @PostMapping
+    public ResponseEntity<EmployeeView> add(@RequestBody @Valid EmployeeAddCommandData addCommandData) {
+        return new ResponseEntity<>(EmployeeView.of(employeeService.addEmployee(addCommandData)), CREATED);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN', 'LOGISTICIAN', 'COURIER'})")
-    @PostMapping("{id}")
-    public EmployeeView add(@PathVariable Long id, @RequestBody @Valid EmployeeEditCommandData editOperationData) {
-        return EmployeeView.of(employeeService.editEmployee(id, editOperationData));
+    @PutMapping("{id}")
+    public ResponseEntity<EmployeeView> edit(@PathVariable Long id, @RequestBody @Valid EmployeeEditCommandData editOperationData) {
+        return new ResponseEntity<>(EmployeeView.of(employeeService.editEmployee(id, editOperationData)), OK);
     }
 }
