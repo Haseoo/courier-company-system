@@ -38,7 +38,7 @@ public class ClientCompanyController {
     @PreAuthorize("hasAnyRole({'ADMIN', 'CLIENT'})")
     @PutMapping("{id}")
     public ResponseEntity<ClientCompanyView> edit(@PathVariable Long id,
-                                  @RequestBody @Valid ClientCompanyEditCommandData commandData) {
+                                                  @RequestBody @Valid ClientCompanyEditCommandData commandData) {
         userDetalisService.verifyEditResource(id);
         return new ResponseEntity<>(ClientCompanyView.of(clientCompanyService.edit(id, ClientCompanyEditData.of(commandData))), OK);
     }

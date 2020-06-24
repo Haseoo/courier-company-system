@@ -83,13 +83,13 @@ public class MagazineController {
                         .stream()
                         .map(parcelViewCreator::createParcelView)
                         .collect(Collectors.toList()),
-            OK);
+                        OK);
             case ASSIGNED_TO_MAGAZINE:
                 return new ResponseEntity<>(magazineService.getAssignedAtSenderParcels(id)
                         .stream()
                         .map(parcelViewCreator::createParcelView)
                         .collect(Collectors.toList()),
-            OK);
+                        OK);
             default:
                 throw new IllegalArgumentException(INVALID_ENUM_TYPE);
         }
