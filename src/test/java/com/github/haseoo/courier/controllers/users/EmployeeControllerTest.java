@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.controllers.users;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.userexceptions.clients.ClientNotFound;
-import com.github.haseoo.courier.services.ports.ClientService;
+import com.github.haseoo.courier.services.ports.EmployeeService;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 
 import static com.github.haseoo.courier.testutlis.constants.Constants.INTEGRATION_TEST;
-import static com.github.haseoo.courier.testutlis.generators.UserControllerTestDataGenerator.getClientData;
-import static org.mockito.ArgumentMatchers.any;
+import static com.github.haseoo.courier.testutlis.generators.UsersDataGenerator.getCourierData;
+import static com.github.haseoo.courier.testutlis.generators.UsersDataGenerator.getLogisiticianData;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,41 +25,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", password = "admin1", roles = "ADMIN")
 @Tag(INTEGRATION_TEST)
-class ClientControllerTest {
+public class EmployeeControllerTest {
     @MockBean
-    private ClientService clientService;
+    private EmployeeService employeeService;
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void should_return_200_on_get_list() throws Exception {
+    void should_return_200_and_employeeList() throws Exception {
         //given
-        when(clientService.getList()).thenReturn(Arrays.asList(getClientData()));
+        when(employeeService.getList()).thenReturn(Arrays.asList(getCourierData(), getLogisiticianData()));
         //when & then
-        mockMvc.perform(get("/api/client"))
+        mockMvc.perform(get("/api/employee"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void should_return_200_when_client_exists() throws Exception {
+    void should_return_200_and_employee_by_id() throws Exception {
         //given
         final long id = 1L;
-        when(clientService.getById(any())).thenReturn(getClientData());
+        when(employeeService.getById(anyLong())).thenReturn(getCourierData());
         //when
-        mockMvc.perform(get("/api/client/" + Long.toString(id)))
+        mockMvc.perform(get("/api/employee/" + id))
                 .andExpect(status().isOk());
         //then
-        verify(clientService).getById(id);
-    }
-
-    @Test
-    void should_return_404_when_client_not_exist() throws Exception {
-        //given
-        final long id = 1L;
-        when(clientService.getById(id)).thenThrow(new ClientNotFound(id));
-        //when & then
-        mockMvc.perform(get("/api/client/" + Long.toString(id)))
-                .andExpect(status().isNotFound());
+        verify(employeeService).getById(id);
     }
 }

@@ -5,7 +5,6 @@ import com.github.haseoo.courier.enums.UserType;
 import com.github.haseoo.courier.servicedata.users.clients.ClientCompanyData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientData;
 import com.github.haseoo.courier.servicedata.users.clients.ClientIndividualData;
-import com.github.haseoo.courier.utilities.UserUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserControllerTestDataGenerator {
-    public static  ClientData getClientData() {
+    public static ClientData getClientData() {
         return ClientData.builder()
                 .clientType(ClientType.COMPANY)
                 .emailAddress("test@tets.ts")

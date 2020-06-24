@@ -46,7 +46,7 @@ class ClientCompanyControllerTest {
     ObjectMapper objectMapper;
 
     @Test
-    void should_return_200_when_register_success() throws Exception {
+    void should_return_201_when_register_success() throws Exception {
         //given
         ClientCompanyAddCommandData in = new ClientCompanyAddCommandData("test",
                 "tutu".toCharArray(),
@@ -122,7 +122,7 @@ class ClientCompanyControllerTest {
     }
 
     @Test
-    void should_return_400_when_with_id_not_exist() throws Exception {
+    void should_return_404_when_with_id_not_exist() throws Exception {
         //given
         final long id = 1L;
         when(clientCompanyService.getById(anyLong())).thenThrow(new ClientNotFound(id));
