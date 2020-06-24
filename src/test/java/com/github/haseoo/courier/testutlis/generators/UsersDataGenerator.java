@@ -100,4 +100,5 @@ public class UsersDataGenerator {
         userModel.setPassword(new char[0]);
         return userModel;
     }
+
 }

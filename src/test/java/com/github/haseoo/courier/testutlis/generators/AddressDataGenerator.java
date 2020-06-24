@@ -2,6 +2,7 @@ package com.github.haseoo.courier.testutlis.generators;
 
 import com.github.haseoo.courier.models.AddressModel;
 import com.github.haseoo.courier.querydata.AddressQueryData;
+import com.github.haseoo.courier.servicedata.places.AddressData;
 import lombok.NoArgsConstructor;
 
 import static com.github.haseoo.courier.testutlis.constants.AddressConstants.*;
@@ -38,6 +39,17 @@ public class AddressDataGenerator {
                 .buildingNumber(TEST_BUILDING_NUMBER)
                 .street(NEW_STREET)
                 .flatNumber(TEST_FLAT_NUMBER)
+                .build();
+    }
+
+    public static AddressData getAddressData() {
+        return AddressData.builder()
+                .id(1L)
+                .buildingNumber("1T")
+                .city("Test")
+                .flatNumber("1T")
+                .postalCode("TT-TTT")
+                .street("Test")
                 .build();
     }
 }

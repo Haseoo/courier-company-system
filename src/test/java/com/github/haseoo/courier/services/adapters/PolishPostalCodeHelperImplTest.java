@@ -1,6 +1,5 @@
 package com.github.haseoo.courier.services.adapters;
 
-import com.github.haseoo.courier.exceptions.serviceexceptions.parcelsexceptions.InvalidPostalCode;
 import com.github.haseoo.courier.services.ports.PostalCodeHelper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Tag;

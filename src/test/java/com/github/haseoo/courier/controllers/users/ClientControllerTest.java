@@ -54,7 +54,7 @@ class ClientControllerTest {
     }
 
     @Test
-    void should_return_400_when_client_not_exist() throws Exception {
+    void should_return_404_when_client_not_exist() throws Exception {
         //given
         final long id = 1L;
         when(clientService.getById(id)).thenThrow(new ClientNotFound(id));

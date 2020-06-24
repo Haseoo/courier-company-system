@@ -76,7 +76,7 @@ class ParcelTypeControllerTest {
     }
 
     @Test
-    void should_return_400_when_type_not_exist() throws Exception {
+    void should_return_404_when_type_not_exist() throws Exception {
         //given
         final long id = 1L;
         when(parcelTypeService.getById(anyLong())).thenThrow(new ParcelTypeNotFound(id));
@@ -87,7 +87,7 @@ class ParcelTypeControllerTest {
     }
 
     @Test
-    void should_add_type() throws Exception{
+    void should_add_type() throws Exception {
         //given
         ParcelTypeCommandAddData in = new ParcelTypeCommandAddData("Test", "test", BigDecimal.TEN);
         when(parcelTypeService.add(any())).thenReturn(getParcelTypeData());
@@ -105,7 +105,7 @@ class ParcelTypeControllerTest {
     }
 
     @Test
-    void should_edit_type() throws Exception{
+    void should_edit_type() throws Exception {
         //given
         final long id = 1L;
         ParcelTypeCommandEditData in = new ParcelTypeCommandEditData("Test", "test", BigDecimal.TEN, false);

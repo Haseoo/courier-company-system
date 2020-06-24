@@ -46,7 +46,7 @@ class ClientCompanyIndividualTest {
     ObjectMapper objectMapper;
 
     @Test
-    void should_return_200_when_register_success() throws Exception {
+    void should_return_201_when_register_success() throws Exception {
         //given
         ClientIndividualAddCommandData in = new ClientIndividualAddCommandData("test",
                 "tutu".toCharArray(),
@@ -111,7 +111,7 @@ class ClientCompanyIndividualTest {
     }
 
     @Test
-    void should_return_400_when_with_id_not_exist() throws Exception {
+    void should_return_404_when_with_id_not_exist() throws Exception {
         //given
         final long id = 1L;
         when(clientIndividualService.getById(anyLong())).thenThrow(new ClientNotFound(id));
