@@ -16,16 +16,16 @@ export class UserService {
   }
   registerCompany(user: ClientCompany) {
     user.password = user.password.split('');
-    return this.http.put(environment.API_URL + `/client/company/register`, user);
+    return this.http.post(environment.API_URL + `/client/company/register`, user);
   }
   registerIndividual(user: ClientIndividual) {
     user.password = user.password.split('');
-    return this.http.put(environment.API_URL + `/client/individual/register`, user);
+    return this.http.post(environment.API_URL + `/client/individual/register`, user);
   }
   setAsInActive(user: User) {
-    return this.http.delete(environment.API_URL + '/user/' + user.id);
+    return this.http.patch(environment.API_URL + '/user/' + user.id, {'active':false});
   }
   setAsActive(user: User) {
-    return this.http.post(environment.API_URL + '/user/' + user.id, user);
+    return this.http.patch(environment.API_URL + '/user/' + user.id, {'active':true});
   }
 }
