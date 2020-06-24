@@ -25,8 +25,7 @@ import java.util.Arrays;
 import static com.github.haseoo.courier.testutlis.constants.Constants.INTEGRATION_TEST;
 import static com.github.haseoo.courier.testutlis.generators.ParcelDataGenerator.getParcelTypeData;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -121,5 +120,26 @@ class ParcelTypeControllerTest {
         Assertions.assertThat(argument.getValue().getDescription()).isEqualTo(in.getDescription());
         Assertions.assertThat(argument.getValue().getPrice()).isEqualTo(in.getPrice());
         Assertions.assertThat(argument.getValue().getActive()).isFalse();
+    }
+
+    @Test
+    void should_return_204_when_delete_type() throws Exception {
+        //void
+        final long id = 1L;
+        //when & then
+        mockMvc.perform(delete("/api/parcelType/" + id))
+                .andExpect(status().isNoContent());
+        verify(parcelTypeService).delete(id);
+    }
+
+    @Test
+    void should_return_404_when_delete_non_existent_type() throws Exception {
+        //void
+        final long id = 1L;
+        doThrow(new ParcelTypeNotFound(id)).when(parcelTypeService).delete(anyLong());
+        //when & then
+        mockMvc.perform(delete("/api/parcelType/" + id))
+                .andExpect(status().isNotFound());
+        verify(parcelTypeService).delete(id);
     }
 }

@@ -21,8 +21,6 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 public class LoginController {
     private final UserService userService;
-    private final ClientIndividualServiceImpl clientIndividualService;
-
 
     @PostMapping
     public ResponseEntity<Object> login(@RequestBody @Valid LoginCommandData loginCommandData) {

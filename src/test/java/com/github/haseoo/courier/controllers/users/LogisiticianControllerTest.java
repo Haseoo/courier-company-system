@@ -32,7 +32,7 @@ public class LogisiticianControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void should_return_200_and_list() throws Exception{
+    void should_return_200_and_list() throws Exception {
         //given
         when(logisticianService.getList()).thenReturn(Arrays.asList(getLogisiticianData()));
         //when & then
@@ -41,7 +41,7 @@ public class LogisiticianControllerTest {
     }
 
     @Test
-    void should_return_200_and_ask_for_logistician_with_id() throws Exception{
+    void should_return_200_and_ask_for_logistician_with_id() throws Exception {
         //given
         long id = 1L;
         when((logisticianService.getById(anyLong()))).thenReturn(getLogisiticianData());
@@ -53,7 +53,7 @@ public class LogisiticianControllerTest {
     }
 
     @Test
-    void should_return_404_when_logistician_does_not_exist() throws Exception{
+    void should_return_404_when_logistician_does_not_exist() throws Exception {
         //given
         long id = 1L;
         when(logisticianService.getById(anyLong())).thenThrow(new EmployeeNotFoundException(id));
