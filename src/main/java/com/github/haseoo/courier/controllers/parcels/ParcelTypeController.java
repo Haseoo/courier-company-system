@@ -9,12 +9,15 @@ import com.github.haseoo.courier.views.parcels.type.ParcelTypeOfferView;
 import com.github.haseoo.courier.views.parcels.type.ParcelTypeView;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,41 +27,42 @@ public class ParcelTypeController {
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public List<ParcelTypeView> getParcelType() {
-        return parcelTypeService.getList(false)
+    public ResponseEntity<List<ParcelTypeView>> getParcelType() {
+        return new ResponseEntity<>(parcelTypeService.getList(false)
                 .stream()
                 .map(ParcelTypeView::of)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()), OK);
     }
 
     @GetMapping("/offer")
-    public List<ParcelTypeOfferView> getOffer() {
-        return parcelTypeService.getList(true)
+    public ResponseEntity<List<ParcelTypeOfferView>> getOffer() {
+        return new ResponseEntity<>(parcelTypeService.getList(true)
                 .stream()
                 .map(ParcelTypeOfferView::of)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()), OK);
     }
 
     @GetMapping("/{id}")
-    public ParcelTypeOfferView getById(@PathVariable Long id) {
-        return ParcelTypeOfferView.of(parcelTypeService.getById(id));
+    public ResponseEntity<ParcelTypeOfferView> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(ParcelTypeOfferView.of(parcelTypeService.getById(id)), OK);
     }
 
-    @PutMapping
+    @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ParcelTypeView add(@RequestBody @Valid ParcelTypeCommandAddData commandData) {
-        return ParcelTypeView.of(parcelTypeService.add(ParcelTypeAddOperationData.of(commandData)));
+    public ResponseEntity<ParcelTypeView> add(@RequestBody @Valid ParcelTypeCommandAddData commandData) {
+        return new ResponseEntity<>(ParcelTypeView.of(parcelTypeService.add(ParcelTypeAddOperationData.of(commandData))), CREATED);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ParcelTypeView edit(@PathVariable Long id, @RequestBody @Valid ParcelTypeCommandEditData commandData) {
-        return ParcelTypeView.of(parcelTypeService.edit(id, ParcelTypeEditOperationData.of(commandData)));
+    public ResponseEntity<ParcelTypeView> edit(@PathVariable Long id, @RequestBody @Valid ParcelTypeCommandEditData commandData) {
+        return new ResponseEntity<>(ParcelTypeView.of(parcelTypeService.edit(id, ParcelTypeEditOperationData.of(commandData))), OK);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         parcelTypeService.delete(id);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 }
