@@ -92,7 +92,7 @@ public class EmailServiceProdImpl implements EmailService {
         mail.setSubject("JanuszeX Courier Company - parcel return tracking pin");
 
         Map<String, Object> model = new HashMap<>();
-        model.put(INFORMATION_PROP, "The customer just picked up the parcel.");
+        model.put(INFORMATION_PROP, "The receiver does not pick up so it needs to be returned.");
         model.put("name", parcelData.getSender().getUserName());
         model.put(PARCEL_ID_PROP, parcelData.getId());
         prepareEmailTemplate(parcelData, mail, model);

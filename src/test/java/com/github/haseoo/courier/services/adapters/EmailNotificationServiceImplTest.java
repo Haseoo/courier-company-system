@@ -16,6 +16,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import javax.mail.MessagingException;
 import java.util.Map;
 
+import static com.github.haseoo.courier.testutlis.constants.Constants.TEST_SEND_EMAIL_ADDRESS;
 import static com.github.haseoo.courier.testutlis.constants.Constants.UNIT_TEST;
 import static com.github.haseoo.courier.testutlis.generators.ParcelDataGenerator.getParcelInMagazineData;
 import static org.mockito.Mockito.verify;
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 @Tag(UNIT_TEST)
 class EmailNotificationServiceImplTest {
-    private static final String TEST_SEND_EMAIL_ADDRESS = "test@test.ts";
+
     @Mock
     private EmailSenderServiceImpl emailSenderService;
     @InjectMocks
