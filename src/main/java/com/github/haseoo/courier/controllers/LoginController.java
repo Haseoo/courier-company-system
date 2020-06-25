@@ -1,7 +1,6 @@
 package com.github.haseoo.courier.controllers;
 
 import com.github.haseoo.courier.commandsdata.users.LoginCommandData;
-import com.github.haseoo.courier.services.adapters.ClientIndividualServiceImpl;
 import com.github.haseoo.courier.services.ports.UserService;
 import com.github.haseoo.courier.views.users.UserLoginView;
 import lombok.RequiredArgsConstructor;

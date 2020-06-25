@@ -11,6 +11,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class EmailServiceProdImpl implements EmailService {
     public void sentNotificationToSender(ParcelData parcelData) {
         log.info(String.format("Sent to sender %s id %s pin %s", parcelData.getSender().getEmailAddress(),
                 parcelData.getId(),
-                String.valueOf(parcelData.getPin())));
+                Arrays.toString(parcelData.getPin())));
 
         MailModel mail = new MailModel();
         mail.setFrom(mailFrom);
@@ -79,20 +80,6 @@ public class EmailServiceProdImpl implements EmailService {
         prepareEmailTemplate(parcelData, mail, model);
     }
 
-    private void prepareEmailTemplate(ParcelData parcelData, MailModel mail, Map<String, Object> model) {
-        model.put("pin", String.valueOf(parcelData.getPin()));
-        model.put("showPin", "active");
-        mail.setProps(model);
-
-        threadPoolTaskExecutor.execute(() -> {
-            try {
-                emailService.sendEmail(mail);
-            } catch (MessagingException exception) {
-                log.error(exception.toString());
-            }
-        });
-    }
-
     @Override
     public void sentReturnNotification(ParcelData parcelData) {
         log.info(String.format("Sent return to sender %s id %s pin %s", parcelData.getSender().getEmailAddress(),
@@ -105,9 +92,23 @@ public class EmailServiceProdImpl implements EmailService {
         mail.setSubject("JanuszeX Courier Company - parcel return tracking pin");
 
         Map<String, Object> model = new HashMap<>();
-        model.put(INFORMATION_PROP, "The customer just picked up the parcel.");
+        model.put(INFORMATION_PROP, "The receiver does not pick up so it needs to be returned.");
         model.put("name", parcelData.getSender().getUserName());
         model.put(PARCEL_ID_PROP, parcelData.getId());
         prepareEmailTemplate(parcelData, mail, model);
+    }
+
+    private void prepareEmailTemplate(ParcelData parcelData, MailModel mail, Map<String, Object> model) {
+        model.put("pin", String.valueOf(parcelData.getPin()));
+        model.put("showPin", "active");
+        mail.setProps(model);
+
+        threadPoolTaskExecutor.execute(() -> {
+            try {
+                emailService.sendEmail(mail);
+            } catch (MessagingException exception) {
+                log.error(exception.toString());
+            }
+        });
     }
 }

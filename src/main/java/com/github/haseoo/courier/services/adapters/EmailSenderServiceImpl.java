@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -20,7 +20,7 @@ public class EmailSenderServiceImpl {
 
     private final JavaMailSender emailSender;
 
-    private final SpringTemplateEngine templateEngine;
+    private final ITemplateEngine templateEngine;
 
 
     public void sendEmail(MailModel mailModel) throws MessagingException {
