@@ -15,6 +15,7 @@ import com.github.haseoo.courier.servicedata.places.AddressData;
 import com.github.haseoo.courier.servicedata.places.AddressOperationData;
 import com.github.haseoo.courier.services.ports.*;
 import com.github.haseoo.courier.utilities.PinGenerator;
+import com.paypal.api.payments.Payment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @RequiredArgsConstructor
-public class ParcelServiceImpl implements ParcelService {
+public class ParcelServiceImpl implements ParcelService, ChangeParcelStateService {
     private final ParcelRepository parcelRepository;
     private final AddressService addressService;
     private final ReceiverInfoService receiverInfoService;
@@ -242,5 +243,20 @@ public class ParcelServiceImpl implements ParcelService {
         } else {
             throw new IllegalArgumentException(INVALID_ENUM_TYPE);
         }
+    }
+
+    @Override
+    public void changeParcelState(Payment payment) {
+        String parcelId = payment.getTransactions()
+                .get(0)
+                .getItemList()
+                .getItems()
+                .get(0)
+                .getName();
+
+        ParcelModel parcelModel = parcelRepository.getById(Long.valueOf(parcelId.substring(parcelId.indexOf(' ') + 1)))
+                .orElseThrow(() -> new ParcelNotFound(Long.valueOf(parcelId.substring(parcelId.indexOf(' ') + 1))));
+        parcelModel.setPaid(true);
+        parcelRepository.saveAndFlush(parcelModel);
     }
 }
