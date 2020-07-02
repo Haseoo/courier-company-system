@@ -1,3 +1,26 @@
+# Courier Company System
+A simple courier company system written as a university project. We were focused on the backend so the frontend is really basic.  The backend is written in Java using spring boot.  The frontend is written is TypeScript using angular 9. We also implemented sending emails with notification about parcels. The parcels are automaticly assigned to the warehouses.
+In our system the following roles can be distinguished:
+
+ - **admin**- Only one account with the "admin" login. 
+ -- activating/deactivating users accounts
+ -- managing the warehouse network
+ -- registering employees
+- **client**- company and individual clients
+-- company users accounts must be activated by the administrator
+-- individual clients can log in with google account
+-- sending parcels
+-- monitoring send parcels
+- not-logged users can monitor and pay for parcels
+- **courier**
+-- picinig up parcels
+-- marking parcels as paid
+-- marking parcels as delivered/returned
+-- handing parcels to warehouses
+- **logistician**
+-- browsing parcels assigned to the warehouse
+-- assigning parcels to couriers
+-- marking parcels to the couriers
 
 # Project status
 ## Building
