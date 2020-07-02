@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  db:
+    image: "postgres:11"
+    environment: 
+      POSTGRES_USER: 'spring'
+      POSTGRES_PASSWORD: 'springsecret'
+      POSTGRES_DB: 'courierdb'
+    volumes:
+        - courierdb:/var/lib/postgresql/data
+        - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+    container_name: "courier_postgres"
+    ports:
+      - "5432:5432"
+volumes:
+  courierdb: 
