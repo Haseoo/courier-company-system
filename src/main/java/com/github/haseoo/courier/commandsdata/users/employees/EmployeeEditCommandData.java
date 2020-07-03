@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.haseoo.courier.commandsdata.users.UserEditCommandData;
 import com.github.haseoo.courier.enums.EmployeeType;
+import com.github.haseoo.courier.validators.Pesel;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ public class EmployeeEditCommandData extends UserEditCommandData {
     private String surname;
     @NotBlank(message = "Employee phone number cannot be empty")
     private String phoneNumber;
+    @Pesel
     private String pesel;
 
     @JsonCreator

@@ -57,16 +57,18 @@ public class UserUtils {
         return userTypeMap.get(userModel.getClass());
     }
 
+    public static boolean tryPesel(String pesel) {
+        if (validatePeselString(pesel)) {
+            return false;
+        }
+        return isChecksumValid(pesel);
+    }
+
     public static void validatePesel(String pesel) {
         if (validatePeselString(pesel)) {
             throw new InvalidPeselFormatException();
         }
-        int checksum = calculateChecksum(pesel);
-        int checkDigit = getCheckDigit(pesel);
-        checksum %= TEN_CUT;
-        checksum = TEN_CUT - checksum;
-        checksum %= TEN_CUT;
-        if (checksum != checkDigit) {
+        if (!isChecksumValid(pesel)) {
             throw new InvalidPeselException();
         }
     }
@@ -85,5 +87,14 @@ public class UserUtils {
 
     private static boolean validatePeselString(String pesel) {
         return pesel.matches(PESEL_REGEX) || pesel.length() != PESEL_LENGTH;
+    }
+
+    private static boolean isChecksumValid(String pesel) {
+        int checksum = calculateChecksum(pesel);
+        int checkDigit = getCheckDigit(pesel);
+        checksum %= TEN_CUT;
+        checksum = TEN_CUT - checksum;
+        checksum %= TEN_CUT;
+        return checksum == checkDigit;
     }
 }

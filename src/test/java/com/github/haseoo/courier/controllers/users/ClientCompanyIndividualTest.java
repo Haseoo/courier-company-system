@@ -54,7 +54,7 @@ class ClientCompanyIndividualTest {
                 "1234",
                 "TestName",
                 "TestSurname",
-                "4556");
+                "60041875771");
         when(clientIndividualService.add(any())).thenReturn(getClientIndividualData());
         ArgumentCaptor<ClientIndividualAddData> argument = ArgumentCaptor.forClass(ClientIndividualAddData.class);
         //when & then

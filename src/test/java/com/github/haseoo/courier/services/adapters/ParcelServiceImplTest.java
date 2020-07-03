@@ -133,7 +133,7 @@ class ParcelServiceImplTest {
         LocalDate newDate;
         if (LocalDate.now().plusDays(1).getDayOfWeek().equals(DayOfWeek.SATURDAY) ||
                 LocalDate.now().plusDays(1).getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-            newDate = LocalDate.now().plusDays(2);
+            newDate = LocalDate.now().plusDays(3);
         } else {
             newDate = LocalDate.now().plusDays(1);
         }
