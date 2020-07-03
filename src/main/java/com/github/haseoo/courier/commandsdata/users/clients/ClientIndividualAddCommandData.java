@@ -3,6 +3,7 @@ package com.github.haseoo.courier.commandsdata.users.clients;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.haseoo.courier.commandsdata.users.UserAddCommandData;
+import com.github.haseoo.courier.validators.Pesel;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +21,7 @@ public class ClientIndividualAddCommandData extends UserAddCommandData {
     private String name;
     @NotBlank(message = "Surname cannot be empty")
     private String surname;
+    @Pesel
     private String pesel;
 
     @JsonCreator
