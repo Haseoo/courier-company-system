@@ -1,5 +1,5 @@
 # Courier Company System
-A simple courier company system written as a university project. We were focused on the backend so the frontend is really basic. We know that this project has some conceptual lacks and issues. But it was made only for learning how to make a web app. The backend is written in Java using spring boot. The frontend is written in TypeScript using angular 9. We also implemented sending emails with notification about parcels. The parcels are automatically assigned to the warehouses using postal codes. The project has integrated PayPal payment method and oAuth2 authorization by Google.
+A simple courier company system written as a university project. We were focused on the backend so the frontend is really basic. We know that this project has some conceptual lacks and issues. But it was made only for learning how to make a web app. The backend is written in Java using spring boot. The frontend is written in TypeScript using angular 9. We also implemented sending emails with notification about parcels using Thymeleaf template engine. The parcels are automatically assigned to the warehouses using postal codes. The project has integrated PayPal payment method and oAuth2 authorization by Google.
 
 In our system the following roles can be distinguished:
  - **admin**- Only one account with the "admin" login. 
