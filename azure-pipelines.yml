@@ -9,7 +9,7 @@ pool:
 steps:
 - task: SonarQubePrepare@4
   inputs:
-    SonarQube: 'SonarCube'
+    SonarQube: 'SonarCubeHome'
     scannerMode: 'Other'
     extraProperties: |
       sonar.projectName=courier-cs
