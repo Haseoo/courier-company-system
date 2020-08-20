@@ -155,24 +155,6 @@ class ParcelServiceImplTest {
     }
 
     @Test
-    void should_not_move_date_too_late() {
-        //given
-        final long id = 1L;
-        ParcelModel parcelModel = getParcelAtSender();
-        parcelModel.setExpectedCourierArrivalDate(LocalDate.of(2020, 6, 18));
-        LocalDate newDate = LocalDate.of(2020, 7, 30);
-        char[] pin = {1, 2, 3, 4};
-        parcelModel.setPin(pin);
-        when(parcelRepository.getById(anyLong())).thenReturn(java.util.Optional.of(parcelModel));
-        ArgumentCaptor<ParcelModel> argument = ArgumentCaptor.forClass(ParcelModel.class);
-        EstimatedDeliveryTimeModel estimatedDeliveryTimeModel = new EstimatedDeliveryTimeModel();
-        estimatedDeliveryTimeModel.setMaxMoveDayAfter(4);
-        when(estimatedDeliveryTimeRepository.getById(anyLong())).thenReturn(estimatedDeliveryTimeModel);
-        //when & then
-        Assertions.assertThatThrownBy(() -> sut.moveDate(id, pin, newDate)).isExactlyInstanceOf(IllegalMoveDate.class);
-    }
-
-    @Test
     void should_not_move_date_is_weekend() {
         //given
         final long id = 1L;
