@@ -12,8 +12,8 @@ steps:
     SonarQube: 'SonarCube'
     scannerMode: 'Other'
     extraProperties: |
-      sonar.projectName=CourierSystem
-      sonar.projectKey=CourierSystemJava:develop
+      sonar.projectName=courier-cs
+      sonar.projectKey=courier-cs
 - task: SonarQubeAnalyze@4
 - task: Maven@3
   inputs:
