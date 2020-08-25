@@ -1,0 +1,15 @@
+div.record:hover{
+    cursor: pointer;
+}
+div.row{
+    padding: 5px 0 5px 0;
+    margin: 5px;
+}
+.subtable{
+    width: 100%;
+}
+.subtable div{
+    width: 100%;
+    display:flex;
+    justify-content: center;
+}

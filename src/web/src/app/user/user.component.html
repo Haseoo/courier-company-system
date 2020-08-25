@@ -1,0 +1,81 @@
+<div id="constainer" class="container">
+  <h2>List of users:</h2>
+  <table
+    class="table table-striped"
+    mat-table
+    *ngIf="users | async as users; else noData"
+  >
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">username</th>
+        <th scope="col">type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" (click)="displayUserDetails(user)">
+        <td>
+          {{ user.id }}
+        </td>
+        <td>
+          {{ user.username }}
+        </td>
+        <td>
+          {{ user.userType | lowercase }}
+        </td>
+        <td *ngIf="user.active; else isNotActive">
+          <button (click)="deactiveUser(user)" class="btn btn-outline-danger">Deactive</button>
+        </td>
+        <ng-template #isNotActive>
+          <td><button (click) = "activeUser(user)" class="btn btn-outline-success">Active</button></td>
+        </ng-template>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+  <div id="details" class="details">
+    <div  *ngIf = "displayDetails && (currentCompany != null)" class="row">
+      <div class="col">
+        <div class="row">
+          <div class="col font-weight-bold">Company Name: </div>
+          <div class="col">{{currentCompany.companyName}}</div>
+        </div>
+        <div class="row ">
+          <div class="col font-weight-bold">Company email address: </div>
+          <div class="col">{{currentCompany.emailAddress}}</div>
+        </div>
+        <div class="row">
+          <div class="col font-weight-bold">Company phone number: </div>
+          <div class="col">{{currentCompany.phoneNumber}}</div>
+        </div>
+        <div class="row">
+          <div class="col font-weight-bold">Company NIP: </div>
+          <div class="col">{{currentCompany.nip}}</div>
+        </div>
+      </div>
+      <div class = "col">
+        <div class="row">
+          <div class="col font-weight-bold">Representative name</div>
+          <div class="col">{{currentCompany.representativeName}}</div>
+        </div>
+        <div class="row">
+          <div class="col font-weight-bold">Representative surname</div>
+          <div class="col">{{currentCompany.representativeSurname}}</div>
+        </div>
+        <div class="row">
+          <div class="col font-weight-bold">Representative email address</div>
+          <div class="col">{{currentCompany.representativeEmailAddress}}</div>
+        </div>
+        <div class="row">
+          <div class="col font-weight-bold">Representative phone number</div>
+          <div class="col">{{currentCompany.representativePhoneNumber}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #noData>
+    An unidentified problem occurred, please try again later
+  </ng-template>
+</div>

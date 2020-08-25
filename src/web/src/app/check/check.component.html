@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="row"><label class="col-4" for="id">Parcel Id:</label>
+    <input class="col-4" type="text" [(ngModel)]="parcelId" /></div>
+    <div class="w-100"></div>
+    <div class="row">
+      <div class="col">
+        <button
+          class=" btn btn-primary"
+          *ngIf="!isClient()"
+          [routerLink]="['/check/parcel', parcelId]"
+        >
+          Check
+        </button>
+      </div>
+      <div class="col">
+        <button
+          class=" btn btn-primary"
+          *ngIf="isClient()"
+          [routerLink]="['/client/check/parcel', parcelId]"
+        >
+          Check
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

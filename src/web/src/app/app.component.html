@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">>
+  <title>Document</title>
+</head>
+<body class="mh-100">
+  <div class="container-fluid">
+    <header class="container-fluid d-flex justify-content-center">
+      <img src="assets/logo.png" (click)="navigateTo()" class="img-fluid" alt="Courier logo" />
+    </header>
+    <app-header></app-header>
+    <main>
+      <app-alert></app-alert>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</body>
+</html>
+

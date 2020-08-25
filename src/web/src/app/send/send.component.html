@@ -1,0 +1,397 @@
+<div *ngIf = isLoading class="text-center">
+  <div class="spinner-border" style="width: 5rem; height: 5rem;">
+  </div>
+</div>
+<form [formGroup]="addParcelForm" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <div class="form-group col-3">
+      <div formGroupName="deliveryAddress">
+        <h5>Delivery Address:</h5>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input
+            type="text"
+            formControlName="city"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('deliveryAddress.city')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('deliveryAddress.city')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControlError('deliveryAddress.city').required">
+              City is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input
+            type="text"
+            formControlName="street"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('deliveryAddress.street')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('deliveryAddress.street')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControlError('deliveryAddress.street').required">
+              Street is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="postalCode">Postal code</label>
+          <input
+            type="text"
+            formControlName="postalCode"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('deliveryAddress.postalCode')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('deliveryAddress.postalCode')"
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="formControlError('deliveryAddress.postalCode').required"
+            >
+              Postal Code is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="buildingNumber">Building number</label>
+          <input
+            type="text"
+            formControlName="buildingNumber"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('deliveryAddress.buildingNumber')
+            }"
+          />
+          <div
+            *ngIf="
+              submitted && formControlError('deliveryAddress.buildingNumber')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="
+                formControlError('deliveryAddress.buildingNumber').required
+              "
+            >
+              Building number is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="flatNumber">Flat number</label>
+          <input
+            type="text"
+            formControlName="flatNumber"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('deliveryAddress.flatNumber')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('deliveryAddress.flatNumber')"
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="formControlError('deliveryAddress.flatNumber').required"
+            >
+              Flat number is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-3">
+      <div formGroupName="senderAddress">
+        <h5>Sender Address:</h5>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input
+            type="text"
+            formControlName="city"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && formControlError('senderAddress.city')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('senderAddress.city')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControlError('senderAddress.city').required">
+              City is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input
+            type="text"
+            formControlName="street"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && formControlError('senderAddress.street')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('senderAddress.street')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControlError('senderAddress.street').required">
+              Street is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="postalCode">Postal code</label>
+          <input
+            type="text"
+            formControlName="postalCode"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('senderAddress.postalCode')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('senderAddress.postalCode')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControlError('senderAddress.postalCode').required">
+              Postal Code is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="buildingNumber">Building number</label>
+          <input
+            type="text"
+            formControlName="buildingNumber"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('senderAddress.buildingNumber')
+            }"
+          />
+          <div
+            *ngIf="
+              submitted && formControlError('senderAddress.buildingNumber')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="formControlError('senderAddress.buildingNumber').required"
+            >
+              Building number is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="flatNumber">Flat number</label>
+          <input
+            type="text"
+            formControlName="flatNumber"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('senderAddress.flatNumber')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('senderAddress.flatNumber')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControlError('senderAddress.flatNumber').required">
+              Flat number is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-3">
+      <div formGroupName="receiverContactData">
+        <h5>Receiver contact data:</h5>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('receiverContactData.name')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('receiverContactData.name')"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControlError('receiverContactData.name').required">
+              Name is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="surname">Surname</label>
+          <input
+            type="text"
+            formControlName="surname"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('receiverContactData.surname')
+            }"
+          />
+          <div
+            *ngIf="submitted && formControlError('receiverContactData.surname')"
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="formControlError('receiverContactData.surname').required"
+            >
+              Surname is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="emailAddress">Email address</label>
+          <input
+            type="text"
+            formControlName="emailAddress"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted &&
+                formControlError('receiverContactData.emailAddress')
+            }"
+          />
+          <div
+            *ngIf="
+              submitted && formControlError('receiverContactData.emailAddress')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="
+                formControlError('receiverContactData.emailAddress').required
+              "
+            >
+              Email address is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone number</label>
+          <input
+            type="text"
+            formControlName="phoneNumber"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                submitted && formControlError('receiverContactData.phoneNumber')
+            }"
+          />
+          <div
+            *ngIf="
+              submitted && formControlError('receiverContactData.phoneNumber')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="
+                formControlError('receiverContactData.phoneNumber').required
+              "
+            >
+              Phone number is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-3">
+      <h5>Other information:</h5>
+      <div class="form-group">
+        <label for="parcelTypeId">Type of Parcel</label>
+        <select
+          formControlName="parcelTypeId"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid':
+              submitted && formControlError('parcelTypeId')
+          }"
+        >
+          <ng-container *ngFor="let opt of typeOfParcels">
+            <option value="{{ opt.id }}">{{ opt.name }} - {{opt.price}} zł</option>
+          </ng-container>
+        </select>
+        <div
+            *ngIf="
+              submitted && formControlError('parcelTypeId')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="
+                formControlError('parcelTypeId').required
+              "
+            >
+              Parcel Type is required
+            </div>
+          </div>
+      </div>
+      <div class="form-group">
+        <label for="parcelFee">Parcel Fee</label>
+        <input
+          type="text"
+          formControlName="parcelFee"
+          class="form-control w-50"
+          [ngClass]="{'is-invalid': submitted && formControlError('parcelFee')}"
+        />
+        <div
+            *ngIf="
+              submitted && formControlError('parcelFee')
+            "
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="
+                formControlError('parcelFee').required
+              "
+            >
+              ParcelFee is required
+            </div>
+        </div>
+      </div>
+      <div class="form-group d-flex justify-content-start">
+        <label for="priority">Priority</label>
+        <input
+          type="checkbox"
+          formControlName="priority"
+          class="form-control w-25"
+        />
+      </div>
+      
+      <button  class="btn btn-primary">
+        save
+      </button>
+    </div>
+  </div>
+</form>

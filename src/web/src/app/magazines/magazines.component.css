@@ -1,0 +1,23 @@
+h2 {
+  text-align: center;
+  color: darkgray;
+}
+.row{
+  display: flex;
+  justify-content: center;
+  padding: 5px 0 5px 0;
+}
+[class= "row formgroup"]{
+  display: flex;
+}
+.row .form-group{
+  margin: 10px;
+}
+.magazine-header{
+  display: flex;
+  justify-content: center;
+}
+.notify-div{
+  text-align: center;
+  margin: 10px auto 0 auto;
+}

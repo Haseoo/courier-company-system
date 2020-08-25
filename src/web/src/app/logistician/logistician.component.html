@@ -1,0 +1,53 @@
+<div class="container" *ngIf="couriers">
+  <div class="row text-light bg-dark">
+    <div class="col-md-1">ID</div>
+    <div class="col-md-2">Name</div>
+    <div class="col-md-2">Surname</div>
+    <div class="col-md-2">Phone number</div>
+    <div class="col-md-1">Number of parcels</div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
+  </div>
+  <ng-container *ngFor="let courier of couriers">
+    <div class="row text-dark bg-light">
+      <div class="col-md-1">{{ courier.id }}</div>
+      <div class="col-md-2">{{ courier.name }}</div>
+      <div class="col-md-2">{{ courier.surname }}</div>
+      <div class="col-md-2">{{ courier.phoneNumber }}</div>
+      <div class="col-md-1">{{ courier.assignedParcels.length }}</div>
+      <div class="col-md-2"><button [routerLink] ="['assign/', courier.id]"  class="btn btn-secondary">asign parcel</button></div>
+      <div class="col-md-2"><button (click)="showParcels()" class="btn btn-secondary">show parcels</button></div>
+    </div>
+    <div *ngIf = "displayParcelsList" style="margin-top: 10px;">
+        <ng-container *ngFor = "let parcel of courier.assignedParcels">
+          <div style = "border: solid 1px royalblue;">
+            <div class="row text-dark" style="margin-left: 5%;">
+                  Parcel info:
+                  </div>
+              <div class="col" ng>
+                  <div class="row text-dark">
+                    <div class="col">ID:</div>
+                    <div class="col">{{ parcel.id }}</div>
+                  </div>
+                  <div class="row text-dark">
+                    <div class="col">Current state:</div>
+                    <div class="col">{{ parcel.currentState | titlecase }}</div>
+                  </div>
+                  <div *ngIf = "!(parcel.currentState === 'AT_SENDER') " class="row text-dark">
+                    <div class="col">Destination Address:</div>
+                    <div class="col">{{ addressToString(parcel.destination.address) }}</div>
+                  </div>
+                  <div *ngIf = "parcel.currentState === 'AT_SENDER' "class="row text-dark">
+                    <div class="col">Sender Address:</div>
+                    <div class="col">{{ addressToString(parcel.source.address) }}</div>
+                  </div>
+                  <div class="row text-dark">
+                      <div class="col">Priority:</div>
+                      <div class="col">{{ parcel.priority }}</div>
+                    </div>
+                </div>
+          </div>
+        </ng-container>
+      </div>
+  </ng-container>
+</div>
