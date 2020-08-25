@@ -11,6 +11,7 @@ steps:
   inputs:
     SonarQube: 'SonarCubeHome'
     scannerMode: 'Other'
+    extraProperties: 'sonar.projectKey=courier-cs'
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
