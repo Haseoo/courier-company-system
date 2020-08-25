@@ -167,7 +167,6 @@ class ParcelServiceImplTest {
         ArgumentCaptor<ParcelModel> argument = ArgumentCaptor.forClass(ParcelModel.class);
         EstimatedDeliveryTimeModel estimatedDeliveryTimeModel = new EstimatedDeliveryTimeModel();
         estimatedDeliveryTimeModel.setMaxMoveDayAfter(4);
-        when(estimatedDeliveryTimeRepository.getById(anyLong())).thenReturn(estimatedDeliveryTimeModel);
         //when & then
         Assertions.assertThatThrownBy(() -> sut.moveDate(id, pin, newDate)).isExactlyInstanceOf(IllegalMoveDate.class);
     }
