@@ -24,7 +24,7 @@ In our system the following roles can be distinguished:
 
 # Project status
 ## Building
-[![Build Status](https://dev.azure.com/dawidszymkiewicz/dawid_szymkiewicz/_apis/build/status/Haseoo.courier-company-system?branchName=develop)](https://dev.azure.com/dawidszymkiewicz/dawid_szymkiewicz/_build/latest?definitionId=10&branchName=develop)
+[![Build Status](https://dev.azure.com/dawidszymkiewicz/dawid_szymkiewicz/_apis/build/status/Haseoo.courier-company-system?branchName=develop)](https://dev.azure.com/dawidszymkiewicz/dawid_szymkiewicz/_build/latest?definitionId=10&branchName=master)
 
 [<img src="http://dawidhomeserver.ddns.net:9000/api/project_badges/quality_gate?project=courier-cs">](http://dawidhomeserver.ddns.net:9000/dashboard?id=courier-cs) 
 
